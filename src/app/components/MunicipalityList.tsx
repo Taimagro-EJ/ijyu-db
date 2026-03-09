@@ -66,7 +66,7 @@ function MunicipalityCard({ m }: { m: Municipality }) {
           <Stat label="年間平均気温" value={m.avg_temp_annual !== null ? `${m.avg_temp_annual}℃` : '-'} color={tempColor(m.avg_temp_annual)} />
           <Stat label="冬の最低気温" value={m.min_temp_winter !== null ? `${m.min_temp_winter}℃` : '-'} color={m.min_temp_winter !== null && m.min_temp_winter < -5 ? '#3b82f6' : '#64748b'} />
           <Stat label="単身月額生活費" value={fmt万(m.total_monthly_cost_single)} />
-          <Stat label="1LDK家賃目安" value={m.rent_1ldk_estimate !== null ? `${(m.rent_1ldk_estimate / 1000).toFixed(0)}千円` : '-'} />
+          <Stat label="1LDK家賃目安" value={m.rent_1ldk_estimate !== null ? `${(Math.floor(m.rent_1ldk_estimate / 10000 * 10) / 10)}万円` : '-'} />
           <Stat label="東京まで" value={m.time_to_tokyo !== null ? `${m.time_to_tokyo}分` : '-'} />
           <Stat label="治安" value={safety.label} color={safety.color} />
         </div>

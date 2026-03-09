@@ -80,7 +80,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         <Section title="💴 生活費（推計）">
           <StatCard label="単身月額生活費" value={m.total_monthly_cost_single !== null ? `${Math.round(m.total_monthly_cost_single / 10000)}万円` : '-'} sub="家賃・食費・光熱費込み" />
           <StatCard label="家族月額生活費" value={m.total_monthly_cost_family !== null ? `${Math.round(m.total_monthly_cost_family / 10000)}万円` : '-'} sub="4人家族想定" />
-          <StatCard label="1LDK家賃目安" value={m.rent_1ldk_estimate !== null ? `${Math.round(m.rent_1ldk_estimate / 1000)}千円` : '-'} />
+          <StatCard label="1LDK家賃目安" value={m.rent_1ldk_estimate !== null ? `${Math.floor(m.rent_1ldk_estimate / 10000 * 10) / 10)}万円` : '-'} />
           <StatCard label="車の必要度" value={['', '必須', '高い', '普通', '低い', '不要'][m.car_necessity_score ?? 0] || '-'} sub={`スコア ${m.car_necessity_score ?? '-'}/5`} />
         </Section>
 

@@ -1,7 +1,7 @@
 import { MetadataRoute } from 'next';
 import { supabase } from '@/lib/supabase';
 
-const BASE_URL = 'https://ijyu-db.vercel.app';
+const BASE_URL = 'https://www.ijyu-data.com';
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const { data: municipalities } = await supabase

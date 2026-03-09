@@ -179,6 +179,10 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <h1 style={{ fontSize: 24, fontWeight: 800, margin: 0, letterSpacing: '-0.5px' }}>移住DB</h1>
           <p style={{ fontSize: 13, color: '#94a3b8', margin: '4px 0 0' }}>全国{municipalities.length}市町村の移住データを比較</p>
+          <div style={{ marginTop: 8, display: 'flex', gap: 16 }}><a href="/about" style={{ fontSize: 12, color: '#94a3b8', textDecoration: 'none' }}>データについて</a><a href="/blog" style={{ fontSize: 12, color: '#94a3b8', textDecoration: 'none' }}>コラム</a></div>          <div style={{ marginTop: 8, display: 'flex', gap: 16 }}>
+            <a href="/about" style={{ fontSize: 12, color: '#64748b', textDecoration: 'none' }}>データについて</a>
+            <a href="/blog" style={{ fontSize: 12, color: '#64748b', textDecoration: 'none' }}>コラム</a>
+          </div>
         </div>
       </header>
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '32px 24px' }}>

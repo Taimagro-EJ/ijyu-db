@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
-export const revalidate = 3600;
+export const revalidate = 60;
 
 type BlogPost = {
   id: number;

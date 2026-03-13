@@ -1,10 +1,10 @@
-// src/app/blog/[slug]/page.tsx
 import { Metadata } from 'next';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
 export const revalidate = 60;
+export const dynamic = 'force-dynamic';
 
 type BlogPost = {
   id: number;
@@ -24,7 +24,6 @@ async function getPost(slug: string): Promise<BlogPost | null> {
     .eq('slug', slug)
     .eq('published', true)
     .single();
-
   if (error || !data) return null;
   return data as BlogPost;
 }
@@ -35,20 +34,7 @@ export async function generateMetadata({ params }: { params: { slug: string } })
   return {
     title: post.title,
     description: post.description ?? undefined,
-    openGraph: {
-      title: post.title,
-      description: post.description ?? undefined,
-      url: `https://www.ijyu-data.com/blog/${post.slug}`,
-    },
   };
-}
-
-export async function generateStaticParams() {
-  const { data } = await supabase
-    .from('blog_posts')
-    .select('slug')
-    .eq('published', true);
-  return (data ?? []).map(p => ({ slug: p.slug }));
 }
 
 const CATEGORY_LABELS: Record<string, string> = {
@@ -71,7 +57,7 @@ export default async function BlogPostPage({ params }: { params: { slug: string 
   return (
     <div style={{ fontFamily: "'Noto Sans JP', sans-serif", minHeight: '100vh', background: '#f8fafc' }}>
       <header style={{ background: '#0f172a', color: '#fff', padding: '16px 32px' }}>
-        <div style={{ maxWidth: 800, margin: '0 auto', display: 'flex', gap: 16 }}>
+        <div style={{ maxWidth: 800, margin: '0 auto', display: 'flex', gap: 16, alignItems: 'center' }}>
           <Link href="/" style={{ color: '#94a3b8', fontSize: 13, textDecoration: 'none' }}>移住DB</Link>
           <span style={{ color: '#475569' }}>/</span>
           <Link href="/blog" style={{ color: '#94a3b8', fontSize: 13, textDecoration: 'none' }}>コラム</Link>

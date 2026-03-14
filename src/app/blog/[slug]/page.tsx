@@ -28,8 +28,9 @@ async function getPost(slug: string): Promise<BlogPost | null> {
   return data as BlogPost;
 }
 
-export async function generateMetadata({ params }: { params: { slug: string } }): Promise<Metadata> {
-  const post = await getPost(params.slug);
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params;
+  const post = await getPost(slug);
   if (!post) return { title: '記事が見つかりません' };
   return {
     title: post.title,
@@ -46,8 +47,9 @@ const CATEGORY_LABELS: Record<string, string> = {
   column: 'コラム',
 };
 
-export default async function BlogPostPage({ params }: { params: { slug: string } }) {
-  const post = await getPost(params.slug);
+export default async function BlogPostPage({ params }: { params: Promise<{ slug: string }> }) {
+  const { slug } = await params;
+  const post = await getPost(slug);
   if (!post) notFound();
 
   const date = post.published_at

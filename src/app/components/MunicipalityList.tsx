@@ -78,32 +78,43 @@ function MunicipalityCard({ m }: { m: Municipality }) {
       }}
       className="card-hover"
       >
-        {/* カラーバー（地域カラー） */}
-        <div style={{
-          height: 4,
-          background: `linear-gradient(90deg, var(--color-base) 0%, var(--color-accent) 100%)`,
-          opacity: 0.6,
-        }} />
-
-        <div style={{ padding: '16px 18px', display: 'flex', flexDirection: 'column', gap: 12, flex: 1 }}>
-          {/* ヘッダー */}
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
+        {/* 地域画像エリア */}
+        <div style={{ position: 'relative', height: 140, overflow: 'hidden', background: 'var(--color-base-light)' }}>
+          {m.image_url ? (
+            <img
+              src={m.image_url}
+              alt={`${m.name}の風景`}
+              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+            />
+          ) : (
+            <div style={{
+              width: '100%', height: '100%',
+              background: `linear-gradient(135deg, var(--color-base-light) 0%, var(--color-accent-soft) 100%)`,
+              display: 'flex', alignItems: 'center', justifyContent: 'center',
+              fontSize: 32,
+            }}>🏘</div>
+          )}
+          {/* グラデーションオーバーレイ */}
+          <div style={{
+            position: 'absolute', bottom: 0, left: 0, right: 0, height: 64,
+            background: 'linear-gradient(transparent, rgba(26,24,20,0.55))',
+          }} />
+          {/* 地域名オーバーレイ */}
+          <div style={{ position: 'absolute', bottom: 8, left: 12, right: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div>
               <div style={{
-                fontSize: 19,
-                fontWeight: 700,
-                color: 'var(--color-text-primary)',
+                fontSize: 18, fontWeight: 700, color: '#fff',
                 fontFamily: "'Shippori Mincho', serif",
                 letterSpacing: '-0.02em',
+                textShadow: '0 1px 6px rgba(0,0,0,0.5)',
               }}>{m.name}</div>
-              <div style={{ fontSize: 11, color: 'var(--color-text-muted)', marginTop: 2 }}>
-                {m.prefecture} · {m.region}
-              </div>
+              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.8)' }}>{m.prefecture} · {m.region}</div>
             </div>
-            {m.is_featured && (
-              <span className="badge badge-featured">注目</span>
-            )}
+            {m.is_featured && <span className="badge badge-featured">注目</span>}
           </div>
+        </div>
+
+        <div style={{ padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
 
           {/* キャッチコピー */}
           <div style={{

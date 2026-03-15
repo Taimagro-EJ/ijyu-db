@@ -15,6 +15,7 @@ export type Municipality = {
   lng: number | null
   slug: string
   is_featured: boolean
+  image_url: string | null
   avg_temp_annual: number | null
   avg_temp_jan: number | null
   avg_temp_jul: number | null

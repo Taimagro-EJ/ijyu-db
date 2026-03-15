@@ -2,6 +2,7 @@
 
 import { useState, useMemo } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { Municipality } from '@/lib/supabase'
 
 const REGIONS = ['全て', '北海道', '東北', '関東', '中部', '近畿', '中国', '四国', '九州', '沖縄']
@@ -80,11 +81,13 @@ function MunicipalityCard({ m }: { m: Municipality }) {
       >
         <div style={{ position: 'relative', height: 140, overflow: 'hidden', background: 'var(--color-base-light)' }}>
           {m.image_url ? (
-            <img
+            <Image
               src={m.image_url}
               alt={`${m.name}の風景`}
-              loading="lazy"
-              style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
+              fill
+              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+              style={{ objectFit: 'cover' }}
+              priority={false}
             />
           ) : (
             <div style={{

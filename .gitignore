@@ -43,3 +43,6 @@ venv311/
 fetch_unsplash_images.py
 fetch_wikimedia_images.py
 .env
+venv311/
+fetch_*.py
+.env

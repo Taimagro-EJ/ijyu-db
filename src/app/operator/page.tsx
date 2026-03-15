@@ -29,8 +29,7 @@ export default function AboutSitePage() {
               {[
                 { label: 'サイト名', value: '移住DB' },
                 { label: 'URL', value: 'https://www.ijyu-data.com' },
-                { label: '運営者', value: '藤井 英治' },
-                { label: '所在地', value: '長野県松本市' },
+                { label: '運営者', value: 'えいじ' },
                 { label: '設立', value: '2026年2月' },
                 { label: 'サイトの目的', value: '全国527市町村の移住情報をデータで比較できるプラットフォームの提供' },
               ].map(({ label, value }) => (

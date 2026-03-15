@@ -1,26 +1,161 @@
 @import "tailwindcss";
 
+/* ============================================
+   移住DB デザインシステム v1.0
+   コンセプト: データで選ぶ、感情で決める
+   ============================================ */
+
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* プライマリ：信頼と自然を象徴するニュートラル */
+  --color-base: #A19679;
+  --color-base-dark: #454034;
+  --color-base-light: #F2F0EC;
+
+  /* アクセント：決断を促す温かみのある色 */
+  --color-accent: #D46B3A;
+  --color-accent-soft: #F0DBC8;
+
+  /* 機能色 */
+  --color-positive: #4A7C59;
+  --color-warning: #C4922A;
+  --color-negative: #B84C3A;
+
+  /* テキスト */
+  --color-text-primary: #1A1814;
+  --color-text-secondary: #6B6457;
+  --color-text-muted: #9E9488;
+
+  /* 背景・ボーダー */
+  --color-bg: #F7F5F2;
+  --color-bg-card: #FFFFFF;
+  --color-border: #E8E4DF;
+
+  /* レガシー互換 */
+  --background: #F7F5F2;
+  --foreground: #1A1814;
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+* {
+  box-sizing: border-box;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text-primary);
+  font-family: 'Noto Sans JP', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
+
+/* 数値データ用モノスペース */
+.font-data {
+  font-family: 'DM Mono', monospace;
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+
+/* 見出し用明朝体 */
+.font-heading {
+  font-family: 'Shippori Mincho', serif;
+}
+
+/* スムーズスクロール */
+html {
+  scroll-behavior: smooth;
+}
+
+/* フォーカスリング */
+:focus-visible {
+  outline: 2px solid var(--color-accent);
+  outline-offset: 2px;
+}
+
+/* カードホバーアニメーション */
+.card-hover {
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
+.card-hover:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 40px rgba(65, 54, 40, 0.12);
+}
+
+/* ボタンベース */
+.btn-primary {
+  background: var(--color-accent);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 20px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.2s ease, transform 0.1s ease;
+}
+.btn-primary:hover {
+  background: #BC5C2E;
+  transform: translateY(-1px);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--color-text-secondary);
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+.btn-ghost:hover {
+  border-color: var(--color-base);
+  color: var(--color-base-dark);
+  background: var(--color-base-light);
+}
+
+/* クイックフィルタータグ */
+.quick-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--color-bg-card);
+  border: 1px solid var(--color-border);
+  border-radius: 999px;
+  padding: 6px 14px;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  color: var(--color-text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+  white-space: nowrap;
+}
+.quick-tag:hover {
+  border-color: var(--color-accent);
+  color: var(--color-accent);
+  background: var(--color-accent-soft);
+}
+.quick-tag.active {
+  background: var(--color-accent);
+  border-color: var(--color-accent);
+  color: #fff;
+}
+
+/* バッジ */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+.badge-positive { background: #E8F4EC; color: var(--color-positive); }
+.badge-warning { background: #FDF3E3; color: var(--color-warning); }
+.badge-negative { background: #FDECEA; color: var(--color-negative); }
+.badge-featured { background: var(--color-accent-soft); color: var(--color-accent); }

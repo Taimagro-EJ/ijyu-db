@@ -5,6 +5,7 @@ import Link from 'next/link'
 import { Municipality } from '@/lib/supabase'
 
 const REGIONS = ['全て', '北海道', '東北', '関東', '中部', '近畿', '中国', '四国', '九州', '沖縄']
+const ITEMS_PER_PAGE = 48
 
 const QUICK_FILTERS = [
   { id: 'childcare', label: '👶 子育て', filter: (m: Municipality) => (m.total_monthly_cost_single ?? 999999) <= 170000 },
@@ -43,7 +44,6 @@ function fmt万1(v: number | null) {
   return `${(Math.floor(v / 10000 * 10) / 10)}万円`
 }
 
-// 市町村ごとのキャッチコピー（簡易版）
 function getCatchCopy(m: Municipality): string {
   const temp = m.avg_temp_annual ?? 0
   const cost = m.total_monthly_cost_single ?? 999999
@@ -78,12 +78,12 @@ function MunicipalityCard({ m }: { m: Municipality }) {
       }}
       className="card-hover"
       >
-        {/* 地域画像エリア */}
         <div style={{ position: 'relative', height: 140, overflow: 'hidden', background: 'var(--color-base-light)' }}>
           {m.image_url ? (
             <img
               src={m.image_url}
               alt={`${m.name}の風景`}
+              loading="lazy"
               style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }}
             />
           ) : (
@@ -94,12 +94,10 @@ function MunicipalityCard({ m }: { m: Municipality }) {
               fontSize: 32,
             }}>🏘</div>
           )}
-          {/* グラデーションオーバーレイ */}
           <div style={{
             position: 'absolute', bottom: 0, left: 0, right: 0, height: 64,
             background: 'linear-gradient(transparent, rgba(26,24,20,0.55))',
           }} />
-          {/* 地域名オーバーレイ */}
           <div style={{ position: 'absolute', bottom: 8, left: 12, right: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
             <div>
               <div style={{
@@ -115,90 +113,51 @@ function MunicipalityCard({ m }: { m: Municipality }) {
         </div>
 
         <div style={{ padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-
-          {/* キャッチコピー */}
           <div style={{
-            fontSize: 12,
-            color: 'var(--color-text-secondary)',
-            fontStyle: 'italic',
-            lineHeight: 1.5,
-            borderLeft: '2px solid var(--color-accent-soft)',
-            paddingLeft: 10,
+            fontSize: 12, color: 'var(--color-text-secondary)',
+            fontStyle: 'italic', lineHeight: 1.5,
+            borderLeft: '2px solid var(--color-accent-soft)', paddingLeft: 10,
           }}>{catchCopy}</div>
 
-          {/* データグリッド（3列） */}
           <div style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 1,
-            background: 'var(--color-border)',
-            borderRadius: 10,
-            overflow: 'hidden',
+            display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+            gap: 1, background: 'var(--color-border)', borderRadius: 10, overflow: 'hidden',
           }}>
-            <DataCell
-              label="年間平均気温"
-              value={m.avg_temp_annual !== null ? `${m.avg_temp_annual}℃` : '-'}
-              color={tempColor(m.avg_temp_annual)}
-            />
-            <DataCell
-              label="1LDK家賃"
-              value={fmt万1(m.rent_1ldk_estimate)}
-            />
-            <DataCell
-              label="東京まで"
-              value={m.time_to_tokyo !== null ? `${m.time_to_tokyo}分` : '-'}
-            />
+            <DataCell label="年間平均気温" value={m.avg_temp_annual !== null ? `${m.avg_temp_annual}℃` : '-'} color={tempColor(m.avg_temp_annual)} />
+            <DataCell label="1LDK家賃" value={fmt万1(m.rent_1ldk_estimate)} />
+            <DataCell label="東京まで" value={m.time_to_tokyo !== null ? `${m.time_to_tokyo}分` : '-'} />
           </div>
 
-          {/* サブデータ */}
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>
               月<span style={{
-                fontFamily: "'DM Mono', monospace",
-                fontSize: 14,
-                fontWeight: 500,
-                color: 'var(--color-text-primary)',
-                margin: '0 2px',
+                fontFamily: "'DM Mono', monospace", fontSize: 14, fontWeight: 500,
+                color: 'var(--color-text-primary)', margin: '0 2px',
               }}>{fmt万(m.total_monthly_cost_single)}</span>で暮らせる
             </div>
             <span className={`badge ${safety.badge}`}>{safety.label}</span>
           </div>
 
-          {/* タグ */}
           <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 'auto' }}>
-            {m.car_necessity_score !== null && m.car_necessity_score <= 2 &&
-              <Tag label="🚗 車必須" bg="#FEF2F2" color="#991B1B" />}
-            {m.car_necessity_score !== null && m.car_necessity_score >= 4 &&
-              <Tag label="🚃 車不要" bg="#F0FDF4" color="#166534" />}
-            {m.avg_temp_annual !== null && m.avg_temp_annual >= 18 &&
-              <Tag label="☀️ 温暖" bg="#FFF7ED" color="#9A3412" />}
-            {m.min_temp_winter !== null && m.min_temp_winter < -5 &&
-              <Tag label="❄️ 寒冷地" bg="#EFF6FF" color="#1E3A8A" />}
-            {m.nearest_shinkansen &&
-              <Tag label={`🚅 ${m.nearest_shinkansen}`} bg="var(--color-base-light)" color="var(--color-base-dark)" />}
+            {m.car_necessity_score !== null && m.car_necessity_score <= 2 && <Tag label="🚗 車必須" bg="#FEF2F2" color="#991B1B" />}
+            {m.car_necessity_score !== null && m.car_necessity_score >= 4 && <Tag label="🚃 車不要" bg="#F0FDF4" color="#166534" />}
+            {m.avg_temp_annual !== null && m.avg_temp_annual >= 18 && <Tag label="☀️ 温暖" bg="#FFF7ED" color="#9A3412" />}
+            {m.min_temp_winter !== null && m.min_temp_winter < -5 && <Tag label="❄️ 寒冷地" bg="#EFF6FF" color="#1E3A8A" />}
+            {m.nearest_shinkansen && <Tag label={`🚅 ${m.nearest_shinkansen}`} bg="var(--color-base-light)" color="var(--color-base-dark)" />}
           </div>
         </div>
 
-        {/* フッター：気になるボタン */}
         <div style={{
-          padding: '10px 18px',
-          borderTop: '1px solid var(--color-border)',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center',
+          padding: '10px 18px', borderTop: '1px solid var(--color-border)',
+          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
         }}>
           <span style={{ fontSize: 11, color: 'var(--color-text-muted)' }}>詳細を見る →</span>
           <button
             onClick={e => { e.preventDefault(); e.stopPropagation() }}
             style={{
-              background: 'none',
-              border: '1px solid var(--color-border)',
-              borderRadius: 999,
-              padding: '4px 12px',
-              fontSize: 11,
-              color: 'var(--color-text-muted)',
-              cursor: 'pointer',
-              transition: 'all 0.2s',
+              background: 'none', border: '1px solid var(--color-border)', borderRadius: 999,
+              padding: '4px 12px', fontSize: 11, color: 'var(--color-text-muted)',
+              cursor: 'pointer', transition: 'all 0.2s',
             }}
             onMouseEnter={e => {
               (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-accent)'
@@ -217,32 +176,16 @@ function MunicipalityCard({ m }: { m: Municipality }) {
 
 function DataCell({ label, value, color }: { label: string; value: string; color?: string }) {
   return (
-    <div style={{
-      background: 'var(--color-base-light)',
-      padding: '8px 10px',
-      textAlign: 'center',
-    }}>
+    <div style={{ background: 'var(--color-base-light)', padding: '8px 10px', textAlign: 'center' }}>
       <div style={{ fontSize: 10, color: 'var(--color-text-muted)', marginBottom: 3, letterSpacing: '0.02em' }}>{label}</div>
-      <div style={{
-        fontSize: 15,
-        fontWeight: 500,
-        color: color ?? 'var(--color-text-primary)',
-        fontFamily: "'DM Mono', monospace",
-      }}>{value}</div>
+      <div style={{ fontSize: 15, fontWeight: 500, color: color ?? 'var(--color-text-primary)', fontFamily: "'DM Mono', monospace" }}>{value}</div>
     </div>
   )
 }
 
 function Tag({ label, bg, color }: { label: string; bg: string; color: string }) {
   return (
-    <span style={{
-      background: bg,
-      color,
-      fontSize: 10,
-      fontWeight: 500,
-      padding: '2px 8px',
-      borderRadius: 999,
-    }}>{label}</span>
+    <span style={{ background: bg, color, fontSize: 10, fontWeight: 500, padding: '2px 8px', borderRadius: 999 }}>{label}</span>
   )
 }
 
@@ -257,13 +200,7 @@ type Filters = {
 function FilterBar({ filters, onChange }: { filters: Filters; onChange: (f: Filters) => void }) {
   return (
     <div style={{ marginBottom: 24 }}>
-      {/* クイックフィルター */}
-      <div style={{
-        display: 'flex',
-        gap: 8,
-        flexWrap: 'wrap',
-        marginBottom: 12,
-      }}>
+      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 12 }}>
         {QUICK_FILTERS.map(qf => (
           <button
             key={qf.id}
@@ -274,17 +211,10 @@ function FilterBar({ filters, onChange }: { filters: Filters; onChange: (f: Filt
           </button>
         ))}
       </div>
-
-      {/* 詳細フィルター */}
       <div style={{
-        background: 'var(--color-bg-card)',
-        borderRadius: 14,
-        border: '1px solid var(--color-border)',
-        padding: '14px 18px',
-        display: 'flex',
-        flexWrap: 'wrap',
-        gap: 12,
-        alignItems: 'center',
+        background: 'var(--color-bg-card)', borderRadius: 14,
+        border: '1px solid var(--color-border)', padding: '14px 18px',
+        display: 'flex', flexWrap: 'wrap', gap: 12, alignItems: 'center',
       }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: 8 }}>
           <label style={{ fontSize: 12, color: 'var(--color-text-muted)', whiteSpace: 'nowrap' }}>地域</label>
@@ -324,15 +254,13 @@ function FilterBar({ filters, onChange }: { filters: Filters; onChange: (f: Filt
 
 export default function MunicipalityList({ municipalities }: { municipalities: Municipality[] }) {
   const [filters, setFilters] = useState<Filters>({
-    region: '全て',
-    maxCost: 999999,
-    maxTemp: 'all',
-    carFree: false,
-    quickFilter: null,
+    region: '全て', maxCost: 999999, maxTemp: 'all', carFree: false, quickFilter: null,
   })
   const [sortKey, setSortKey] = useState<'name' | 'cost' | 'temp' | 'tokyo'>('name')
+  const [page, setPage] = useState(1)
 
   const filtered = useMemo(() => {
+    setPage(1)
     const qf = QUICK_FILTERS.find(q => q.id === filters.quickFilter)
     return municipalities
       .filter(m => filters.region === '全て' || m.region === filters.region)
@@ -350,25 +278,22 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
       })
   }, [municipalities, filters, sortKey])
 
+  const paged = filtered.slice(0, page * ITEMS_PER_PAGE)
+  const hasMore = paged.length < filtered.length
+  const remaining = filtered.length - paged.length
+
   return (
     <div style={{ minHeight: '100vh', background: 'var(--color-bg)' }}>
-      {/* ヘッダー */}
       <header style={{
-        background: 'var(--color-base-dark)',
-        color: '#fff',
-        padding: '20px 32px',
-        borderBottom: '1px solid rgba(255,255,255,0.08)',
+        background: 'var(--color-base-dark)', color: '#fff',
+        padding: '20px 32px', borderBottom: '1px solid rgba(255,255,255,0.08)',
       }}>
         <div style={{ maxWidth: 1200, margin: '0 auto' }}>
           <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
             <div>
               <h1 style={{
-                fontSize: 22,
-                fontWeight: 800,
-                margin: 0,
-                letterSpacing: '-0.03em',
-                fontFamily: "'Shippori Mincho', serif",
-                color: 'var(--color-base-light)',
+                fontSize: 22, fontWeight: 800, margin: 0, letterSpacing: '-0.03em',
+                fontFamily: "'Shippori Mincho', serif", color: 'var(--color-base-light)',
               }}>移住DB</h1>
               <p style={{ fontSize: 12, color: 'var(--color-base)', margin: '3px 0 0' }}>
                 全国{municipalities.length}市町村の移住データを比較
@@ -388,15 +313,15 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
         </div>
       </header>
 
-      {/* メインコンテンツ */}
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '28px 24px' }}>
         <FilterBar filters={filters} onChange={setFilters} />
 
-        {/* 件数・ソート */}
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
           <span style={{ fontSize: 13, color: 'var(--color-text-muted)' }}>
-            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 15, fontWeight: 500, color: 'var(--color-text-primary)' }}>{filtered.length}</span>
-            {' '}件表示
+            <span style={{ fontFamily: "'DM Mono', monospace", fontSize: 15, fontWeight: 500, color: 'var(--color-text-primary)' }}>
+              {paged.length}
+            </span>
+            {' '}/ {filtered.length}件表示
             {filters.quickFilter && (
               <button onClick={() => setFilters({ ...filters, quickFilter: null })}
                 style={{ marginLeft: 8, fontSize: 11, color: 'var(--color-accent)', background: 'var(--color-accent-soft)', border: 'none', borderRadius: 999, padding: '2px 8px', cursor: 'pointer' }}>
@@ -406,17 +331,12 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
           </span>
           <div style={{ display: 'flex', gap: 6 }}>
             {(['name', 'cost', 'temp', 'tokyo'] as const).map(key => (
-              <button key={key} onClick={() => setSortKey(key)} style={{
-                fontSize: 12,
-                padding: '5px 12px',
-                borderRadius: 999,
-                border: '1px solid',
+              <button key={key} onClick={() => { setSortKey(key); setPage(1) }} style={{
+                fontSize: 12, padding: '5px 12px', borderRadius: 999, border: '1px solid',
                 borderColor: sortKey === key ? 'var(--color-accent)' : 'var(--color-border)',
                 background: sortKey === key ? 'var(--color-accent)' : 'var(--color-bg-card)',
                 color: sortKey === key ? '#fff' : 'var(--color-text-muted)',
-                cursor: 'pointer',
-                fontWeight: sortKey === key ? 600 : 400,
-                transition: 'all 0.2s',
+                cursor: 'pointer', fontWeight: sortKey === key ? 600 : 400, transition: 'all 0.2s',
               }}>
                 {{ name: '名前順', cost: '生活費安い順', temp: '温暖順', tokyo: '東京近い順' }[key]}
               </button>
@@ -424,14 +344,27 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
           </div>
         </div>
 
-        {/* カードグリッド */}
-        <div style={{
-          display: 'grid',
-          gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))',
-          gap: 16,
-        }}>
-          {filtered.map(m => <MunicipalityCard key={m.id} m={m} />)}
+        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
+          {paged.map(m => <MunicipalityCard key={m.id} m={m} />)}
         </div>
+
+        {hasMore && (
+          <div style={{ textAlign: 'center', marginTop: 40 }}>
+            <button
+              onClick={() => setPage(p => p + 1)}
+              style={{
+                padding: '14px 40px', background: 'var(--color-accent)', color: '#fff',
+                border: 'none', borderRadius: 999, fontSize: 14, fontWeight: 600,
+                cursor: 'pointer', transition: 'all 0.2s',
+                boxShadow: '0 4px 16px rgba(212,107,58,0.3)',
+              }}
+              onMouseEnter={e => (e.currentTarget as HTMLButtonElement).style.transform = 'translateY(-2px)'}
+              onMouseLeave={e => (e.currentTarget as HTMLButtonElement).style.transform = 'none'}
+            >
+              もっと見る（残り{remaining}件）
+            </button>
+          </div>
+        )}
 
         {filtered.length === 0 && (
           <div style={{ textAlign: 'center', padding: '80px 0', color: 'var(--color-text-muted)' }}>

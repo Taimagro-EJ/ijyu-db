@@ -1,0 +1,311 @@
+[
+  {
+    "slug": "child-rearing-municipality-ranking",
+    "title": "子育てしやすい街ランキング10選｜移住DBデータで徹底比較",
+    "type": "ranking",
+    "target_keyword": "子育て 移住 おすすめ",
+    "ranking_condition": "childcare",
+    "h2_outline": [
+      "子育て移住で重視すべき3つのデータ指標",
+      "子育てしやすい街ランキングTOP10",
+      "ランキング上位の街の共通点",
+      "子育て移住の注意点・落とし穴",
+      "まとめ：あなたに合う街の選び方"
+    ],
+    "internal_links": ["/municipalities?filter=childcare"],
+    "description": "移住DBのデータをもとに、子育て世代が移住すべき街TOP10を紹介。生活費・医療・教育環境のデータで徹底比較。"
+  },
+  {
+    "slug": "low-cost-living-ranking",
+    "title": "生活費が安い街ランキングTOP10｜月15万円以下で暮らせる移住先",
+    "type": "ranking",
+    "target_keyword": "生活費 安い 移住先",
+    "ranking_condition": "cost_asc",
+    "h2_outline": [
+      "なぜ東北エリアが圧倒的に安いのか",
+      "生活費が安い街ランキングTOP10",
+      "月額15万円以下のリアルな生活費内訳",
+      "安さだけで選ばない！注意すべき隠れコスト",
+      "おわりに"
+    ],
+    "internal_links": ["/municipalities?filter=low_cost"],
+    "description": "移住DBのデータをもとに月15万円以下で暮らせる街TOP10を紹介。東北中心に家賃3〜4万円台の移住先を解説。"
+  },
+  {
+    "slug": "warm-climate-no-snow-ranking",
+    "title": "雪が少ない温暖な移住先10選｜冬も快適に暮らせる街",
+    "type": "ranking",
+    "target_keyword": "雪 少ない 移住 温暖",
+    "ranking_condition": "warm_no_snow",
+    "h2_outline": [
+      "雪国移住の後悔TOP3とその回避策",
+      "温暖で雪が少ない移住先ランキングTOP10",
+      "各エリアの気候データ詳細",
+      "温暖な地域への移住コスト",
+      "まとめ"
+    ],
+    "internal_links": ["/municipalities?filter=warm"],
+    "description": "雪かきが嫌な方必見。年間平均気温と降雪データをもとに、温暖で快適な移住先TOP10を紹介。"
+  },
+  {
+    "slug": "near-tokyo-2hours-ranking",
+    "title": "東京から2時間以内の移住先ランキングTOP10｜週末も都心に行ける街",
+    "type": "ranking",
+    "target_keyword": "東京 近い 移住 2時間",
+    "ranking_condition": "tokyo_access",
+    "h2_outline": [
+      "なぜ今トカイナカが選ばれるのか",
+      "東京から2時間以内の移住先ランキングTOP10",
+      "週末に都心へ行けるメリットとリアルな交通費",
+      "トカイナカ移住の失敗パターン",
+      "おわりに"
+    ],
+    "internal_links": ["/municipalities?filter=near_tokyo"],
+    "description": "リモートワーカー必見。東京から2時間以内のトカイナカ移住先TOP10。週末も都心アクセス可能な街を紹介。"
+  },
+  {
+    "slug": "car-free-lifestyle-ranking",
+    "title": "車なしで暮らせる地方都市10選｜公共交通が充実した移住先",
+    "type": "ranking",
+    "target_keyword": "移住 車なし 生活",
+    "ranking_condition": "car_free",
+    "h2_outline": [
+      "地方移住で車が必要な理由と例外",
+      "車なしで暮らせる地方都市ランキングTOP10",
+      "車なし移住のリアルなメリット・デメリット",
+      "車なし移住に向いている人・向いていない人",
+      "まとめ"
+    ],
+    "internal_links": ["/municipalities?filter=no_car"],
+    "description": "車の維持費を節約したい方へ。公共交通が充実した車なし移住可能な地方都市TOP10を紹介。"
+  },
+  {
+    "slug": "matsumoto-vs-nagano",
+    "title": "松本市vs長野市、移住するならどっち？データで徹底比較",
+    "type": "comparison",
+    "target_keyword": "松本市 長野市 移住 比較",
+    "compare_slugs": ["nagano-matsumoto", "nagano-nagano"],
+    "h2_outline": [
+      "基本データの比較：気候と生活費",
+      "アクセス比較：特急あずさvs北陸新幹線",
+      "街のカルチャーと雰囲気の違い",
+      "結論：あなたにおすすめなのはどっち？"
+    ],
+    "internal_links": ["/municipalities/nagano-matsumoto", "/municipalities/nagano-nagano"],
+    "description": "長野県の2大都市を移住DBデータで徹底比較。気候・家賃・東京アクセス・カルチャーの違いを解説。"
+  },
+  {
+    "slug": "maebashi-vs-takasaki",
+    "title": "前橋市vs高崎市、移住するならどっち？群馬2大都市を比較",
+    "type": "comparison",
+    "target_keyword": "前橋市 高崎市 移住 比較",
+    "compare_slugs": ["gunma-maebashi", "gunma-takasaki"],
+    "h2_outline": [
+      "前橋市と高崎市の基本データ比較",
+      "東京へのアクセス比較",
+      "生活環境・街の特徴の違い",
+      "どちらを選ぶべきか：タイプ別おすすめ"
+    ],
+    "internal_links": ["/municipalities/gunma-maebashi", "/municipalities/gunma-takasaki"],
+    "description": "群馬県の2大都市、前橋市と高崎市を移住DBデータで比較。新幹線アクセスと生活コストの違いを解説。"
+  },
+  {
+    "slug": "akashi-vs-himeji",
+    "title": "明石市vs姫路市、移住するならどっち？兵庫県の人気移住先を比較",
+    "type": "comparison",
+    "target_keyword": "明石市 姫路市 移住 比較",
+    "compare_slugs": ["hyogo-akashi", "hyogo-himeji"],
+    "h2_outline": [
+      "明石市と姫路市の基本データ比較",
+      "大阪・神戸へのアクセス",
+      "子育て環境と生活コストの違い",
+      "どちらを選ぶべきか"
+    ],
+    "internal_links": ["/municipalities/hyogo-akashi", "/municipalities/hyogo-himeji"],
+    "description": "関西圏の人気移住先、明石市と姫路市を徹底比較。子育て環境・生活費・大阪アクセスの違いを解説。"
+  },
+  {
+    "slug": "fukuoka-vs-kitakyushu",
+    "title": "福岡市vs北九州市、移住するならどっち？九州2大都市の比較",
+    "type": "comparison",
+    "target_keyword": "福岡市 北九州市 移住 比較",
+    "compare_slugs": ["fukuoka-fukuoka", "fukuoka-kitakyushu"],
+    "h2_outline": [
+      "福岡市と北九州市の基本データ比較",
+      "生活費と家賃の違い",
+      "仕事環境と街の特徴",
+      "どちらを選ぶべきか"
+    ],
+    "internal_links": ["/municipalities/fukuoka-fukuoka", "/municipalities/fukuoka-kitakyushu"],
+    "description": "九州最大の2都市を移住DBデータで比較。生活費・仕事環境・街のカルチャーの違いを徹底解説。"
+  },
+  {
+    "slug": "matsumoto-city-guide",
+    "title": "松本市移住完全ガイド2026｜データで見るリアルな移住生活",
+    "type": "deep_dive",
+    "target_keyword": "松本市 移住 ガイド",
+    "target_slug": "nagano-matsumoto",
+    "h2_outline": [
+      "松本市の基本データ：気候・生活費・アクセス",
+      "松本市の住みやすさをデータで検証",
+      "移住者が語るリアルな松本生活",
+      "松本市への移住手順と支援制度",
+      "松本市移住の注意点"
+    ],
+    "internal_links": ["/municipalities/nagano-matsumoto"],
+    "description": "長野県松本市への移住完全ガイド。気候・家賃・生活費・交通アクセスをデータで徹底解説。"
+  },
+  {
+    "slug": "akashi-city-guide",
+    "title": "明石市移住完全ガイド2026｜子育て支援日本一の街のリアル",
+    "type": "deep_dive",
+    "target_keyword": "明石市 移住 子育て",
+    "target_slug": "hyogo-akashi",
+    "h2_outline": [
+      "明石市の基本データ：気候・生活費・アクセス",
+      "子育て支援の充実度をデータで検証",
+      "大阪・神戸へのアクセスの便利さ",
+      "明石市への移住手順と支援制度",
+      "移住の注意点"
+    ],
+    "internal_links": ["/municipalities/hyogo-akashi"],
+    "description": "子育て支援で注目の兵庫県明石市への移住ガイド。大阪近郊で暮らす移住者のリアルを紹介。"
+  },
+  {
+    "slug": "fukuoka-city-guide",
+    "title": "福岡市移住完全ガイド2026｜都市移住のベストバランス",
+    "type": "deep_dive",
+    "target_keyword": "福岡市 移住 ガイド",
+    "target_slug": "fukuoka-fukuoka",
+    "h2_outline": [
+      "福岡市の基本データ：気候・生活費・アクセス",
+      "福岡市が移住先として人気の理由",
+      "福岡市のエリア別特徴",
+      "福岡市への移住手順と支援制度",
+      "移住の注意点"
+    ],
+    "internal_links": ["/municipalities/fukuoka-fukuoka"],
+    "description": "移住先人気ランキング常連の福岡市への完全ガイド。都市の利便性と適度な自然環境のバランスを解説。"
+  },
+  {
+    "slug": "ama-town-guide",
+    "title": "海士町移住完全ガイド｜島根の離島移住のリアルとデータ",
+    "type": "deep_dive",
+    "target_keyword": "海士町 移住 島根",
+    "target_slug": "shimane-amachi",
+    "h2_outline": [
+      "海士町の基本データ：気候・生活費・アクセス",
+      "離島移住のリアルな生活",
+      "海士町の仕事・起業環境",
+      "海士町への移住手順と支援制度",
+      "離島移住に向いている人・向いていない人"
+    ],
+    "internal_links": ["/municipalities/shimane-amachi"],
+    "description": "島根県海士町への移住完全ガイド。離島ならではの暮らしと充実した移住支援制度を解説。"
+  },
+  {
+    "slug": "solo-living-simulation",
+    "title": "一人暮らしの地方移住シミュレーション｜東京との生活費比較",
+    "type": "simulation",
+    "target_keyword": "一人暮らし 地方移住 生活費",
+    "h2_outline": [
+      "東京一人暮らしのリアルな生活費",
+      "地方移住後の生活費シミュレーション（3都市比較）",
+      "移住で浮くお金の活用法",
+      "一人暮らし移住の注意点",
+      "移住前にやるべき準備リスト"
+    ],
+    "internal_links": ["/municipalities?filter=low_cost"],
+    "description": "東京から地方移住した場合の生活費シミュレーション。3都市を例に月々いくら節約できるか計算。"
+  },
+  {
+    "slug": "couple-living-simulation",
+    "title": "夫婦二人の地方移住シミュレーション｜共働きでどれだけ余裕ができる？",
+    "type": "simulation",
+    "target_keyword": "夫婦 移住 生活費 シミュレーション",
+    "h2_outline": [
+      "東京で共働き夫婦の生活費リアル",
+      "地方移住後の夫婦生活費シミュレーション",
+      "リモートワーク×移住のお金の計算",
+      "夫婦移住で揉めやすいポイントと対策",
+      "まとめ"
+    ],
+    "internal_links": ["/municipalities?filter=telework"],
+    "description": "共働き夫婦が地方移住した場合の生活費シミュレーション。月々の貯蓄増加額をリアルに計算。"
+  },
+  {
+    "slug": "family-living-simulation",
+    "title": "4人家族の地方移住生活費シミュレーション｜子育て費用も含めて計算",
+    "type": "simulation",
+    "target_keyword": "家族 移住 生活費 子育て",
+    "h2_outline": [
+      "東京で4人家族の生活費リアル",
+      "地方移住後の4人家族生活費シミュレーション",
+      "教育費・医療費の地域差",
+      "移住支援金で家族移住コストを下げる方法",
+      "まとめ"
+    ],
+    "internal_links": ["/municipalities?filter=childcare"],
+    "description": "子ども2人の4人家族が地方移住した場合の生活費シミュレーション。教育費・住宅費を含めて計算。"
+  },
+  {
+    "slug": "how-to-migrate-steps",
+    "title": "地方移住の進め方5ステップ｜失敗しないための完全ガイド",
+    "type": "howto",
+    "target_keyword": "地方移住 進め方 ステップ",
+    "h2_outline": [
+      "Step1：移住の目的と絶対に譲れない条件を明確にする",
+      "Step2：候補地をデータで客観的に絞り込む",
+      "Step3：現地訪問とお試し移住でリアルを体感する",
+      "Step4：仕事と住まいの準備を並行して進める",
+      "Step5：移住後は適度な距離感で地域コミュニティに参加する"
+    ],
+    "internal_links": ["/"],
+    "description": "地方移住を成功させるための5ステップを徹底解説。データを使った候補地選定から移住後の生活まで網羅。"
+  },
+  {
+    "slug": "migration-subsidy-guide",
+    "title": "移住支援金の申請方法完全ガイド｜最大100万円以上もらう方法",
+    "type": "howto",
+    "target_keyword": "移住支援金 申請 もらい方",
+    "h2_outline": [
+      "移住支援金とは？国と自治体の制度を整理",
+      "支援金をもらえる条件（東京23区要件など）",
+      "申請の手順と必要書類",
+      "支援金が多い自治体ランキング",
+      "よくある失敗と注意点"
+    ],
+    "internal_links": ["/municipalities?filter=subsidy"],
+    "description": "移住支援金の申請方法を完全解説。最大100万円以上もらえる条件・手順・注意点を網羅。"
+  },
+  {
+    "slug": "migration-checklist",
+    "title": "移住前にやるべきことリスト20選｜後悔しないための準備完全版",
+    "type": "howto",
+    "target_keyword": "移住 準備 チェックリスト やること",
+    "h2_outline": [
+      "移住6ヶ月前にやること（情報収集・現地訪問）",
+      "移住3ヶ月前にやること（仕事・住まいの準備）",
+      "移住1ヶ月前にやること（手続き・引っ越し準備）",
+      "移住後にやること（住民票・各種手続き）",
+      "見落としがちな意外な準備リスト"
+    ],
+    "internal_links": ["/"],
+    "description": "移住前にやるべきこと20選を時系列で整理。6ヶ月前から当日まで、チェックリスト形式で解説。"
+  },
+  {
+    "slug": "matsumoto-migration-first-year",
+    "title": "松本市に移住して1年のリアル｜生活費・気候・仕事のホンネ",
+    "type": "column",
+    "target_keyword": "松本市 移住 体験談 リアル",
+    "h2_outline": [
+      "移住前の不安と実際のギャップ",
+      "月額16.4万円って本当？松本の生活費のリアル",
+      "-4.5℃の冬と、驚くほど明るい毎日",
+      "特急あずさで約2時間30分。東京へのアクセスの使い勝手",
+      "移住して良かった点と、少しだけ後悔している点"
+    ],
+    "internal_links": ["/municipalities/nagano-matsumoto"],
+    "description": "松本市に移住して1年。家賃・生活費・冬の寒さ・東京アクセスのリアルを体験談として紹介。"
+  }
+]

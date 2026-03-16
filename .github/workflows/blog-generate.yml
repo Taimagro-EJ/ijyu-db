@@ -1,0 +1,26 @@
+name: Weekly Blog Generation
+
+on:
+  schedule:
+    - cron: '0 21 * * 0'  # 毎週日曜 21:00 UTC = 月曜 6:00 JST
+  workflow_dispatch:       # 手動実行も可能
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: pip install requests
+
+      - name: Generate blog article
+        run: python scripts/generate_blog.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}

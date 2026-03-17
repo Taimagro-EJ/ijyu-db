@@ -1,0 +1,347 @@
+[
+  {
+    "id": 1,
+    "title": "犯罪率と家賃は比例する？527市町村データで検証",
+    "slug": "hanzairitsu-yachin-soukan-527",
+    "type": "correlation",
+    "target_keyword": "犯罪率 家賃 関係",
+    "ranking_condition": "safe",
+    "h2_outline": [
+      "「安全な街は家賃が高い」は本当か",
+      "527市町村の犯罪率×家賃データを可視化",
+      "犯罪率が低く家賃も安い「穴場」市町村",
+      "犯罪率と家賃以外の相関：気温・人口との関係",
+      "データが示す移住先選びの新しい視点"
+    ],
+    "internal_links": ["/municipalities?sort=safety", "/municipalities?filter=low_cost"],
+    "human_insight_prompt": "松本市は犯罪率が低いが家賃も低い。この外れ値について実感を1文で",
+    "description": "527市町村の犯罪率と家賃データを横断分析。「安全=高い」という思い込みをデータで検証します。"
+  },
+  {
+    "id": 2,
+    "title": "東京2時間以内×家賃7万以下×治安良好な移住先TOP10",
+    "slug": "tokyo-2h-yachin-7man-anzen-top10",
+    "type": "complex_ranking",
+    "target_keyword": "東京 近い 安い 移住先",
+    "ranking_condition": "tokyo_access",
+    "h2_outline": [
+      "3条件の掛け合わせで絞ると何件残るか",
+      "条件クリア市町村TOP10の詳細データ",
+      "各市町村の特徴と隠れたトレードオフ",
+      "4条件目を加えると候補はどう変わるか",
+      "まとめ：複合条件で選ぶ移住先の考え方"
+    ],
+    "internal_links": ["/municipalities?filter=near_tokyo", "/municipalities?filter=low_cost"],
+    "human_insight_prompt": "東京へのアクセスと生活費のバランスで松本を選んだ理由を1文で",
+    "description": "東京2時間以内×家賃7万以下×治安良好の3条件で移住DBの527市町村を絞り込んだ結果を公開。"
+  },
+  {
+    "id": 3,
+    "title": "沖縄より日照時間が長い本州の市町村があった",
+    "slug": "okinawa-yori-nissho-nagai-honshu",
+    "type": "surprising_discovery",
+    "target_keyword": "日照時間 長い 移住先",
+    "ranking_condition": "sunshine",
+    "h2_outline": [
+      "日照時間ランキングで意外な結果が出た",
+      "沖縄を超える日照時間を持つ本州の市町村",
+      "なぜこの地域は日照時間が長いのか",
+      "日照時間が長い=冬が快適とは限らない",
+      "日照時間×生活費で選ぶ最適移住先"
+    ],
+    "internal_links": ["/municipalities?filter=warm", "/municipalities?sort=sunshine"],
+    "description": "「日照時間は沖縄が一番」という思い込みをデータで覆す。527市町村の日照時間ランキングで見えた意外な事実。"
+  },
+  {
+    "id": 4,
+    "title": "年収400万・夫婦+子ども1人の最適移住先を計算してみた",
+    "slug": "nenshu-400man-fufu-ko1-saiteki-ijyu",
+    "type": "simulation",
+    "target_keyword": "年収400万 移住 どこ",
+    "ranking_condition": "cost_asc",
+    "h2_outline": [
+      "年収400万・家族3人の実質可処分所得を計算",
+      "東京在住vs地方移住：毎月いくら差が出るか",
+      "家族向け生活費が安い市町村TOP10",
+      "移住コスト（引越し・支援金）を含めた総合試算",
+      "あなたの家族構成でシミュレーションする方法"
+    ],
+    "internal_links": ["/municipalities?filter=childcare", "/municipalities?filter=low_cost"],
+    "description": "年収400万・夫婦+子ども1人のケースで、地方移住した場合の家計を527市町村データで試算。"
+  },
+  {
+    "id": 5,
+    "title": "松本市の数字が語る本当の姿【2026年版カルテ】",
+    "slug": "matsumoto-data-carte-2026",
+    "type": "city_carte",
+    "target_keyword": "松本市 移住 データ",
+    "target_slug": "nagano-matsumoto",
+    "h2_outline": [
+      "松本市の基本データ：6指標の全国比較",
+      "生活コストデータが示す松本の経済的実力",
+      "気候データの真実：日照時間2050時間の意味",
+      "治安データ：犯罪率が全国平均の61%という事実",
+      "データが示さない松本のリアル"
+    ],
+    "internal_links": ["/municipalities/nagano-matsumoto"],
+    "human_insight_prompt": "冬の-6℃というデータの裏にある日常（水道凍結・車の暖機など）を具体的に1文で",
+    "description": "長野県松本市への移住を全データで分析。気候・家賃・治安・アクセスを全国平均と比較した2026年版カルテ。"
+  },
+  {
+    "id": 6,
+    "title": "雪国なのに生活費が安い？北陸データの逆転現象",
+    "slug": "yukiguni-seikatsuhi-yasui-hokuriku",
+    "type": "surprising_discovery",
+    "target_keyword": "北陸 生活費 安い 雪国",
+    "ranking_condition": "cold",
+    "h2_outline": [
+      "「雪国=生活費が高い」という先入観を検証",
+      "降雪量100cm超の市町村の生活費ランキング",
+      "北陸で生活費が安い市町村の共通点",
+      "雪国の隠れコスト：灯油・タイヤ・除雪を含めると？",
+      "データで選ぶ雪国移住のリアルなコスト計算"
+    ],
+    "internal_links": ["/municipalities?filter=nature", "/municipalities?filter=low_cost"],
+    "description": "雪が多い=生活費が高いは本当か。527市町村データで降雪量と生活費の関係を分析した結果を公開。"
+  },
+  {
+    "id": 7,
+    "title": "共働き子育て夫婦の移住先TOP10：通勤×治安×コストで算出",
+    "slug": "tomobataraki-kosodate-ijyu-top10",
+    "type": "complex_ranking",
+    "target_keyword": "共働き 子育て 移住 おすすめ",
+    "ranking_condition": "tokyo_access",
+    "h2_outline": [
+      "共働き子育て世帯が移住先に求める3条件",
+      "データで算出した共働き移住先TOP10",
+      "1位〜3位の詳細分析：なぜこの街が選ばれるか",
+      "車の必要度：保育園送迎に車は必須か",
+      "子育て支援制度との組み合わせで最適解が変わる"
+    ],
+    "internal_links": ["/municipalities?filter=childcare", "/municipalities?filter=near_tokyo"],
+    "description": "共働き子育て夫婦向けに、通勤利便性×治安×生活費の3条件で移住先TOP10をデータ算出。"
+  },
+  {
+    "id": 8,
+    "title": "手取り月25万で暮らせる移住先は全国に何件あるか",
+    "slug": "tedori-25man-kurasesu-ijyu-saki",
+    "type": "simulation",
+    "target_keyword": "手取り25万 移住 生活費",
+    "ranking_condition": "cost_asc",
+    "h2_outline": [
+      "手取り月25万の内訳：東京vs地方の比較",
+      "月25万以下で暮らせる市町村は全国何件か",
+      "地域別の分布：どの都道府県に集中しているか",
+      "25万の内訳シミュレーション：3パターン比較",
+      "貯蓄ペース試算：月5万貯めるには何県がよいか"
+    ],
+    "internal_links": ["/municipalities?filter=low_cost"],
+    "description": "手取り月25万円で移住生活が成立する市町村を527件のデータで全件チェック。地域別分布も公開。"
+  },
+  {
+    "id": 9,
+    "title": "東京23区より犯罪率が高い地方都市は何件あるか",
+    "slug": "tokyo23ku-yori-hanzairitsu-takai-chihou",
+    "type": "surprising_discovery",
+    "target_keyword": "地方 犯罪率 高い 都市",
+    "ranking_condition": "safe",
+    "h2_outline": [
+      "「地方=安全」という思い込みをデータで検証",
+      "東京23区の犯罪率：実際の数値は？",
+      "東京23区を上回る犯罪率の地方都市リスト",
+      "犯罪率が高い地方都市の共通点",
+      "移住先選びで犯罪率をどう活用するか"
+    ],
+    "internal_links": ["/municipalities?sort=safety"],
+    "description": "地方は安全という常識をデータで検証。東京23区より犯罪率が高い地方都市が実在するという意外な事実。"
+  },
+  {
+    "id": 10,
+    "title": "冬の最低気温と家賃の関係：寒い街ほど安いのか",
+    "slug": "fuyu-saitei-kion-yachin-kankei",
+    "type": "correlation",
+    "target_keyword": "寒い 移住先 家賃 安い",
+    "ranking_condition": "cold",
+    "h2_outline": [
+      "気温と家賃の相関：527市町村データを分析",
+      "冬の最低気温と1LDK家賃の散布図",
+      "寒いのに家賃が高い市町村：なぜか",
+      "温暖なのに家賃が安い市町村：穴場はどこか",
+      "気候×コストで選ぶ移住先の新しい軸"
+    ],
+    "internal_links": ["/municipalities?filter=warm", "/municipalities?filter=low_cost"],
+    "description": "冬の最低気温と家賃の相関を527市町村データで分析。寒い街ほど安いとは限らないデータの実態。"
+  },
+  {
+    "id": 11,
+    "title": "車なしで暮らせる地方都市はどこか：データで検証",
+    "slug": "kuruma-nashi-chihou-toshi-data",
+    "type": "complex_ranking",
+    "target_keyword": "車なし 地方移住 可能",
+    "ranking_condition": "car_free",
+    "h2_outline": [
+      "地方移住で車が必要になる理由とデータ",
+      "車必要度スコアが低い地方都市TOP10",
+      "車なし生活が成立する条件：データが示す閾値",
+      "車なし移住のコスト削減効果を試算",
+      "車なし移住に向いている人・向いていない人"
+    ],
+    "internal_links": ["/municipalities?filter=no_car"],
+    "description": "移住DBの車必要度スコアを使って、本当に車なしで暮らせる地方都市をデータで特定。"
+  },
+  {
+    "id": 12,
+    "title": "明石市の数字が語る本当の姿【2026年版カルテ】",
+    "slug": "akashi-data-carte-2026",
+    "type": "city_carte",
+    "target_keyword": "明石市 移住 データ",
+    "target_slug": "hyogo-akashi",
+    "h2_outline": [
+      "明石市の基本データ：6指標の全国比較",
+      "大阪・神戸へのアクセスデータ",
+      "生活コストデータ：家賃と月額生活費の実態",
+      "治安データ：犯罪率の全国比較",
+      "データが示す明石市の移住適性スコア"
+    ],
+    "internal_links": ["/municipalities/hyogo-akashi"],
+    "description": "子育て支援で注目の兵庫県明石市を全データで分析。大阪・神戸へのアクセスと生活コストの実態。"
+  },
+  {
+    "id": 13,
+    "title": "日照時間ランキング：527市町村で最も太陽が多い街",
+    "slug": "nissho-jikan-ranking-527",
+    "type": "single_ranking",
+    "target_keyword": "日照時間 多い 市町村 ランキング",
+    "ranking_condition": "sunshine",
+    "h2_outline": [
+      "日照時間が移住生活に与える影響",
+      "日照時間ランキングTOP20：意外な顔ぶれ",
+      "都道府県別の日照時間分布",
+      "日照時間と冬の快適さの関係",
+      "日照時間×生活費で選ぶ最適な移住先"
+    ],
+    "internal_links": ["/municipalities?filter=warm"],
+    "description": "527市町村の年間日照時間ランキングを公開。冬のメンタルに影響する日照時間で選ぶ移住先の考え方。"
+  },
+  {
+    "id": 14,
+    "title": "移住支援金100万円は本当にもらえるか：条件をデータで検証",
+    "slug": "ijyu-shienkin-100man-joken-data",
+    "type": "policy_analysis",
+    "target_keyword": "移住支援金 100万円 条件",
+    "ranking_condition": "cost_asc",
+    "h2_outline": [
+      "移住支援金制度の全体像：国と自治体の仕組み",
+      "100万円をもらえる人の条件を具体的に整理",
+      "申請できる市町村数：移住DBで対象地域を確認",
+      "審査で弾かれる人の特徴とNG理由",
+      "支援金申請のタイムライン：いつ申請すれば間に合うか"
+    ],
+    "internal_links": ["/municipalities", "/about"],
+    "human_insight_prompt": "移住支援制度について調べた経験や、実際に申請した知人の話があれば1文で",
+    "description": "移住支援金100万円の実態をデータで検証。もらえる条件・審査のNGポイント・申請タイムラインを解説。"
+  },
+  {
+    "id": 15,
+    "title": "フリーランスエンジニアの移住先：ネット×生活費×気候で算出",
+    "slug": "freelance-engineer-ijyu-saki-data",
+    "type": "complex_ranking",
+    "target_keyword": "フリーランス エンジニア 移住 おすすめ",
+    "ranking_condition": "cost_asc",
+    "h2_outline": [
+      "フリーランスエンジニアが移住先に求める条件",
+      "ネット環境×生活費×気候の3軸データ分析",
+      "フリーランス移住先TOP10の詳細",
+      "コワーキングスペース密度との相関",
+      "IT系フリーランスが実際に集まっている街"
+    ],
+    "internal_links": ["/municipalities?filter=telework", "/municipalities?filter=low_cost"],
+    "description": "フリーランスエンジニア向けに、ネット環境×生活費×気候の3条件で最適移住先をデータ算出。"
+  },
+  {
+    "id": 16,
+    "title": "人口が増えている地方都市TOP10：データが示す移住先の未来",
+    "slug": "jinko-zoka-chihou-toshi-top10",
+    "type": "time_series",
+    "target_keyword": "人口増加 地方都市 移住",
+    "ranking_condition": "cost_asc",
+    "h2_outline": [
+      "人口増加と移住先選びの関係",
+      "直近5年で人口が増えた地方都市TOP10",
+      "人口増加都市の共通点：何が人を引き寄せるか",
+      "人口減少が続く地方都市：移住のリスクと機会",
+      "人口動態データで読む10年後の地方都市"
+    ],
+    "internal_links": ["/municipalities"],
+    "description": "人口増加データから見る移住先の未来。直近で人が集まっている地方都市TOP10とその共通点を分析。"
+  },
+  {
+    "id": 17,
+    "title": "降雪量100cm超の市町村の生活費を全調査してみた",
+    "slug": "kousetsuryo-100cm-seikatsuhi-zentyosa",
+    "type": "correlation",
+    "target_keyword": "雪国 生活費 移住",
+    "ranking_condition": "cold",
+    "h2_outline": [
+      "雪国移住のコスト全体像",
+      "降雪量100cm超の市町村リストと生活費データ",
+      "雪国の光熱費・除雪費用の実態",
+      "降雪量×生活費の散布図：安い雪国はどこか",
+      "雪国移住のコストを下げる5つの方法"
+    ],
+    "internal_links": ["/municipalities?filter=nature"],
+    "description": "降雪量100cm超の市町村を全件調査。雪国移住の生活費実態と、コストを抑えられる市町村を特定。"
+  },
+  {
+    "id": 18,
+    "title": "定年後の移住に最適な市町村TOP10：医療×気候×生活費で算出",
+    "slug": "teinen-ijyu-iryo-kikou-seikatsuhi",
+    "type": "complex_ranking",
+    "target_keyword": "定年後 移住 おすすめ シニア",
+    "ranking_condition": "warm_no_snow",
+    "h2_outline": [
+      "定年後の移住で重視すべき3つのデータ指標",
+      "医療×気候×生活費で算出した最適移住先TOP10",
+      "医療アクセスデータ：病院までの距離と診療科数",
+      "温暖な気候と生活費のバランスが良い市町村",
+      "65歳以降の生活費シミュレーション"
+    ],
+    "internal_links": ["/municipalities?filter=warm", "/municipalities?filter=low_cost"],
+    "description": "定年後の移住に最適な市町村をデータで算出。医療アクセス×気候×生活費の3軸で選ぶシニア向け移住先。"
+  },
+  {
+    "id": 19,
+    "title": "福岡市の数字が語る本当の姿【2026年版カルテ】",
+    "slug": "fukuoka-data-carte-2026",
+    "type": "city_carte",
+    "target_keyword": "福岡市 移住 データ 2026",
+    "target_slug": "fukuoka-fukuoka",
+    "h2_outline": [
+      "福岡市の基本データ：6指標の全国比較",
+      "なぜ福岡は移住人気No.1なのか：データで読む",
+      "生活コストデータ：実は安くない福岡の家賃",
+      "治安データと気候データの実態",
+      "データが示す福岡移住の本当のメリット・デメリット"
+    ],
+    "internal_links": ["/municipalities/fukuoka-fukuoka"],
+    "description": "移住先人気No.1の福岡市を全データで分析。人気の理由をデータで検証し、見落とされがちなデメリットも公開。"
+  },
+  {
+    "id": 20,
+    "title": "僕が松本に移住して気づいた、データが教えてくれなかったこと",
+    "slug": "matsumoto-ijyu-data-ga-oshienai-koto",
+    "type": "personal_column",
+    "target_keyword": "松本 移住 体験談 リアル データ",
+    "target_slug": "nagano-matsumoto",
+    "h2_outline": [
+      "移住前に見ていたデータと、実際のギャップ",
+      "年間平均気温11.8℃の意味：データでは分からない冬の体感",
+      "犯罪率データが教えてくれなかった「鹿との戦い」",
+      "生活費データの盲点：見えないコストが3つあった",
+      "それでも松本を選んで良かった理由"
+    ],
+    "internal_links": ["/municipalities/nagano-matsumoto"],
+    "human_insight_prompt": "全文E執筆。データと実感のギャップを正直に書く。データ数値を引用しながら体験を語る",
+    "description": "移住DBを作った本人が松本移住のリアルを告白。データが示す数値と実際の生活のギャップを正直に公開。"
+  }
+]

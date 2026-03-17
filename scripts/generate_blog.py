@@ -1,10 +1,9 @@
 """
-移住DB ブログ記事自動生成スクリプト
-Gemini Flash API → Supabase blog_posts テーブルに下書き保存
+移住DB ブログ記事自動生成スクリプト v2
+データジャーナリズム型 - Gemini Flash API → Supabase blog_posts テーブルに下書き保存
 """
 import os
 import json
-import time
 import requests
 from datetime import datetime, timezone
 
@@ -22,30 +21,45 @@ SUPABASE_HEADERS = {
 
 # モデル設定（記事タイプ別）
 MODELS = {
+    # 新タイプ
+    'correlation': 'gemini-3-flash-preview',
+    'complex_ranking': 'gemini-3-flash-preview',
+    'surprising_discovery': 'gemini-3-flash-preview',
+    'simulation': 'gemini-3-flash-preview',
+    'city_carte': 'gemini-3-flash-preview',
+    'policy_analysis': 'gemini-3-flash-preview',
+    'time_series': 'gemini-3-flash-preview',
+    'single_ranking': 'gemini-3-flash-preview',
+    'personal_column': 'gemini-3-flash-preview',
+    # 旧タイプ（後方互換）
     'ranking': 'gemini-3-flash-preview',
     'comparison': 'gemini-3-flash-preview',
-    'simulation': 'gemini-3-flash-preview',
     'howto': 'gemini-3-flash-preview',
-    'deep_dive': 'gemini-3-flash-preview',  # より深い分析が必要
-    'column': 'gemini-3-flash-preview',  # コラムはE本人が書くが、ドラフトはFlashで
+    'deep_dive': 'gemini-3-flash-preview',
+    'column': 'gemini-3-flash-preview',
 }
 
-SYSTEM_PROMPT = """あなたは「移住DB」（https://www.ijyu-data.com）のブログライターです。
+SYSTEM_PROMPT = """あなたは「移住DB」（https://www.ijyu-data.com）のデータジャーナリストです。
+
+## 記事の核心ルール
+1. データが主役。体験談は補足。
+2. 「他のサイトにも書いてある内容」は書かない。
+3. 527市町村のデータを横断分析した「移住DBにしか出せない発見」を書く。
+4. 数字は必ず渡されたデータの値を使用。捏造禁止。
+5. 推計値は「※推計」と明記。
+6. [HUMAN_INSIGHT:プロンプト] でデータでは分からない実感の挿入箇所を1〜2箇所配置。
+7. 内部リンクは <a href="/municipalities/スラッグ">市名</a> 形式で2本以上含める。
 
 ## ブランドボイス
-- データに基づく客観的な分析が基本
-- 「移住経験者の視点」から温かみのある文体
+- 「移住DBのデータ分析によると〜」がベースの論調
+- 断定的な意見を述べる（中立的な要約ではなく）
+- 直感に反する発見は特に強調する
 - 読者は移住を検討している30〜40代
-- 推計値は必ず「※推計」と明記
-- ポジティブもネガティブも正直に伝える
+- 記事末尾に「出典：移住DB（e-Stat・気象庁統計データに基づく推計）」を記載
 
 ## 出力ルール
-- HTML形式（<h2><h3><p><ul><li>タグのみ）
-- [HUMAN_INSERT:〇〇についての実体験コメントをここに追加] を3箇所以上配置
-- 内部リンクは <a href="/municipalities/スラッグ">市名</a> 形式
-- 数値は渡されたデータの値のみ使用（数値の捏造禁止）
+- HTML形式（<h2><h3><p><ul><li><table>タグのみ）
 - 文字数: 2,500〜3,500文字
-- 記事末尾に「出典：移住DB（e-Stat統計データに基づく推計）」を記載
 - <html><body>タグは不要"""
 
 
@@ -61,6 +75,11 @@ def get_existing_slugs():
 
 def get_next_outline(outlines_path='blog-outlines.json'):
     """次に生成すべき記事をoutlinesから選択"""
+    # v2があればv2を優先
+    v2_path = outlines_path.replace('.json', '-v2.json')
+    if os.path.exists(v2_path):
+        outlines_path = v2_path
+
     with open(outlines_path) as f:
         outlines = json.load(f)
 
@@ -76,7 +95,9 @@ def get_next_outline(outlines_path='blog-outlines.json'):
 
 def fetch_municipality_data(slug=None, slugs=None, condition=None, limit=10):
     """Supabaseから市町村データを取得"""
-    params = {'select': 'name,prefecture,region,avg_temp_annual,min_temp_winter,rent_1ldk_estimate,total_monthly_cost_single,time_to_tokyo,nearest_shinkansen,car_necessity_score,criminal_rate,slug'}
+    params = {
+        'select': 'name,prefecture,region,avg_temp_annual,min_temp_winter,sunshine_hours_annual,precipitation_annual,rent_1ldk_estimate,total_monthly_cost_single,total_monthly_cost_family,time_to_tokyo,nearest_shinkansen,car_necessity_score,criminal_rate,slug'
+    }
 
     if slug:
         params['slug'] = f'eq.{slug}'
@@ -94,8 +115,11 @@ def fetch_municipality_data(slug=None, slugs=None, condition=None, limit=10):
         'cost_asc': 'total_monthly_cost_single.asc',
         'tokyo_access': 'time_to_tokyo.asc',
         'warm_no_snow': 'avg_temp_annual.desc',
-        'car_free': 'car_necessity_score.desc',
+        'car_free': 'car_necessity_score.asc',
         'childcare': 'total_monthly_cost_single.asc',
+        'safe': 'criminal_rate.asc',
+        'sunshine': 'sunshine_hours_annual.desc',
+        'cold': 'avg_temp_annual.asc',
     }
     order = sort_map.get(condition, 'total_monthly_cost_single.asc')
     params['order'] = order
@@ -103,6 +127,35 @@ def fetch_municipality_data(slug=None, slugs=None, condition=None, limit=10):
 
     r = requests.get(f'{SUPABASE_URL}/rest/v1/municipality_overview', headers=SUPABASE_HEADERS, params=params)
     return r.json()
+
+
+def fetch_data_for_article(outline):
+    """記事タイプに応じたデータを取得"""
+    article_type = outline.get('type', 'ranking')
+
+    if article_type == 'city_carte':
+        return fetch_municipality_data(slug=outline.get('target_slug'))
+
+    elif article_type == 'comparison':
+        return fetch_municipality_data(slugs=outline.get('compare_slugs', []))
+
+    elif article_type in ('correlation', 'surprising_discovery', 'time_series'):
+        # 全データを取得して分析用に渡す（上位50件）
+        return fetch_municipality_data(condition='cost_asc', limit=50)
+
+    elif article_type == 'complex_ranking':
+        # 複合条件に対応したデータを取得
+        return fetch_municipality_data(condition='cost_asc', limit=30)
+
+    elif article_type in ('single_ranking', 'ranking'):
+        condition = outline.get('ranking_condition', 'cost_asc')
+        return fetch_municipality_data(condition=condition, limit=20)
+
+    elif article_type == 'simulation':
+        return fetch_municipality_data(condition='cost_asc', limit=30)
+
+    else:
+        return fetch_municipality_data(condition='cost_asc', limit=20)
 
 
 def call_gemini(prompt, model='gemini-3-flash-preview'):
@@ -142,29 +195,43 @@ def call_gemini(prompt, model='gemini-3-flash-preview'):
 
 def build_prompt(outline, data):
     """記事タイプに応じたプロンプトを構築"""
-    article_type = outline['type']
+    article_type = outline.get('type', 'ranking')
     title = outline['title']
-    h2s = '\n'.join([f'- {h}' for h in outline['h2_outline']])
-    keyword = outline['target_keyword']
+    h2s = '\n'.join([f'- {h}' for h in outline.get('h2_outline', [])])
+    keyword = outline.get('target_keyword', '')
+    human_insight = outline.get('human_insight_prompt', '')
     data_str = json.dumps(data, ensure_ascii=False, indent=2, default=str)
 
-    prompt = f"""以下の構成案とデータに基づいて、ブログ記事を作成してください。
+    prompt = f"""以下の記事仕様とデータに基づいて、データジャーナリズム型のブログ記事を作成してください。
 
-## 記事情報
+## 記事仕様
 タイトル: {title}
 ターゲットキーワード: {keyword}
 記事タイプ: {article_type}
+"""
 
+    if h2s:
+        prompt += f"""
 ## H2構成
 {h2s}
+"""
 
-## 移住DBのデータ（このデータを正確に引用してください）
+    if human_insight:
+        prompt += f"""
+## [HUMAN_INSIGHT]のプロンプト
+記事内の適切な箇所に以下のプロンプトで[HUMAN_INSIGHT]を1箇所配置してください：
+[HUMAN_INSIGHT:{human_insight}]
+"""
+
+    prompt += f"""
+## 移住DBのデータ（このデータを正確に引用・分析してください）
 {data_str}
 
 ## 注意事項
-- データの数値を記事内で具体的に引用してください
-- [HUMAN_INSERT:〇〇についての体験コメントをここに追加] を3箇所以上配置してください
-- 内部リンクは必ず含めてください: {outline.get('internal_links', [])}
+- データの横断分析から「意外な発見」や「直感に反する事実」を積極的に取り上げてください
+- 全国平均との比較、地域間の差異、相関関係など、データならではの視点を入れてください
+- 「移住DBのデータによると〜」という論調で書いてください
+- 内部リンク: {outline.get('internal_links', [])}
 - HTMLのみ出力（<html><body>タグ不要）
 """
     return prompt
@@ -177,7 +244,7 @@ def save_draft(outline, content, model):
         'title': outline['title'],
         'description': outline.get('description', ''),
         'content': content,
-        'category': outline['type'],
+        'category': outline.get('type', 'ranking'),
         'target_keyword': outline.get('target_keyword', ''),
         'tags': [],
         'published': False,
@@ -211,28 +278,19 @@ def main():
         return
 
     print(f'生成開始: {outline["title"]}')
-    print(f'タイプ: {outline["type"]}')
+    print(f'タイプ: {outline.get("type")}')
 
     # データ取得
-    article_type = outline['type']
-    if article_type == 'deep_dive':
-        data = fetch_municipality_data(slug=outline.get('target_slug'))
-    elif article_type == 'comparison':
-        data = fetch_municipality_data(slugs=outline.get('compare_slugs', []))
-    elif article_type == 'ranking':
-        data = fetch_municipality_data(condition=outline.get('ranking_condition'), limit=15)
-    else:
-        # simulation / howto / column: 全体統計から安い順TOP20
-        data = fetch_municipality_data(condition='cost_asc', limit=20)
-
+    data = fetch_data_for_article(outline)
     if not data:
         print('❌ データ取得失敗')
         return
 
-    print(f'データ取得完了: {len(data) if isinstance(data, list) else 1}件')
+    count = len(data) if isinstance(data, list) else 1
+    print(f'データ取得完了: {count}件')
 
     # モデル選定
-    model = MODELS.get(article_type, 'gemini-3-flash-preview')
+    model = MODELS.get(outline.get('type', 'ranking'), 'gemini-3-flash-preview')
     print(f'使用モデル: {model}')
 
     # プロンプト構築・生成
@@ -245,8 +303,6 @@ def main():
         return
 
     print(f'生成完了: {len(content)}文字')
-
-    # 保存
     save_draft(outline, content, model)
 
 

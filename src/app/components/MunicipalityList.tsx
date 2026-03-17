@@ -311,6 +311,10 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
                 onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = '#fff'}
                 onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-base)'}
               >データについて</a>
+              <a href="/contact" style={{ fontSize: 13, color: 'var(--color-base)', textDecoration: 'none', transition: 'color 0.2s' }}
+                onMouseEnter={e => (e.currentTarget as HTMLAnchorElement).style.color = '#fff'}
+                onMouseLeave={e => (e.currentTarget as HTMLAnchorElement).style.color = 'var(--color-base)'}
+              >お問い合わせ</a>
             </nav>
           </div>
         </div>

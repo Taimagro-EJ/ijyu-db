@@ -1,0 +1,73 @@
+name: Collect Lifestyle Data
+
+on:
+  # 毎週日曜 深夜2時（JST）= UTC 17:00土曜
+  schedule:
+    - cron: '0 17 * * 6'
+  # 手動実行も可能
+  workflow_dispatch:
+    inputs:
+      limit:
+        description: '処理件数の上限（テスト用。空欄=全527件）'
+        required: false
+        default: ''
+      resume:
+        description: '中断再開モード（true/false）'
+        required: false
+        default: 'false'
+      municipality:
+        description: '特定市町村IDのみ処理（例: 20202）'
+        required: false
+        default: ''
+
+jobs:
+  collect:
+    runs-on: ubuntu-latest
+    timeout-minutes: 180  # 最大3時間
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Install dependencies
+        run: |
+          pip install requests
+
+      - name: Run collect_lifestyle.py
+        env:
+          SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          cd scripts
+
+          # 引数の組み立て
+          ARGS=""
+
+          if [ -n "${{ github.event.inputs.limit }}" ]; then
+            ARGS="$ARGS --limit ${{ github.event.inputs.limit }}"
+          fi
+
+          if [ "${{ github.event.inputs.resume }}" = "true" ]; then
+            ARGS="$ARGS --resume"
+          fi
+
+          if [ -n "${{ github.event.inputs.municipality }}" ]; then
+            ARGS="$ARGS --municipality ${{ github.event.inputs.municipality }}"
+          fi
+
+          echo "実行コマンド: python3 collect_lifestyle.py $ARGS"
+          python3 collect_lifestyle.py $ARGS
+
+      - name: Upload progress file (for resume)
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: collect-progress-${{ github.run_id }}
+          path: scripts/collect_lifestyle_progress.json
+          if-no-files-found: ignore
+          retention-days: 7

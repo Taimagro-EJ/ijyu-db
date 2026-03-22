@@ -38,6 +38,13 @@ jobs:
         run: |
           pip install requests
 
+      - name: Debug secrets
+        env:
+          SUPABASE_SERVICE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}
+        run: |
+          echo "KEY length: ${#SUPABASE_SERVICE_KEY}"
+          echo "KEY set: $([ -n "$SUPABASE_SERVICE_KEY" ] && echo YES || echo NO)"
+
       - name: Run collect_lifestyle.py
         env:
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}

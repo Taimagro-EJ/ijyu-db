@@ -1,0 +1,1290 @@
+{
+  "_meta": {
+    "_version": "1.0.0",
+    "_last_updated": "2026-03-19",
+    "_update_frequency": "quarterly",
+    "_source": "Claude Opus 4.6 ブランド分析ストラテジスト設計書",
+    "_note": "Sonnetが実装時にOverpass APIのbrandタグと照合して検証すること"
+  },
+  "categories": {
+    "shopping_mall": {
+      "display_name": "ショッピングモール",
+      "display_name_en": "Shopping Mall",
+      "tier_enabled": true,
+      "scoring_weight": 0.25,
+      "brands": [
+        {
+          "name_ja": "三井アウトレットパーク",
+          "name_en": "Mitsui Outlet Park",
+          "aliases": ["三井アウトレット", "MOP"],
+          "overpass_tags": [
+            {"key": "brand", "value": "三井アウトレットパーク"},
+            {"key": "brand:en", "value": "Mitsui Outlet Park"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国13施設。地方では希少。200店超テナントの集客力",
+          "region": "national",
+          "store_count_approx": 13,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ららぽーと",
+          "name_en": "LaLaport",
+          "aliases": ["LaLaport", "三井ショッピングパーク ららぽーと"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ららぽーと"},
+            {"key": "brand:en", "value": "LaLaport"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国18施設。三井不動産系。年間来館者数1,000万人超の施設あり",
+          "region": "national",
+          "store_count_approx": 18,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "IKEA",
+          "name_en": "IKEA",
+          "aliases": ["イケア"],
+          "overpass_tags": [
+            {"key": "brand", "value": "IKEA"},
+            {"key": "brand", "value": "イケア"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国13店舗。地方では極めて希少。移住先選びの決め手になりうる",
+          "region": "national",
+          "store_count_approx": 13,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "コストコ",
+          "name_en": "Costco",
+          "aliases": ["Costco Wholesale", "コストコホールセール"],
+          "overpass_tags": [
+            {"key": "brand", "value": "コストコ"},
+            {"key": "brand", "value": "Costco"},
+            {"key": "brand:en", "value": "Costco Wholesale"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国35倉庫。会員制の高ロイヤリティ。地方移住者の満足度に直結",
+          "region": "national",
+          "store_count_approx": 35,
+          "trend_status": "growing"
+        },
+        {
+          "name_ja": "イオンモール",
+          "name_en": "AEON MALL",
+          "aliases": ["イオンモール"],
+          "overpass_tags": [
+            {"key": "brand", "value": "イオンモール"},
+            {"key": "brand:en", "value": "AEON MALL"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約150施設。地方の生活インフラの中核",
+          "region": "national",
+          "store_count_approx": 150,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "アリオ",
+          "name_en": "Ario",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "アリオ"},
+            {"key": "brand:en", "value": "Ario"}
+          ],
+          "tier": "A",
+          "tier_reason": "イトーヨーカドー系。全国約20施設",
+          "region": "national",
+          "store_count_approx": 20,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ゆめタウン",
+          "name_en": "youme Town",
+          "aliases": ["ゆめタウン"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ゆめタウン"}
+          ],
+          "tier": "A",
+          "tier_reason": "中国・四国・九州で圧倒的。イオンモール不在エリアの代替",
+          "region": "chugoku,shikoku,kyushu",
+          "store_count_approx": 40,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "パルコ",
+          "name_en": "PARCO",
+          "aliases": ["PARCO"],
+          "overpass_tags": [
+            {"key": "brand", "value": "パルコ"},
+            {"key": "brand", "value": "PARCO"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国18店舗。ファッション感度の指標",
+          "region": "national",
+          "store_count_approx": 18,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "イオン",
+          "name_en": "AEON",
+          "aliases": ["AEON"],
+          "overpass_tags": [
+            {"key": "brand", "value": "イオン"},
+            {"key": "brand:en", "value": "AEON"}
+          ],
+          "tier": "B",
+          "tier_reason": "モールではない一般的なイオン。全国約350店",
+          "region": "national",
+          "store_count_approx": 350,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "イトーヨーカドー",
+          "name_en": "Ito-Yokado",
+          "aliases": ["ヨーカドー"],
+          "overpass_tags": [
+            {"key": "brand", "value": "イトーヨーカドー"}
+          ],
+          "tier": "B",
+          "tier_reason": "関東中心約120店。閉店加速中だが依然主力",
+          "region": "kanto",
+          "store_count_approx": 120,
+          "trend_status": "declining"
+        },
+        {
+          "name_ja": "アピタ",
+          "name_en": "Apita",
+          "aliases": ["ピアゴ", "Piago"],
+          "overpass_tags": [
+            {"key": "brand", "value": "アピタ"},
+            {"key": "brand", "value": "ピアゴ"}
+          ],
+          "tier": "B",
+          "tier_reason": "中部圏中心。ユニー系",
+          "region": "chubu",
+          "store_count_approx": 80,
+          "trend_status": "declining"
+        }
+      ]
+    },
+    "fitness_gym": {
+      "display_name": "フィットネスジム",
+      "display_name_en": "Fitness Gym",
+      "tier_enabled": true,
+      "scoring_weight": 0.10,
+      "brands": [
+        {
+          "name_ja": "ゴールドジム",
+          "name_en": "Gold's Gym",
+          "aliases": ["GOLD'S GYM"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ゴールドジム"},
+            {"key": "brand", "value": "Gold's Gym"},
+            {"key": "brand:en", "value": "Gold's Gym"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約60店。本格トレーニーの指標。設備品質最高峰",
+          "region": "national",
+          "store_count_approx": 60,
+          "trend_status": "stable",
+          "open_24h": false
+        },
+        {
+          "name_ja": "ライザップ",
+          "name_en": "RIZAP",
+          "aliases": ["RIZAP"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ライザップ"},
+            {"key": "brand", "value": "RIZAP"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約100店。パーソナル特化。高価格帯の代表",
+          "region": "national",
+          "store_count_approx": 100,
+          "trend_status": "stable",
+          "open_24h": false
+        },
+        {
+          "name_ja": "エニタイムフィットネス",
+          "name_en": "Anytime Fitness",
+          "aliases": ["エニタイム"],
+          "overpass_tags": [
+            {"key": "brand", "value": "エニタイムフィットネス"},
+            {"key": "brand", "value": "Anytime Fitness"},
+            {"key": "brand:en", "value": "Anytime Fitness"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国1,100店超。24時間。地方展開が最も進んだジム",
+          "region": "national",
+          "store_count_approx": 1100,
+          "trend_status": "growing",
+          "open_24h": true
+        },
+        {
+          "name_ja": "JOYFIT24",
+          "name_en": "JOYFIT",
+          "aliases": ["ジョイフィット", "JOYFIT"],
+          "overpass_tags": [
+            {"key": "brand", "value": "JOYFIT"},
+            {"key": "brand", "value": "JOYFIT24"},
+            {"key": "brand", "value": "ジョイフィット"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約300店。24時間。エニタイムに次ぐ地方カバー率",
+          "region": "national",
+          "store_count_approx": 300,
+          "trend_status": "stable",
+          "open_24h": true
+        },
+        {
+          "name_ja": "ティップネス",
+          "name_en": "TIPNESS",
+          "aliases": ["TIPNESS"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ティップネス"},
+            {"key": "brand", "value": "TIPNESS"}
+          ],
+          "tier": "A",
+          "tier_reason": "首都圏中心約50店。総合型フィットネス",
+          "region": "kanto",
+          "store_count_approx": 50,
+          "trend_status": "stable",
+          "open_24h": false
+        },
+        {
+          "name_ja": "コナミスポーツクラブ",
+          "name_en": "Konami Sports",
+          "aliases": ["コナミスポーツ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "コナミスポーツクラブ"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約150店。プール併設が強み",
+          "region": "national",
+          "store_count_approx": 150,
+          "trend_status": "declining",
+          "open_24h": false
+        },
+        {
+          "name_ja": "カーブス",
+          "name_en": "Curves",
+          "aliases": ["Curves"],
+          "overpass_tags": [
+            {"key": "brand", "value": "カーブス"},
+            {"key": "brand", "value": "Curves"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約2,000店。女性専用。地方カバー率が圧倒的",
+          "region": "national",
+          "store_count_approx": 2000,
+          "trend_status": "stable",
+          "open_24h": false
+        },
+        {
+          "name_ja": "ホリデイスポーツクラブ",
+          "name_en": "Holiday Sports Club",
+          "aliases": ["ホリデイ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ホリデイスポーツクラブ"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約100店。地方の総合型として定番",
+          "region": "national",
+          "store_count_approx": 100,
+          "trend_status": "stable",
+          "open_24h": false
+        },
+        {
+          "name_ja": "FIT-EASY",
+          "name_en": "FIT-EASY",
+          "aliases": ["フィットイージー"],
+          "overpass_tags": [
+            {"key": "brand", "value": "FIT-EASY"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約100店。低価格24時間",
+          "region": "national",
+          "store_count_approx": 100,
+          "trend_status": "growing",
+          "open_24h": true
+        },
+        {
+          "name_ja": "chocoZAP",
+          "name_en": "chocoZAP",
+          "aliases": ["チョコザップ", "ちょこざっぷ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "chocoZAP"},
+            {"key": "brand", "value": "チョコザップ"}
+          ],
+          "tier": "Trend",
+          "tier_reason": "2022年開始で1,700店超。月2,980円。急拡大ゆえに撤退リスクあり",
+          "region": "national",
+          "store_count_approx": 1700,
+          "trend_status": "volatile",
+          "open_24h": true
+        },
+        {
+          "name_ja": "BEYOND",
+          "name_en": "BEYOND",
+          "aliases": ["ビヨンド"],
+          "overpass_tags": [
+            {"key": "brand", "value": "BEYOND"}
+          ],
+          "tier": "Trend",
+          "tier_reason": "パーソナル特化。YouTube発の知名度。全国約80店",
+          "region": "national",
+          "store_count_approx": 80,
+          "trend_status": "growing",
+          "open_24h": false
+        }
+      ]
+    },
+    "cafe": {
+      "display_name": "カフェ",
+      "display_name_en": "Café",
+      "tier_enabled": true,
+      "scoring_weight": 0.10,
+      "remote_work_enabled": true,
+      "brands": [
+        {
+          "name_ja": "スターバックス",
+          "name_en": "Starbucks",
+          "aliases": ["スタバ", "Starbucks Coffee", "スターバックスコーヒー"],
+          "overpass_tags": [
+            {"key": "brand", "value": "スターバックス"},
+            {"key": "brand", "value": "Starbucks"},
+            {"key": "brand", "value": "スターバックスコーヒー"},
+            {"key": "brand:en", "value": "Starbucks"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約1,900店。移住先の都市度の体感指標。リモートワーク拠点として最適",
+          "region": "national",
+          "store_count_approx": 1900,
+          "trend_status": "stable",
+          "remote_work_score": 5
+        },
+        {
+          "name_ja": "タリーズ",
+          "name_en": "Tully's Coffee",
+          "aliases": ["タリーズコーヒー", "Tully's"],
+          "overpass_tags": [
+            {"key": "brand", "value": "タリーズ"},
+            {"key": "brand", "value": "タリーズコーヒー"},
+            {"key": "brand", "value": "Tully's Coffee"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約780店。スタバに次ぐリモートワーク拠点",
+          "region": "national",
+          "store_count_approx": 780,
+          "trend_status": "stable",
+          "remote_work_score": 4
+        },
+        {
+          "name_ja": "ドトール",
+          "name_en": "DOUTOR",
+          "aliases": ["ドトールコーヒー", "DOUTOR COFFEE"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ドトール"},
+            {"key": "brand", "value": "ドトールコーヒーショップ"},
+            {"key": "brand", "value": "DOUTOR"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約1,000店。低価格だがリモート環境は店舗差あり",
+          "region": "national",
+          "store_count_approx": 1000,
+          "trend_status": "stable",
+          "remote_work_score": 3
+        },
+        {
+          "name_ja": "コメダ珈琲店",
+          "name_en": "Komeda's Coffee",
+          "aliases": ["コメダ", "Komeda"],
+          "overpass_tags": [
+            {"key": "brand", "value": "コメダ珈琲店"},
+            {"key": "brand", "value": "コメダ"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約1,000店。広い席・フード充実。地方にも強い",
+          "region": "national",
+          "store_count_approx": 1000,
+          "trend_status": "growing",
+          "remote_work_score": 4
+        },
+        {
+          "name_ja": "サンマルクカフェ",
+          "name_en": "St. Marc Café",
+          "aliases": ["サンマルク"],
+          "overpass_tags": [
+            {"key": "brand", "value": "サンマルクカフェ"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約380店。パン系に強み",
+          "region": "national",
+          "store_count_approx": 380,
+          "trend_status": "stable",
+          "remote_work_score": 2
+        },
+        {
+          "name_ja": "上島珈琲店",
+          "name_en": "Ueshima Coffee",
+          "aliases": ["UCC", "上島"],
+          "overpass_tags": [
+            {"key": "brand", "value": "上島珈琲店"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約70店。UCCグループ。落ち着いた雰囲気",
+          "region": "national",
+          "store_count_approx": 70,
+          "trend_status": "stable",
+          "remote_work_score": 4
+        },
+        {
+          "name_ja": "ミスタードーナツ",
+          "name_en": "Mister Donut",
+          "aliases": ["ミスド"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ミスタードーナツ"},
+            {"key": "brand", "value": "Mister Donut"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約900店。カフェ利用可。地方に非常に強い",
+          "region": "national",
+          "store_count_approx": 900,
+          "trend_status": "stable",
+          "remote_work_score": 2
+        },
+        {
+          "name_ja": "ベローチェ",
+          "name_en": "VELOCE",
+          "aliases": ["VELOCE"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ベローチェ"},
+            {"key": "brand", "value": "VELOCE"}
+          ],
+          "tier": "B",
+          "tier_reason": "首都圏中心約170店。低価格だがリモート不向き",
+          "region": "kanto",
+          "store_count_approx": 170,
+          "trend_status": "stable",
+          "remote_work_score": 1
+        },
+        {
+          "name_ja": "プロント",
+          "name_en": "PRONTO",
+          "aliases": ["PRONTO"],
+          "overpass_tags": [
+            {"key": "brand", "value": "プロント"},
+            {"key": "brand", "value": "PRONTO"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約180店。昼カフェ・夜バー",
+          "region": "national",
+          "store_count_approx": 180,
+          "trend_status": "stable",
+          "remote_work_score": 2
+        }
+      ]
+    },
+    "cinema": {
+      "display_name": "映画館",
+      "display_name_en": "Cinema",
+      "tier_enabled": true,
+      "scoring_weight": 0.10,
+      "brands": [
+        {
+          "name_ja": "TOHOシネマズ",
+          "name_en": "TOHO Cinemas",
+          "aliases": ["東宝シネマズ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "TOHOシネマズ"},
+            {"key": "brand", "value": "TOHO Cinemas"},
+            {"key": "brand:en", "value": "TOHO Cinemas"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約70施設。最新作の公開が最速。IMAX/MX4D/ドルビーアトモス",
+          "region": "national",
+          "store_count_approx": 70,
+          "trend_status": "stable",
+          "has_imax": true,
+          "has_4dx": true
+        },
+        {
+          "name_ja": "109シネマズ",
+          "name_en": "109 Cinemas",
+          "aliases": ["東急シネマ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "109シネマズ"},
+            {"key": "brand:en", "value": "109 Cinemas"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約20施設。東急系。プレミアムシート充実。IMAX/4DX",
+          "region": "national",
+          "store_count_approx": 20,
+          "trend_status": "stable",
+          "has_imax": true,
+          "has_4dx": true
+        },
+        {
+          "name_ja": "イオンシネマ",
+          "name_en": "AEON Cinema",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "イオンシネマ"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約90施設。イオンモール併設。地方カバー率最高",
+          "region": "national",
+          "store_count_approx": 90,
+          "trend_status": "stable",
+          "has_imax": false,
+          "has_4dx": true
+        },
+        {
+          "name_ja": "ユナイテッド・シネマ",
+          "name_en": "United Cinemas",
+          "aliases": ["ユナイテッドシネマ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ユナイテッド・シネマ"},
+            {"key": "brand", "value": "ユナイテッドシネマ"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約40施設。4DX/SCREENX対応",
+          "region": "national",
+          "store_count_approx": 40,
+          "trend_status": "stable",
+          "has_imax": false,
+          "has_4dx": true
+        },
+        {
+          "name_ja": "MOVIX",
+          "name_en": "MOVIX",
+          "aliases": ["ムービックス"],
+          "overpass_tags": [
+            {"key": "brand", "value": "MOVIX"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約15施設。松竹系",
+          "region": "national",
+          "store_count_approx": 15,
+          "trend_status": "stable",
+          "has_imax": false,
+          "has_4dx": false
+        },
+        {
+          "name_ja": "シネマサンシャイン",
+          "name_en": "Cinema Sunshine",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "シネマサンシャイン"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約15施設。佐々木興業系",
+          "region": "national",
+          "store_count_approx": 15,
+          "trend_status": "stable",
+          "has_imax": false,
+          "has_4dx": false
+        },
+        {
+          "name_ja": "コロナワールド",
+          "name_en": "Korona Cinema World",
+          "aliases": ["コロナシネマワールド"],
+          "overpass_tags": [
+            {"key": "brand", "value": "コロナワールド"},
+            {"key": "brand", "value": "コロナシネマワールド"}
+          ],
+          "tier": "B",
+          "tier_reason": "中部中心。複合施設併設",
+          "region": "chubu",
+          "store_count_approx": 10,
+          "trend_status": "stable",
+          "has_imax": false,
+          "has_4dx": false
+        },
+        {
+          "name_ja": "T・ジョイ",
+          "name_en": "T-JOY",
+          "aliases": ["ティジョイ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "T・ジョイ"},
+            {"key": "brand", "value": "T-JOY"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約15施設。東映系",
+          "region": "national",
+          "store_count_approx": 15,
+          "trend_status": "stable",
+          "has_imax": false,
+          "has_4dx": false
+        }
+      ]
+    },
+    "supermarket": {
+      "display_name": "スーパーマーケット",
+      "display_name_en": "Supermarket",
+      "tier_enabled": true,
+      "scoring_weight": 0.20,
+      "brands": [
+        {
+          "name_ja": "成城石井",
+          "name_en": "Seijo Ishii",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "成城石井"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約190店。輸入食品・高品質PB。地方にあれば希少",
+          "region": "national",
+          "store_count_approx": 190,
+          "trend_status": "growing"
+        },
+        {
+          "name_ja": "紀ノ国屋",
+          "name_en": "Kinokuniya",
+          "aliases": ["紀伊國屋", "KINOKUNIYA"],
+          "overpass_tags": [
+            {"key": "brand", "value": "紀ノ国屋"},
+            {"key": "brand", "value": "紀伊國屋"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約10店。首都圏限定の超高品質スーパー",
+          "region": "kanto",
+          "store_count_approx": 10,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "カルディコーヒーファーム",
+          "name_en": "KALDI Coffee Farm",
+          "aliases": ["カルディ", "KALDI"],
+          "overpass_tags": [
+            {"key": "brand", "value": "カルディ"},
+            {"key": "brand", "value": "カルディコーヒーファーム"},
+            {"key": "brand", "value": "KALDI"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約470店。輸入食品・コーヒー。イオンモール内にも",
+          "region": "national",
+          "store_count_approx": 470,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ライフ",
+          "name_en": "LIFE",
+          "aliases": ["LIFE"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ライフ"}
+          ],
+          "tier": "A",
+          "tier_reason": "近畿・関東で約300店。品質安定",
+          "region": "kanto,kinki",
+          "store_count_approx": 300,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ヤオコー",
+          "name_en": "Yaoko",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "ヤオコー"}
+          ],
+          "tier": "A",
+          "tier_reason": "関東約200店。惣菜の質が高い。営業利益率トップクラス",
+          "region": "kanto",
+          "store_count_approx": 200,
+          "trend_status": "growing"
+        },
+        {
+          "name_ja": "オーケー",
+          "name_en": "OK",
+          "aliases": ["OK", "オーケーストア"],
+          "overpass_tags": [
+            {"key": "brand", "value": "オーケー"},
+            {"key": "brand", "value": "OK"}
+          ],
+          "tier": "A",
+          "tier_reason": "関東約150店。EDLP。消費者満足度1位常連",
+          "region": "kanto",
+          "store_count_approx": 150,
+          "trend_status": "growing"
+        },
+        {
+          "name_ja": "マルエツ",
+          "name_en": "Maruetsu",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "マルエツ"}
+          ],
+          "tier": "A",
+          "tier_reason": "関東約300店。イオン系。都市型",
+          "region": "kanto",
+          "store_count_approx": 300,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "バロー",
+          "name_en": "Valor",
+          "aliases": ["Valor"],
+          "overpass_tags": [
+            {"key": "brand", "value": "バロー"}
+          ],
+          "tier": "A",
+          "tier_reason": "中部約250店。東海・北陸の主力",
+          "region": "chubu",
+          "store_count_approx": 250,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "フレスタ",
+          "name_en": "Fresta",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "フレスタ"}
+          ],
+          "tier": "A",
+          "tier_reason": "中国地方約60店。地域密着型の高品質スーパー",
+          "region": "chugoku",
+          "store_count_approx": 60,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "業務スーパー",
+          "name_en": "Gyomu Super",
+          "aliases": ["業スー"],
+          "overpass_tags": [
+            {"key": "brand", "value": "業務スーパー"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約1,050店。大容量・低価格。地方に非常に強い",
+          "region": "national",
+          "store_count_approx": 1050,
+          "trend_status": "growing"
+        },
+        {
+          "name_ja": "ドン・キホーテ",
+          "name_en": "Don Quijote",
+          "aliases": ["ドンキ", "MEGAドン・キホーテ", "MEGAドンキ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ドン・キホーテ"},
+            {"key": "brand", "value": "MEGAドン・キホーテ"},
+            {"key": "brand", "value": "Don Quijote"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約600店。食品+雑貨の総合。深夜営業",
+          "region": "national",
+          "store_count_approx": 600,
+          "trend_status": "growing"
+        },
+        {
+          "name_ja": "トライアル",
+          "name_en": "TRIAL",
+          "aliases": ["TRIAL"],
+          "overpass_tags": [
+            {"key": "brand", "value": "トライアル"},
+            {"key": "brand", "value": "TRIAL"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約300店。24時間営業の倉庫型。九州・中部に強い",
+          "region": "national",
+          "store_count_approx": 300,
+          "trend_status": "growing"
+        },
+        {
+          "name_ja": "マックスバリュ",
+          "name_en": "MaxValu",
+          "aliases": ["MaxValu"],
+          "overpass_tags": [
+            {"key": "brand", "value": "マックスバリュ"},
+            {"key": "brand:en", "value": "MaxValu"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約500店。イオン系の食品スーパー",
+          "region": "national",
+          "store_count_approx": 500,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ベイシア",
+          "name_en": "Beisia",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "ベイシア"}
+          ],
+          "tier": "B",
+          "tier_reason": "北関東中心約130店。カインズ・ワークマンと同グループ",
+          "region": "kanto",
+          "store_count_approx": 130,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "Aコープ",
+          "name_en": "A-COOP",
+          "aliases": ["A-COOP", "エーコープ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "Aコープ"},
+            {"key": "brand", "value": "A-COOP"},
+            {"key": "brand", "value": "エーコープ"}
+          ],
+          "tier": "B",
+          "tier_reason": "全国約300店。JA系。農村部の生命線",
+          "region": "national",
+          "store_count_approx": 300,
+          "trend_status": "declining"
+        }
+      ]
+    },
+    "drugstore": {
+      "display_name": "ドラッグストア",
+      "display_name_en": "Drugstore",
+      "tier_enabled": false,
+      "scoring_weight": 0.05,
+      "count_only": true,
+      "overpass_count_tags": [
+        {"key": "shop", "value": "chemist"},
+        {"key": "amenity", "value": "pharmacy"}
+      ],
+      "notable_brands": [
+        {
+          "name_ja": "マツモトキヨシ",
+          "name_en": "Matsumoto Kiyoshi",
+          "aliases": ["マツキヨ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "マツモトキヨシ"}
+          ],
+          "note": "品揃え豊富さの代理指標。有無をboolean記録"
+        }
+      ]
+    },
+    "home_center": {
+      "display_name": "ホームセンター",
+      "display_name_en": "Home Center",
+      "tier_enabled": true,
+      "scoring_weight": 0.10,
+      "brands": [
+        {
+          "name_ja": "カインズ",
+          "name_en": "CAINZ",
+          "aliases": ["CAINZ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "カインズ"},
+            {"key": "brand", "value": "CAINZ"}
+          ],
+          "tier": "S",
+          "tier_reason": "全国約230店。PB商品の質が高い。DX推進でアプリも充実",
+          "region": "national",
+          "store_count_approx": 230,
+          "trend_status": "growing"
+        },
+        {
+          "name_ja": "ジョイフル本田",
+          "name_en": "Joyful Honda",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "ジョイフル本田"}
+          ],
+          "tier": "S",
+          "tier_reason": "北関東中心15店だが1店舗が巨大。プロ向け品揃え",
+          "region": "kanto",
+          "store_count_approx": 15,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "コメリ",
+          "name_en": "Komeri",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "コメリ"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約1,200店。農村部のカバー率が最も高い",
+          "region": "national",
+          "store_count_approx": 1200,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "コーナン",
+          "name_en": "Kohnan",
+          "aliases": ["コーナンPRO"],
+          "overpass_tags": [
+            {"key": "brand", "value": "コーナン"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約470店。関西発。Pro店舗は業者御用達",
+          "region": "national",
+          "store_count_approx": 470,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "DCM",
+          "name_en": "DCM",
+          "aliases": ["DCMホーマック", "DCMカーマ", "DCMダイキ", "ホーマック", "カーマ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "DCM"},
+            {"key": "brand", "value": "DCMホーマック"},
+            {"key": "brand", "value": "DCMカーマ"},
+            {"key": "brand", "value": "DCMダイキ"},
+            {"key": "brand", "value": "ホーマック"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約670店。旧ホーマック+カーマ+ダイキ統合。広域展開",
+          "region": "national",
+          "store_count_approx": 670,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ナフコ",
+          "name_en": "Nafco",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "ナフコ"}
+          ],
+          "tier": "A",
+          "tier_reason": "九州中心に約360店。家具も扱う",
+          "region": "kyushu",
+          "store_count_approx": 360,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ビバホーム",
+          "name_en": "Viva Home",
+          "aliases": ["スーパービバホーム"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ビバホーム"},
+            {"key": "brand", "value": "スーパービバホーム"}
+          ],
+          "tier": "B",
+          "tier_reason": "関東中心約40店。LIXILビバ系",
+          "region": "kanto",
+          "store_count_approx": 40,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ケーヨーデイツー",
+          "name_en": "Keiyo D2",
+          "aliases": ["D2", "デイツー"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ケーヨーデイツー"},
+            {"key": "brand", "value": "ケーヨー"}
+          ],
+          "tier": "B",
+          "tier_reason": "関東中心約170店",
+          "region": "kanto",
+          "store_count_approx": 170,
+          "trend_status": "stable"
+        },
+        {
+          "name_ja": "ダイユーエイト",
+          "name_en": "Daiyu Eight",
+          "aliases": [],
+          "overpass_tags": [
+            {"key": "brand", "value": "ダイユーエイト"}
+          ],
+          "tier": "B",
+          "tier_reason": "東北中心約60店。雪国生活の味方",
+          "region": "tohoku",
+          "store_count_approx": 60,
+          "trend_status": "stable"
+        }
+      ]
+    },
+    "restaurant": {
+      "display_name": "飲食チェーン",
+      "display_name_en": "Restaurant Chain",
+      "tier_enabled": true,
+      "scoring_weight": 0.05,
+      "count_and_diversity": true,
+      "brands": [
+        {
+          "name_ja": "ロイヤルホスト",
+          "name_en": "Royal Host",
+          "aliases": ["ロイホ"],
+          "overpass_tags": [{"key": "brand", "value": "ロイヤルホスト"}],
+          "tier": "S",
+          "tier_reason": "ファミレスの最高峰。地方にあれば都市度の指標",
+          "region": "national",
+          "store_count_approx": 220,
+          "trend_status": "stable",
+          "sub_category": "family_restaurant"
+        },
+        {
+          "name_ja": "一風堂",
+          "name_en": "Ippudo",
+          "aliases": ["IPPUDO"],
+          "overpass_tags": [{"key": "brand", "value": "一風堂"}],
+          "tier": "S",
+          "tier_reason": "全国約130店+海外。ラーメンのプレミアムブランド",
+          "region": "national",
+          "store_count_approx": 130,
+          "trend_status": "stable",
+          "sub_category": "ramen"
+        },
+        {
+          "name_ja": "一蘭",
+          "name_en": "Ichiran",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "一蘭"}],
+          "tier": "S",
+          "tier_reason": "全国約90店。天然とんこつの独自ブランド",
+          "region": "national",
+          "store_count_approx": 90,
+          "trend_status": "stable",
+          "sub_category": "ramen"
+        },
+        {
+          "name_ja": "サイゼリヤ",
+          "name_en": "Saizeriya",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "サイゼリヤ"}],
+          "tier": "A",
+          "tier_reason": "全国約1,100店。圧倒的コスパ",
+          "region": "national",
+          "store_count_approx": 1100,
+          "trend_status": "stable",
+          "sub_category": "family_restaurant"
+        },
+        {
+          "name_ja": "ガスト",
+          "name_en": "Gusto",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "ガスト"}],
+          "tier": "A",
+          "tier_reason": "全国約1,300店。すかいらーく系の主力",
+          "region": "national",
+          "store_count_approx": 1300,
+          "trend_status": "stable",
+          "sub_category": "family_restaurant"
+        },
+        {
+          "name_ja": "スシロー",
+          "name_en": "Sushiro",
+          "aliases": ["あきんどスシロー"],
+          "overpass_tags": [{"key": "brand", "value": "スシロー"}],
+          "tier": "A",
+          "tier_reason": "全国約700店。回転寿司の最大手",
+          "region": "national",
+          "store_count_approx": 700,
+          "trend_status": "stable",
+          "sub_category": "sushi"
+        },
+        {
+          "name_ja": "はま寿司",
+          "name_en": "Hama-sushi",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "はま寿司"}],
+          "tier": "A",
+          "tier_reason": "全国約580店。ゼンショー系",
+          "region": "national",
+          "store_count_approx": 580,
+          "trend_status": "stable",
+          "sub_category": "sushi"
+        },
+        {
+          "name_ja": "くら寿司",
+          "name_en": "Kura Sushi",
+          "aliases": ["無添くら寿司"],
+          "overpass_tags": [{"key": "brand", "value": "くら寿司"}],
+          "tier": "A",
+          "tier_reason": "全国約540店。テクノロジー活用",
+          "region": "national",
+          "store_count_approx": 540,
+          "trend_status": "stable",
+          "sub_category": "sushi"
+        },
+        {
+          "name_ja": "吉野家",
+          "name_en": "Yoshinoya",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "吉野家"}],
+          "tier": "A",
+          "tier_reason": "全国約1,200店。牛丼チェーンの代表",
+          "region": "national",
+          "store_count_approx": 1200,
+          "trend_status": "stable",
+          "sub_category": "gyudon"
+        },
+        {
+          "name_ja": "すき家",
+          "name_en": "Sukiya",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "すき家"}],
+          "tier": "A",
+          "tier_reason": "全国約1,900店。牛丼最大手。ゼンショー系",
+          "region": "national",
+          "store_count_approx": 1900,
+          "trend_status": "stable",
+          "sub_category": "gyudon"
+        },
+        {
+          "name_ja": "松屋",
+          "name_en": "Matsuya",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "松屋"}],
+          "tier": "A",
+          "tier_reason": "全国約1,200店。定食メニューが豊富",
+          "region": "national",
+          "store_count_approx": 1200,
+          "trend_status": "stable",
+          "sub_category": "gyudon"
+        },
+        {
+          "name_ja": "マクドナルド",
+          "name_en": "McDonald's",
+          "aliases": ["マック"],
+          "overpass_tags": [
+            {"key": "brand", "value": "マクドナルド"},
+            {"key": "brand", "value": "McDonald's"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約3,000店。あらゆる地域に展開",
+          "region": "national",
+          "store_count_approx": 3000,
+          "trend_status": "stable",
+          "sub_category": "fast_food"
+        },
+        {
+          "name_ja": "ケンタッキー",
+          "name_en": "KFC",
+          "aliases": ["ケンタ", "KFC"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ケンタッキーフライドチキン"},
+            {"key": "brand", "value": "KFC"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約1,200店",
+          "region": "national",
+          "store_count_approx": 1200,
+          "trend_status": "stable",
+          "sub_category": "fast_food"
+        },
+        {
+          "name_ja": "モスバーガー",
+          "name_en": "MOS Burger",
+          "aliases": ["モス"],
+          "overpass_tags": [
+            {"key": "brand", "value": "モスバーガー"},
+            {"key": "brand", "value": "MOS Burger"}
+          ],
+          "tier": "A",
+          "tier_reason": "全国約1,300店。国産食材重視",
+          "region": "national",
+          "store_count_approx": 1300,
+          "trend_status": "stable",
+          "sub_category": "fast_food"
+        },
+        {
+          "name_ja": "焼肉きんぐ",
+          "name_en": "Yakiniku King",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "焼肉きんぐ"}],
+          "tier": "A",
+          "tier_reason": "全国約350店。食べ放題焼肉の最大手",
+          "region": "national",
+          "store_count_approx": 350,
+          "trend_status": "growing",
+          "sub_category": "yakiniku"
+        },
+        {
+          "name_ja": "牛角",
+          "name_en": "Gyu-Kaku",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "牛角"}],
+          "tier": "A",
+          "tier_reason": "全国約600店。焼肉チェーンの定番",
+          "region": "national",
+          "store_count_approx": 600,
+          "trend_status": "stable",
+          "sub_category": "yakiniku"
+        },
+        {
+          "name_ja": "幸楽苑",
+          "name_en": "Kourakuen",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "幸楽苑"}],
+          "tier": "A",
+          "tier_reason": "全国約400店。低価格ラーメンの代表",
+          "region": "national",
+          "store_count_approx": 400,
+          "trend_status": "stable",
+          "sub_category": "ramen"
+        },
+        {
+          "name_ja": "日高屋",
+          "name_en": "Hidakaya",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "日高屋"}],
+          "tier": "A",
+          "tier_reason": "首都圏約430店。駅前中華の定番",
+          "region": "kanto",
+          "store_count_approx": 430,
+          "trend_status": "growing",
+          "sub_category": "ramen"
+        },
+        {
+          "name_ja": "デニーズ",
+          "name_en": "Denny's",
+          "aliases": [],
+          "overpass_tags": [{"key": "brand", "value": "デニーズ"}],
+          "tier": "A",
+          "tier_reason": "関東中心約300店。セブン＆アイ系",
+          "region": "kanto",
+          "store_count_approx": 300,
+          "trend_status": "stable",
+          "sub_category": "family_restaurant"
+        }
+      ]
+    },
+    "convenience_store": {
+      "display_name": "コンビニエンスストア",
+      "display_name_en": "Convenience Store",
+      "tier_enabled": false,
+      "scoring_weight": 0.05,
+      "count_only": true,
+      "overpass_count_tags": [
+        {"key": "shop", "value": "convenience"}
+      ],
+      "notable_brands": [
+        {
+          "name_ja": "セブン-イレブン",
+          "name_en": "7-Eleven",
+          "aliases": ["セブンイレブン", "セブン"],
+          "overpass_tags": [
+            {"key": "brand", "value": "セブン-イレブン"},
+            {"key": "brand", "value": "7-Eleven"}
+          ],
+          "note": "個別カウント用"
+        },
+        {
+          "name_ja": "ファミリーマート",
+          "name_en": "FamilyMart",
+          "aliases": ["ファミマ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ファミリーマート"},
+            {"key": "brand", "value": "FamilyMart"}
+          ],
+          "note": "個別カウント用"
+        },
+        {
+          "name_ja": "ローソン",
+          "name_en": "Lawson",
+          "aliases": ["ローソンストア100", "ナチュラルローソン"],
+          "overpass_tags": [
+            {"key": "brand", "value": "ローソン"},
+            {"key": "brand", "value": "Lawson"}
+          ],
+          "note": "個別カウント用"
+        },
+        {
+          "name_ja": "セイコーマート",
+          "name_en": "Seicomart",
+          "aliases": ["セコマ"],
+          "overpass_tags": [
+            {"key": "brand", "value": "セイコーマート"},
+            {"key": "brand", "value": "Seicomart"}
+          ],
+          "note": "北海道限定。JCSI顧客満足度1位常連。北海道移住では重要指標",
+          "region": "hokkaido"
+        }
+      ]
+    }
+  }
+}

@@ -60,120 +60,232 @@ function getCatchCopy(m: Municipality): string {
   return 'データが語る、あなたの新しい日常。'
 }
 
+// ── 施設データ行 ──────────────────────────────
+function FacilityRow({
+  icon, label, value, unit, badge, highlight,
+}: {
+  icon: string; label: string; value: number | null; unit: string;
+  badge?: string; highlight?: boolean;
+}) {
+  const v = value ?? 0
+  return (
+    <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', fontSize: 13, color: 'var(--color-text-secondary)' }}>
+      <span><span style={{ marginRight: 6 }}>{icon}</span>{label}</span>
+      <span style={{ display: 'flex', alignItems: 'center', gap: 6 }}>
+        {highlight && v === 0 ? (
+          <span style={{ color: '#4A7C59', fontWeight: 600 }}>0{unit} ✓</span>
+        ) : (
+          <>
+            <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 500, color: 'var(--color-text-primary)' }}>{v}</span>
+            <span style={{ fontSize: 10, color: 'var(--color-text-muted)' }}>{unit}</span>
+          </>
+        )}
+        {badge && (
+          <span style={{
+            fontSize: 9, padding: '1px 6px', borderRadius: 999,
+            background: 'rgba(212,107,58,0.1)', color: '#D46B3A', fontWeight: 600,
+          }}>{badge}</span>
+        )}
+      </span>
+    </div>
+  )
+}
+
+// ── スコアバー ────────────────────────────────
+function ScoreBar({ value, color }: { value: number | null; color: string }) {
+  const v = value ?? 0
+  return (
+    <div style={{ height: 6, background: 'var(--color-border)', borderRadius: 999, overflow: 'hidden' }}>
+      <div style={{ height: '100%', width: `${v}%`, backgroundColor: color, borderRadius: 999, transition: 'width 0.5s ease' }} />
+    </div>
+  )
+}
+
+// ── 市町村カード（ホバー展開付き）───────────────
 function MunicipalityCard({ m }: { m: Municipality }) {
+  const [isExpanded, setIsExpanded] = useState(false)
   const safety = safetyInfo(m.criminal_rate)
   const catchCopy = getCatchCopy(m)
+  const lifestyleScore = m.lifestyle_score ?? 0
+  const scoreColor = lifestyleScore >= 70 ? '#4A7C59' : lifestyleScore >= 45 ? '#D46B3A' : '#B84C3A'
 
   return (
-    <Link href={`/municipalities/${m.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
-      <div style={{
-        background: 'var(--color-bg-card)',
-        borderRadius: 16,
-        border: '1px solid var(--color-border)',
-        overflow: 'hidden',
-        display: 'flex',
-        flexDirection: 'column',
-        height: '100%',
-        cursor: 'pointer',
-        transition: 'transform 0.25s ease, box-shadow 0.25s ease',
-      }}
-      className="card-hover"
-      >
-        <div style={{ position: 'relative', height: 140, overflow: 'hidden', background: 'var(--color-base-light)' }}>
-          {m.image_url ? (
-            <Image
-              src={m.image_url}
-              alt={`${m.name}の風景`}
-              fill
-              sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-              style={{ objectFit: 'cover' }}
-              priority={false}
-            />
-          ) : (
-            <div style={{
-              width: '100%', height: '100%',
-              background: `linear-gradient(135deg, var(--color-base-light) 0%, var(--color-accent-soft) 100%)`,
-              display: 'flex', alignItems: 'center', justifyContent: 'center',
-              fontSize: 32,
-            }}>🏘</div>
-          )}
-          <div style={{
-            position: 'absolute', bottom: 0, left: 0, right: 0, height: 64,
-            background: 'linear-gradient(transparent, rgba(26,24,20,0.55))',
-          }} />
-          <div style={{ position: 'absolute', bottom: 8, left: 12, right: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-            <div>
-              <div style={{
-                fontSize: 18, fontWeight: 700, color: '#fff',
-                fontFamily: "'Shippori Mincho', serif",
-                letterSpacing: '-0.02em',
-                textShadow: '0 1px 6px rgba(0,0,0,0.5)',
-              }}>{m.name}</div>
-              <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.8)' }}>{m.prefecture} · {m.region}</div>
-            </div>
-            {m.is_featured && <span className="badge badge-featured">注目</span>}
-          </div>
-        </div>
-
-        <div style={{ padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-          <div style={{
-            fontSize: 12, color: 'var(--color-text-secondary)',
-            fontStyle: 'italic', lineHeight: 1.5,
-            borderLeft: '2px solid var(--color-accent-soft)', paddingLeft: 10,
-          }}>{catchCopy}</div>
-
-          <div style={{
-            display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
-            gap: 1, background: 'var(--color-border)', borderRadius: 10, overflow: 'hidden',
-          }}>
-            <DataCell label="年間平均気温" value={m.avg_temp_annual !== null ? `${m.avg_temp_annual}℃` : '-'} color={tempColor(m.avg_temp_annual)} />
-            <DataCell label="1LDK家賃" value={fmt万1(m.rent_1ldk_estimate)} />
-            <DataCell label="東京まで" value={m.time_to_tokyo !== null ? `${m.time_to_tokyo}分` : '-'} />
-          </div>
-
-          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <div style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>
-              月<span style={{
-                fontFamily: "'DM Mono', monospace", fontSize: 14, fontWeight: 500,
-                color: 'var(--color-text-primary)', margin: '0 2px',
-              }}>{fmt万(m.total_monthly_cost_single)}</span>で暮らせる
-            </div>
-            <span className={`badge ${safety.badge}`}>{safety.label}</span>
-          </div>
-
-          <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 'auto' }}>
-            {m.car_necessity_score !== null && m.car_necessity_score <= 2 && <Tag label="🚗 車必須" bg="#FEF2F2" color="#991B1B" />}
-            {m.car_necessity_score !== null && m.car_necessity_score >= 4 && <Tag label="🚃 車不要" bg="#F0FDF4" color="#166534" />}
-            {m.avg_temp_annual !== null && m.avg_temp_annual >= 18 && <Tag label="☀️ 温暖" bg="#FFF7ED" color="#9A3412" />}
-            {m.min_temp_winter !== null && m.min_temp_winter < -5 && <Tag label="❄️ 寒冷地" bg="#EFF6FF" color="#1E3A8A" />}
-            {m.nearest_shinkansen && <Tag label={`🚅 ${m.nearest_shinkansen}`} bg="var(--color-base-light)" color="var(--color-base-dark)" />}
-          </div>
-        </div>
-
+    <div
+      style={{ position: 'relative' }}
+      onMouseEnter={() => setIsExpanded(true)}
+      onMouseLeave={() => setIsExpanded(false)}
+    >
+      <Link href={`/municipalities/${m.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
         <div style={{
-          padding: '10px 18px', borderTop: '1px solid var(--color-border)',
-          display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          background: 'var(--color-bg-card)',
+          borderRadius: 16,
+          border: isExpanded ? '1px solid rgba(212,107,58,0.35)' : '1px solid var(--color-border)',
+          overflow: 'hidden',
+          display: 'flex',
+          flexDirection: 'column',
+          height: '100%',
+          cursor: 'pointer',
+          transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease',
+          boxShadow: isExpanded ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
         }}>
-          <span style={{ fontSize: 11, color: 'var(--color-text-muted)' }}>詳細を見る →</span>
-          <button
-            onClick={e => { e.preventDefault(); e.stopPropagation() }}
-            style={{
-              background: 'none', border: '1px solid var(--color-border)', borderRadius: 999,
-              padding: '4px 12px', fontSize: 11, color: 'var(--color-text-muted)',
-              cursor: 'pointer', transition: 'all 0.2s',
-            }}
-            onMouseEnter={e => {
-              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-accent)'
-              ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--color-accent)'
-            }}
-            onMouseLeave={e => {
-              (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-border)'
-              ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--color-text-muted)'
-            }}
-          >♡ 気になる</button>
+          {/* 写真エリア */}
+          <div style={{ position: 'relative', height: 140, overflow: 'hidden', background: 'var(--color-base-light)' }}>
+            {m.image_url ? (
+              <Image
+                src={m.image_url}
+                alt={`${m.name}の風景`}
+                fill
+                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                style={{ objectFit: 'cover' }}
+                priority={false}
+              />
+            ) : (
+              <div style={{
+                width: '100%', height: '100%',
+                background: `linear-gradient(135deg, var(--color-base-light) 0%, var(--color-accent-soft) 100%)`,
+                display: 'flex', alignItems: 'center', justifyContent: 'center',
+                fontSize: 32,
+              }}>🏘</div>
+            )}
+            <div style={{
+              position: 'absolute', bottom: 0, left: 0, right: 0, height: 64,
+              background: 'linear-gradient(transparent, rgba(26,24,20,0.55))',
+            }} />
+            <div style={{ position: 'absolute', bottom: 8, left: 12, right: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+              <div>
+                <div style={{
+                  fontSize: 18, fontWeight: 700, color: '#fff',
+                  fontFamily: "'Shippori Mincho', serif",
+                  letterSpacing: '-0.02em',
+                  textShadow: '0 1px 6px rgba(0,0,0,0.5)',
+                }}>{m.name}</div>
+                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.8)' }}>{m.prefecture} · {m.region}</div>
+              </div>
+              {m.is_featured && <span className="badge badge-featured">注目</span>}
+            </div>
+          </div>
+
+          <div style={{ padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
+            <div style={{
+              fontSize: 12, color: 'var(--color-text-secondary)',
+              fontStyle: 'italic', lineHeight: 1.5,
+              borderLeft: '2px solid var(--color-accent-soft)', paddingLeft: 10,
+            }}>{catchCopy}</div>
+
+            <div style={{
+              display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)',
+              gap: 1, background: 'var(--color-border)', borderRadius: 10, overflow: 'hidden',
+            }}>
+              <DataCell label="年間平均気温" value={m.avg_temp_annual !== null ? `${m.avg_temp_annual}℃` : '-'} color={tempColor(m.avg_temp_annual)} />
+              <DataCell label="1LDK家賃" value={fmt万1(m.rent_1ldk_estimate)} />
+              <DataCell label="東京まで" value={m.time_to_tokyo !== null ? `${m.time_to_tokyo}分` : '-'} />
+            </div>
+
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <div style={{ fontSize: 12, color: 'var(--color-text-secondary)' }}>
+                月<span style={{
+                  fontFamily: "'DM Mono', monospace", fontSize: 14, fontWeight: 500,
+                  color: 'var(--color-text-primary)', margin: '0 2px',
+                }}>{fmt万(m.total_monthly_cost_single)}</span>で暮らせる
+              </div>
+              <span className={`badge ${safety.badge}`}>{safety.label}</span>
+            </div>
+
+            {/* ★ 生活リアリティ指数バー（新規追加） */}
+            {m.lifestyle_score !== null && (
+              <div>
+                <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--color-text-muted)', marginBottom: 4 }}>
+                  <span>生活リアリティ指数</span>
+                  <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 500 }}>{lifestyleScore}/100</span>
+                </div>
+                <ScoreBar value={lifestyleScore} color={scoreColor} />
+              </div>
+            )}
+
+            <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 'auto' }}>
+              {m.car_necessity_score !== null && m.car_necessity_score <= 2 && <Tag label="🚗 車必須" bg="#FEF2F2" color="#991B1B" />}
+              {m.car_necessity_score !== null && m.car_necessity_score >= 4 && <Tag label="🚃 車不要" bg="#F0FDF4" color="#166534" />}
+              {m.avg_temp_annual !== null && m.avg_temp_annual >= 18 && <Tag label="☀️ 温暖" bg="#FFF7ED" color="#9A3412" />}
+              {m.min_temp_winter !== null && m.min_temp_winter < -5 && <Tag label="❄️ 寒冷地" bg="#EFF6FF" color="#1E3A8A" />}
+              {m.nearest_shinkansen && <Tag label={`🚅 ${m.nearest_shinkansen}`} bg="var(--color-base-light)" color="var(--color-base-dark)" />}
+            </div>
+          </div>
+
+          <div style={{
+            padding: '10px 18px', borderTop: '1px solid var(--color-border)',
+            display: 'flex', justifyContent: 'space-between', alignItems: 'center',
+          }}>
+            <span style={{ fontSize: 11, color: 'var(--color-text-muted)' }}>詳細を見る →</span>
+            <button
+              onClick={e => { e.preventDefault(); e.stopPropagation() }}
+              style={{
+                background: 'none', border: '1px solid var(--color-border)', borderRadius: 999,
+                padding: '4px 12px', fontSize: 11, color: 'var(--color-text-muted)',
+                cursor: 'pointer', transition: 'all 0.2s',
+              }}
+              onMouseEnter={e => {
+                (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-accent)'
+                ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--color-accent)'
+              }}
+              onMouseLeave={e => {
+                (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-border)'
+                ;(e.currentTarget as HTMLButtonElement).style.color = 'var(--color-text-muted)'
+              }}
+            >♡ 気になる</button>
+          </div>
         </div>
-      </div>
-    </Link>
+      </Link>
+
+      {/* ★ ホバー展開パネル（オーバーレイ方式） */}
+      {isExpanded && (
+        <div style={{
+          position: 'absolute',
+          top: 0,
+          left: '100%',
+          zIndex: 50,
+          width: 220,
+          background: 'var(--color-bg-card)',
+          borderRadius: '0 16px 16px 0',
+          border: '1px solid rgba(212,107,58,0.35)',
+          borderLeft: 'none',
+          boxShadow: '6px 0 24px rgba(0,0,0,0.12)',
+          padding: '16px 14px',
+          pointerEvents: 'none',
+        }}>
+          <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.08em', color: 'var(--color-text-muted)', marginBottom: 12 }}>
+            施設データ
+          </div>
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
+            <FacilityRow icon="☕" label="スタバ" value={m.cafe_starbucks} unit="軒" />
+            <FacilityRow icon="🏋️" label="24hジム" value={m.gym_24h_count} unit="軒" />
+            <FacilityRow
+              icon="🎬" label="映画館" value={m.cinema_count} unit="軒"
+              badge={m.cinema_has_imax ? 'IMAX' : undefined}
+            />
+            <FacilityRow
+              icon="🛒" label="モール" value={m.mall_count} unit="軒"
+              badge={m.mall_best_tier ? `Tier ${m.mall_best_tier}` : undefined}
+            />
+            <FacilityRow
+              icon="👶" label="待機児童" value={m.waiting_children} unit="人"
+              highlight={true}
+            />
+            <FacilityRow icon="🏥" label="小児科" value={m.pediatric_clinics} unit="件" />
+          </div>
+
+          {/* コスパスコア */}
+          {m.score_costperf !== null && (
+            <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--color-border)' }}>
+              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--color-text-muted)', marginBottom: 4 }}>
+                <span>コスパスコア</span>
+                <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 500 }}>{m.score_costperf}/100</span>
+              </div>
+              <ScoreBar value={m.score_costperf} color="#4A7C59" />
+            </div>
+          )}
+        </div>
+      )}
+    </div>
   )
 }
 
@@ -259,7 +371,7 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
   const [filters, setFilters] = useState<Filters>({
     region: '全て', maxCost: 999999, maxTemp: 'all', carFree: false, quickFilter: null,
   })
-  const [sortKey, setSortKey] = useState<'name' | 'cost' | 'temp' | 'tokyo'>('name')
+  const [sortKey, setSortKey] = useState<'name' | 'cost' | 'temp' | 'tokyo' | 'lifestyle'>('lifestyle')
   const [page, setPage] = useState(1)
 
   const filtered = useMemo(() => {
@@ -277,6 +389,7 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
         if (sortKey === 'cost') return (a.total_monthly_cost_single ?? 999999) - (b.total_monthly_cost_single ?? 999999)
         if (sortKey === 'temp') return (b.avg_temp_annual ?? -99) - (a.avg_temp_annual ?? -99)
         if (sortKey === 'tokyo') return (a.time_to_tokyo ?? 999) - (b.time_to_tokyo ?? 999)
+        if (sortKey === 'lifestyle') return (b.lifestyle_score ?? 0) - (a.lifestyle_score ?? 0)
         return a.name.localeCompare(b.name, 'ja')
       })
   }, [municipalities, filters, sortKey])
@@ -337,7 +450,7 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
             )}
           </span>
           <div style={{ display: 'flex', gap: 6 }}>
-            {(['name', 'cost', 'temp', 'tokyo'] as const).map(key => (
+            {(['lifestyle', 'name', 'cost', 'temp', 'tokyo'] as const).map(key => (
               <button key={key} onClick={() => { setSortKey(key); setPage(1) }} style={{
                 fontSize: 12, padding: '5px 12px', borderRadius: 999, border: '1px solid',
                 borderColor: sortKey === key ? 'var(--color-accent)' : 'var(--color-border)',
@@ -345,7 +458,7 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
                 color: sortKey === key ? '#fff' : 'var(--color-text-muted)',
                 cursor: 'pointer', fontWeight: sortKey === key ? 600 : 400, transition: 'all 0.2s',
               }}>
-                {{ name: '名前順', cost: '生活費安い順', temp: '温暖順', tokyo: '東京近い順' }[key]}
+                {{ lifestyle: '⭐ 生活充実度', name: '名前順', cost: '生活費安い順', temp: '温暖順', tokyo: '東京近い順' }[key]}
               </button>
             ))}
           </div>

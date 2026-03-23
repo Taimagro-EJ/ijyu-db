@@ -3,6 +3,7 @@ import Link from 'next/link';
 import { notFound } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
 
 export const revalidate = 60;
 export const dynamic = 'force-dynamic';
@@ -89,7 +90,7 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {post.content ? (
           <div style={{ fontSize: 15, lineHeight: 1.9, color: '#1e293b' }}>
-            <ReactMarkdown>{post.content}</ReactMarkdown>
+            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '60px 0', color: '#94a3b8' }}>

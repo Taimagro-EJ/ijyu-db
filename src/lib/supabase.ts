@@ -31,4 +31,20 @@ export type Municipality = {
   nearest_airport: string | null
   public_transport_score: number | null
   criminal_rate: number | null
+  lifestyle_score: number | null;
+  score_costperf: number | null;
+  score_shopping: number | null;
+  score_gourmet: number | null;
+  score_fitness: number | null;
+  score_entertainment: number | null;
+  score_childcare: number | null;
+  score_medical: number | null;
+  cafe_starbucks: number | null;
+  gym_24h_count: number | null;
+  cinema_count: number | null;
+  cinema_has_imax: boolean | null;
+  mall_count: number | null;
+  mall_best_tier: string | null;
+  waiting_children: number | null;
+  pediatric_clinics: number | null;
 }

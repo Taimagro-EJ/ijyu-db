@@ -90,7 +90,19 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
 
         {post.content ? (
           <div style={{ fontSize: 15, lineHeight: 1.9, color: '#1e293b' }}>
-            <ReactMarkdown remarkPlugins={[remarkGfm]}>{post.content}</ReactMarkdown>
+            <ReactMarkdown
+              remarkPlugins={[remarkGfm]}
+              components={{
+                h1: () => null,
+                h2: ({children}) => <h2 style={{fontSize:22, fontWeight:700, color:'#0f172a', margin:'32px 0 12px', paddingBottom:8, borderBottom:'2px solid #e2e8f0'}}>{children}</h2>,
+                h3: ({children}) => <h3 style={{fontSize:18, fontWeight:600, color:'#1e293b', margin:'24px 0 8px'}}>{children}</h3>,
+                table: ({children}) => <div style={{overflowX:'auto', margin:'16px 0'}}><table style={{width:'100%', borderCollapse:'collapse', fontSize:14}}>{children}</table></div>,
+                th: ({children}) => <th style={{background:'#f1f5f9', padding:'8px 12px', textAlign:'left', borderBottom:'2px solid #e2e8f0', fontWeight:600}}>{children}</th>,
+                td: ({children}) => <td style={{padding:'8px 12px', borderBottom:'1px solid #f1f5f9'}}>{children}</td>,
+                blockquote: ({children}) => <blockquote style={{borderLeft:'4px solid #0f172a', paddingLeft:16, margin:'16px 0', color:'#475569', background:'#f8fafc', padding:'12px 16px', borderRadius:'0 8px 8px 0'}}>{children}</blockquote>,
+                strong: ({children}) => <strong style={{fontWeight:700, color:'#0f172a'}}>{children}</strong>,
+              }}
+            >{post.content}</ReactMarkdown>
           </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '60px 0', color: '#94a3b8' }}>

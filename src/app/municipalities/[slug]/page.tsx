@@ -1,12 +1,9 @@
 import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
-import dynamic from 'next/dynamic'
+import RadarChart from '@/components/lifestyle/RadarChartWrapper'
 
 export const revalidate = 60
-
-// rechartsはSSR非対応のためdynamic importでCSRのみに
-const RadarChart = dynamic(() => import('@/components/lifestyle/RadarChart'), { ssr: false })
 
 function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (

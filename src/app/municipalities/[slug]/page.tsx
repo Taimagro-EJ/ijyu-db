@@ -183,7 +183,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
                       <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#64748b', marginBottom: 3 }}>
                         <span>{item.label}</span>
                         <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600, color: '#0f172a' }}>
-                          {item.value}
+                          {String(item.value)}
                         </span>
                       </div>
                       <ScoreBar
@@ -202,19 +202,19 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
                       {m.total_score_family != null && (
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
                           <span style={{ color: '#64748b' }}>👶 子育て世帯</span>
-                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{m.total_score_family}点</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{String(m.total_score_family)}点</span>
                         </div>
                       )}
                       {m.total_score_remote != null && (
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
                           <span style={{ color: '#64748b' }}>💻 リモートワーカー</span>
-                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{m.total_score_remote}点</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{String(m.total_score_remote)}点</span>
                         </div>
                       )}
                       {m.total_score_active != null && (
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
                           <span style={{ color: '#64748b' }}>🏃 アクティブ</span>
-                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{m.total_score_active}点</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{String(m.total_score_active)}点</span>
                         </div>
                       )}
                     </div>
@@ -231,8 +231,8 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <StatCard label="スターバックス" value={`${m.cafe_starbucks}軒`} />
             {m.gym_24h_count != null && <StatCard label="24時間ジム" value={`${m.gym_24h_count}軒`} />}
             {m.cinema_count != null && <StatCard label="映画館" value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} />}
-            {m.mall_count != null && <StatCard label="モール" value={`${m.mall_count}軒`} sub={m.mall_best_tier ? `最高Tier: ${m.mall_best_tier}` : undefined} />}
-            {m.waiting_children != null && <StatCard label="待機児童" value={`${m.waiting_children}人`} sub={m.waiting_children === 0 ? '✓ ゼロ' : undefined} />}
+            {m.mall_count != null && <StatCard label="モール" value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} />}
+            {m.waiting_children != null && <StatCard label="待機児童" value={`${m.waiting_children}人`} sub={(m.waiting_children as number | null) === 0 ? '✓ ゼロ' : undefined} />}
             {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} />}
           </Section>
         )}

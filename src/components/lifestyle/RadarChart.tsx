@@ -82,7 +82,6 @@ export default function RadarChart({ municipalityName, scores }: RadarChartProps
               border: '1px solid #E8E4DF',
               borderRadius: 8,
             }}
-            formatter={(value: number, name: string) => [`${value}点`, name]}
           />
           <Legend wrapperStyle={{ fontSize: 11, fontFamily: "'Noto Sans JP', sans-serif" }} />
         </RechartsRadarChart>

@@ -35,9 +35,13 @@ export type Municipality = {
   lifestyle_score: number | null
   score_costperf: number | null
   score_shopping: number | null
-  score_gourmet: number | null
+  score_cafe: number | null
+  score_dining: number | null
   score_fitness: number | null
   score_entertainment: number | null
+  score_family: number | null
+  score_grocery: number | null
+  score_gourmet: number | null
   score_childcare: number | null
   score_medical: number | null
   // ★ 施設データ（ホバー展開用）

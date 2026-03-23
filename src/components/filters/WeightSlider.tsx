@@ -4,18 +4,18 @@ import { useState, useCallback } from 'react';
 
 const CATEGORIES = [
   { key: 'shopping',      label: 'ショッピング',  icon: '🛒', default: 50 },
-  { key: 'gourmet',       label: 'カフェ・外食',  icon: '☕', default: 50 },
+  { key: 'cafe',          label: 'カフェ',        icon: '☕', default: 50 },
+  { key: 'dining',        label: 'グルメ・外食',  icon: '🍜', default: 50 },
   { key: 'fitness',       label: 'フィットネス',  icon: '🏋️', default: 50 },
   { key: 'entertainment', label: 'エンタメ',      icon: '🎬', default: 50 },
-  { key: 'childcare',     label: '子育て・教育',  icon: '👶', default: 50 },
-  { key: 'medical',       label: '医療・安心',    icon: '🏥', default: 50 },
-  { key: 'costperf',      label: 'コスパ重視',    icon: '💰', default: 50 },
+  { key: 'family',        label: '子育て・家族',  icon: '👶', default: 50 },
+  { key: 'grocery',       label: '食料品・日用品', icon: '🛍', default: 50 },
 ];
 
 const PRESETS = {
-  family: { shopping: 40, gourmet: 20, fitness: 15, entertainment: 20, childcare: 95, medical: 85, costperf: 70 },
-  remote: { shopping: 35, gourmet: 80, fitness: 60, entertainment: 40, childcare: 15, medical: 30, costperf: 70 },
-  senior: { shopping: 50, gourmet: 30, fitness: 60, entertainment: 30, childcare: 0,  medical: 95, costperf: 50 },
+  family: { shopping: 40, cafe: 20, dining: 30, fitness: 15, entertainment: 20, family: 95, grocery: 70 },
+  remote: { shopping: 35, cafe: 80, dining: 60, fitness: 60, entertainment: 40, family: 15, grocery: 50 },
+  senior: { shopping: 50, cafe: 30, dining: 40, fitness: 60, entertainment: 30, family: 0,  grocery: 70 },
 };
 
 interface WeightSliderProps {
@@ -50,7 +50,7 @@ export default function WeightSlider({ weights, onWeightsChange }: WeightSliderP
         {[
           { key: 'family' as const, label: '👶 子育て世帯' },
           { key: 'remote' as const, label: '💻 リモートワーカー' },
-          { key: 'senior' as const, label: '🏥 シニア' },
+          { key: 'senior' as const, label: '🌿 シニア' },
         ].map(p => (
           <button
             key={p.key}
@@ -77,7 +77,6 @@ export default function WeightSlider({ weights, onWeightsChange }: WeightSliderP
           </button>
         ))}
 
-        {/* 展開トグル */}
         <button
           onClick={() => setIsOpen(v => !v)}
           style={{
@@ -98,7 +97,7 @@ export default function WeightSlider({ weights, onWeightsChange }: WeightSliderP
             {CATEGORIES.map(cat => (
               <div key={cat.key} style={{ display: 'flex', alignItems: 'center', gap: 10 }}>
                 <span style={{ fontSize: 16, width: 22, textAlign: 'center' }}>{cat.icon}</span>
-                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)', width: 90, flexShrink: 0 }}>
+                <span style={{ fontSize: 12, color: 'var(--color-text-secondary)', width: 100, flexShrink: 0 }}>
                   {cat.label}
                 </span>
                 <input
@@ -119,7 +118,7 @@ export default function WeightSlider({ weights, onWeightsChange }: WeightSliderP
             ))}
           </div>
           <p style={{ fontSize: 10, color: 'var(--color-text-muted)', marginTop: 10 }}>
-            ※ スライダーを動かすと「カスタム」ソートで527市町村がリアルタイムに並び替わります
+            ※ スライダーを動かすと「🎯 カスタム」ソートで527市町村がリアルタイムに並び替わります
           </p>
         </div>
       )}

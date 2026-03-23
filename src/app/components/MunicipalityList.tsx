@@ -299,8 +299,8 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
   const [filters, setFilters] = useState<Filters>({ region: '全て', maxCost: 999999, maxTemp: 'all', carFree: false, quickFilter: null })
   const [sortKey, setSortKey] = useState<SortKey>('lifestyle')
   const [weights, setWeights] = useState<Record<string, number>>({
-    shopping: 50, gourmet: 50, fitness: 50, entertainment: 50,
-    childcare: 50, medical: 50, costperf: 50,
+    shopping: 50, cafe: 50, dining: 50, fitness: 50, entertainment: 50,
+    family: 50, grocery: 50,
   })
   const [page, setPage] = useState(1)
 
@@ -328,12 +328,12 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
           ...m,
           customScore: Math.round((
             (m.score_shopping ?? 0) * (norm.shopping ?? 0) +
-            (m.score_gourmet ?? 0) * (norm.gourmet ?? 0) +
+            (m.score_cafe ?? 0) * (norm.cafe ?? 0) +
+            (m.score_dining ?? 0) * (norm.dining ?? 0) +
             (m.score_fitness ?? 0) * (norm.fitness ?? 0) +
             (m.score_entertainment ?? 0) * (norm.entertainment ?? 0) +
-            (m.score_childcare ?? 0) * (norm.childcare ?? 0) +
-            (m.score_medical ?? 0) * (norm.medical ?? 0) +
-            (m.score_costperf ?? 0) * (norm.costperf ?? 0)
+            (m.score_family ?? 0) * (norm.family ?? 0) +
+            (m.score_grocery ?? 0) * (norm.grocery ?? 0)
           ) * 10) / 10,
         }))
         .sort((a, b) => (b.customScore ?? 0) - (a.customScore ?? 0))

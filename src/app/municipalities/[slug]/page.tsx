@@ -1,10 +1,12 @@
 import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
+import dynamic from 'next/dynamic'
 
-// SSGではなくISR（60秒キャッシュ）で動的生成
 export const revalidate = 60
-// generateStaticParams は削除 → ビルド時に静的生成しない
+
+// rechartsはSSR非対応のためdynamic importでCSRのみに
+const RadarChart = dynamic(() => import('@/components/lifestyle/RadarChart'), { ssr: false })
 
 function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
@@ -53,6 +55,14 @@ function fmtTemp(v: unknown): string {
   return `${n}℃`
 }
 
+function ScoreBar({ value, color }: { value: number; color: string }) {
+  return (
+    <div style={{ height: 8, background: '#e2e8f0', borderRadius: 999, overflow: 'hidden', marginTop: 6 }}>
+      <div style={{ height: '100%', width: `${value}%`, backgroundColor: color, borderRadius: 999, transition: 'width 0.7s ease' }} />
+    </div>
+  )
+}
+
 export default async function MunicipalityPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
   const { data, error } = await supabase
@@ -65,6 +75,22 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
   const m = data as Record<string, unknown>
   const carScore = m.car_necessity_score as number | null
   const carLabel = (['', '必須', '高い', '普通', '低い', '不要'] as const)[carScore ?? 0] ?? '-'
+  const lifestyleScore = (m.lifestyle_score as number | null) ?? 0
+  const scoreColor = lifestyleScore >= 70 ? '#4A7C59' : lifestyleScore >= 45 ? '#D46B3A' : '#B84C3A'
+
+  const hasLifestyleData = m.lifestyle_score != null
+  const hasFacilityData = m.cafe_starbucks != null
+
+  // レーダーチャート用スコア
+  const radarScores = {
+    shopping:      m.score_shopping as number | null,
+    cafe:          m.score_cafe as number | null,
+    dining:        m.score_dining as number | null,
+    fitness:       m.score_fitness as number | null,
+    entertainment: m.score_entertainment as number | null,
+    family:        m.score_family as number | null,
+    grocery:       m.score_grocery as number | null,
+  }
 
   return (
     <div style={{ fontFamily: "'Noto Sans JP', 'Hiragino Sans', sans-serif", minHeight: '100vh', background: '#f8fafc' }}>
@@ -103,19 +129,104 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
           <StatCard label="治安評価" value={safetyLabel(m.criminal_rate as number | null)} />
         </Section>
 
-        {m.lifestyle_score != null && (
-          <Section title="⭐ 生活リアリティ指数">
-            <StatCard label="総合スコア" value={`${m.lifestyle_score}/100`} sub="施設充実度・コスパ総合" />
-            {m.score_costperf != null && <StatCard label="コスパ" value={`${m.score_costperf}/100`} />}
-            {m.score_shopping != null && <StatCard label="ショッピング" value={`${m.score_shopping}/100`} />}
-            {m.score_fitness != null && <StatCard label="フィットネス" value={`${m.score_fitness}/100`} />}
-            {m.score_entertainment != null && <StatCard label="エンタメ" value={`${m.score_entertainment}/100`} />}
-            {m.score_childcare != null && <StatCard label="子育て" value={`${m.score_childcare}/100`} />}
-            {m.score_medical != null && <StatCard label="医療" value={`${m.score_medical}/100`} />}
-          </Section>
+        {/* ★ 生活リアリティセクション（レーダーチャート付き） */}
+        {hasLifestyleData && (
+          <div style={{ marginBottom: 32 }}>
+            <h2 style={{ fontSize: 16, fontWeight: 700, color: '#0f172a', margin: '0 0 16px', paddingBottom: 8, borderBottom: '2px solid #e2e8f0' }}>
+              ⭐ 生活リアリティ指数
+            </h2>
+
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))', gap: 24, alignItems: 'start' }}>
+
+              {/* レーダーチャート */}
+              <div style={{ background: '#f8fafc', borderRadius: 12, padding: '20px' }}>
+                <p style={{ fontSize: 12, color: '#94a3b8', margin: '0 0 12px', textAlign: 'center' }}>
+                  カテゴリ別スコア（全国平均との比較）
+                </p>
+                <RadarChart
+                  municipalityName={m.name as string}
+                  scores={radarScores}
+                />
+              </div>
+
+              {/* スコアサマリー */}
+              <div style={{ background: '#f8fafc', borderRadius: 12, padding: '20px' }}>
+                {/* 総合スコア */}
+                <div style={{ marginBottom: 20 }}>
+                  <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: 6 }}>
+                    <span style={{ fontSize: 13, color: '#64748b' }}>総合スコア</span>
+                    <span style={{ fontSize: 36, fontWeight: 700, color: '#0f172a', fontFamily: "'DM Mono', monospace" }}>
+                      {lifestyleScore}
+                      <span style={{ fontSize: 16, color: '#94a3b8' }}>/100</span>
+                    </span>
+                  </div>
+                  <ScoreBar value={lifestyleScore} color={scoreColor} />
+                  {m.rank_total != null && (
+                    <p style={{ fontSize: 11, color: '#94a3b8', marginTop: 6 }}>
+                      全国 {m.rank_total as number}位 / 527市町村
+                    </p>
+                  )}
+                </div>
+
+                {/* カテゴリ別スコア */}
+                <div style={{ display: 'flex', flexDirection: 'column', gap: 10 }}>
+                  {[
+                    { label: '🛒 ショッピング', value: m.score_shopping as number | null },
+                    { label: '☕ カフェ',       value: m.score_cafe as number | null },
+                    { label: '🍜 グルメ',       value: m.score_dining as number | null },
+                    { label: '🏋️ フィットネス', value: m.score_fitness as number | null },
+                    { label: '🎬 エンタメ',     value: m.score_entertainment as number | null },
+                    { label: '👶 子育て',       value: m.score_family as number | null },
+                    { label: '🛍 食料品',       value: m.score_grocery as number | null },
+                  ].filter(item => item.value != null).map(item => (
+                    <div key={item.label}>
+                      <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12, color: '#64748b', marginBottom: 3 }}>
+                        <span>{item.label}</span>
+                        <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600, color: '#0f172a' }}>
+                          {item.value}
+                        </span>
+                      </div>
+                      <ScoreBar
+                        value={item.value!}
+                        color={item.value! >= 70 ? '#4A7C59' : item.value! >= 45 ? '#D46B3A' : '#94a3b8'}
+                      />
+                    </div>
+                  ))}
+                </div>
+
+                {/* ペルソナ別スコア */}
+                {(m.total_score_family != null || m.total_score_remote != null || m.total_score_active != null) && (
+                  <div style={{ marginTop: 16, paddingTop: 16, borderTop: '1px solid #e2e8f0' }}>
+                    <p style={{ fontSize: 11, color: '#94a3b8', marginBottom: 8 }}>ペルソナ別</p>
+                    <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
+                      {m.total_score_family != null && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+                          <span style={{ color: '#64748b' }}>👶 子育て世帯</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{m.total_score_family}点</span>
+                        </div>
+                      )}
+                      {m.total_score_remote != null && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+                          <span style={{ color: '#64748b' }}>💻 リモートワーカー</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{m.total_score_remote}点</span>
+                        </div>
+                      )}
+                      {m.total_score_active != null && (
+                        <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+                          <span style={{ color: '#64748b' }}>🏃 アクティブ</span>
+                          <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 600 }}>{m.total_score_active}点</span>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                )}
+              </div>
+            </div>
+          </div>
         )}
 
-        {m.cafe_starbucks != null && (
+        {/* 施設データ */}
+        {hasFacilityData && (
           <Section title="🏪 施設データ">
             <StatCard label="スターバックス" value={`${m.cafe_starbucks}軒`} />
             {m.gym_24h_count != null && <StatCard label="24時間ジム" value={`${m.gym_24h_count}軒`} />}

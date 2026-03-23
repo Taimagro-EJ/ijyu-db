@@ -1,0 +1,96 @@
+[
+  {
+    "id": 1,
+    "title": "スタバがある×家賃5万以下×東京3時間以内：コスパ最強移住先TOP10",
+    "slug": "starbucks-yachin-5man-tokyo-3h-cospa",
+    "type": "cross_ranking",
+    "target_keyword": "スタバ 移住先 家賃 安い",
+    "facility_filter": {"cafe_starbucks": 1},
+    "stat_conditions": {"rent_1ldk_estimate": ["lte", 50000], "time_to_tokyo": ["lte", 180]},
+    "h2_outline": ["スタバを移住先選びの指標にする理由", "3条件を全てクリアした市町村は何件？", "TOP10ランキング詳細", "意外な入選・落選市町村", "[HUMAN_INSIGHT] 松本のスタバ事情"]
+  },
+  {
+    "id": 2,
+    "title": "24時間ジムがある移住先×家賃6万以下：筋トレ移住先データランキング",
+    "slug": "gym-24h-yachin-6man-ranking",
+    "type": "cross_ranking",
+    "target_keyword": "24時間ジム 移住先 家賃",
+    "facility_filter": {"gym_24h_count": 1},
+    "stat_conditions": {"rent_1ldk_estimate": ["lte", 60000]},
+    "h2_outline": ["24hジムがある移住先を探す理由", "全国527市町村中の該当数", "TOP10ランキング", "エニタイムフィットネスがある市町村一覧", "[HUMAN_INSIGHT] 松本のジム事情"]
+  },
+  {
+    "id": 3,
+    "title": "映画館がある地方都市×家賃5万以下：エンタメ充実の移住先",
+    "slug": "cinema-yachin-5man-chiho",
+    "type": "cross_ranking",
+    "target_keyword": "映画館 移住先 地方",
+    "facility_filter": {"cinema_count": 1},
+    "stat_conditions": {"rent_1ldk_estimate": ["lte", 50000]},
+    "h2_outline": ["映画館があるかどうかで生活が変わる理由", "映画館あり×家賃安い市町村", "TOP10の特徴", "意外な発見：人口が少ないのに映画館がある町", "[HUMAN_INSIGHT] 松本の映画館体験"]
+  },
+  {
+    "id": 4,
+    "title": "東京2時間以内×生活費15万以下×犯罪率低い：データで選ぶ安全移住先",
+    "slug": "tokyo-2h-seikatsuhi-15man-anzen",
+    "type": "cross_ranking",
+    "target_keyword": "東京 近い 移住先 安全",
+    "facility_filter": {},
+    "stat_conditions": {"time_to_tokyo": ["lte", 120], "rent_1ldk_estimate": ["lte", 65000], "criminal_rate": ["lte", 5.0]},
+    "h2_outline": ["東京近郊×コスパ×安全の3条件", "該当市町村数と分布", "TOP10詳細データ", "新幹線アクセス別の内訳", "[HUMAN_INSIGHT] 移住先に安全を求める理由"]
+  },
+  {
+    "id": 5,
+    "title": "コスパ最強の移住先：生活リアリティ指数÷家賃ランキング全国TOP20",
+    "slug": "cospa-life-reality-yachin-ranking",
+    "type": "surprising_discovery",
+    "target_keyword": "コスパ 移住先 ランキング",
+    "h2_outline": ["コスパスコアの定義とデータ根拠", "コスパTOP20の全データ", "高コスパ市町村の共通点（地域・規模・産業）", "東京23区のコスパはワースト何位か", "[HUMAN_INSIGHT] 松本のコスパ実感"]
+  },
+  {
+    "id": 6,
+    "title": "移住DBデータが示す意外な発見：地方なのに都会より充実している市町村",
+    "slug": "chiho-toshi-yori-jujitsu-surprising",
+    "type": "surprising_discovery",
+    "target_keyword": "地方移住 意外 充実",
+    "h2_outline": ["527市町村のデータから見えた5つの意外な発見", "人口3万以下なのにスタバがある町", "東京より家賃が高い地方都市はどこか", "24hジムが都心より多い地方都市", "[HUMAN_INSIGHT] 松本で驚いた生活インフラ"]
+  },
+  {
+    "id": 7,
+    "title": "リモートワーカーの移住先データ分析：カフェ×東京2時間×家賃安い",
+    "slug": "remote-worker-cafe-tokyo-2h-yachin",
+    "type": "cross_ranking",
+    "target_keyword": "リモートワーク 移住先 おすすめ",
+    "facility_filter": {"cafe_starbucks": 1},
+    "stat_conditions": {"time_to_tokyo": ["lte", 120], "rent_1ldk_estimate": ["lte", 65000]},
+    "h2_outline": ["リモートワーカーが移住先に求める3条件", "データが示す最適解TOP10", "カフェ環境と通信インフラの実態", "新幹線駅からの距離と家賃の関係", "[HUMAN_INSIGHT] 松本でのリモートワーク体験"]
+  },
+  {
+    "id": 8,
+    "title": "イオンモールがある地方都市×家賃5万以下：ショッピング環境で選ぶ移住先",
+    "slug": "aeon-mall-yachin-5man-ranking",
+    "type": "cross_ranking",
+    "target_keyword": "イオンモール 移住先 地方",
+    "facility_filter": {"mall_count": 1},
+    "stat_conditions": {"rent_1ldk_estimate": ["lte", 50000]},
+    "h2_outline": ["ショッピングモールのTier分類とは", "イオンモールあり×家賃安い市町村", "Tier A以上のモールがある移住先TOP10", "車必要度との関係", "[HUMAN_INSIGHT] 松本のショッピング環境"]
+  },
+  {
+    "id": 9,
+    "title": "新潟市が生活リアリティ指数1位の理由：データで読む地方移住の最適解",
+    "slug": "niigata-life-reality-index-1i-data",
+    "type": "surprising_discovery",
+    "target_keyword": "新潟市 移住 おすすめ",
+    "h2_outline": ["生活リアリティ指数とは何か", "新潟市の全指標データ一覧", "なぜ東京より地方中核市がスコアで上回るのか", "新潟市と他の上位都市との比較", "[HUMAN_INSIGHT] 実際に地方中核市に住んで感じること"]
+  },
+  {
+    "id": 10,
+    "title": "スーパーが徒歩圏にある×家賃4万以下×治安良好：車なし移住先データ",
+    "slug": "super-tohoiken-yachin-4man-kuruma-nashi",
+    "type": "cross_ranking",
+    "target_keyword": "車なし 移住先 スーパー",
+    "facility_filter": {"supermarket_count": 3},
+    "stat_conditions": {"rent_1ldk_estimate": ["lte", 40000], "criminal_rate": ["lte", 4.0]},
+    "h2_outline": ["車なし移住の3大条件", "スーパー密度×家賃×治安の該当市町村", "TOP10の公共交通スコア", "意外な穴場：地方なのに車なしで暮らせる町", "[HUMAN_INSIGHT] 車なし移住の実態"]
+  }
+]

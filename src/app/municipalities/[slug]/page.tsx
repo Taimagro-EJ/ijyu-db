@@ -1,23 +1,10 @@
-import { supabase, Municipality } from '@/lib/supabase'
+import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 
+// SSGではなくISR（60秒キャッシュ）で動的生成
 export const revalidate = 60
-
-async function getMunicipality(slug: string): Promise<Municipality | null> {
-  const { data, error } = await supabase
-    .from('municipality_overview')
-    .select('*')
-    .eq('slug', slug)
-    .single()
-  if (error || !data) return null
-  return data as Municipality
-}
-
-export async function generateStaticParams() {
-  const { data } = await supabase.from('municipalities').select('slug')
-  return (data ?? []).map(m => ({ slug: m.slug }))
-}
+// generateStaticParams は削除 → ビルド時に静的生成しない
 
 function StatCard({ label, value, sub }: { label: string; value: string; sub?: string }) {
   return (
@@ -68,19 +55,24 @@ function fmtTemp(v: unknown): string {
 
 export default async function MunicipalityPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
-  const m = await getMunicipality(slug)
-  if (!m) notFound()
+  const { data, error } = await supabase
+    .from('municipality_overview')
+    .select('*')
+    .eq('slug', slug)
+    .single()
+  if (error || !data) notFound()
 
-  const raw = m as Record<string, unknown>
-  const carLabel = (['', '必須', '高い', '普通', '低い', '不要'] as const)[m.car_necessity_score ?? 0] ?? '-'
+  const m = data as Record<string, unknown>
+  const carScore = m.car_necessity_score as number | null
+  const carLabel = (['', '必須', '高い', '普通', '低い', '不要'] as const)[carScore ?? 0] ?? '-'
 
   return (
     <div style={{ fontFamily: "'Noto Sans JP', 'Hiragino Sans', sans-serif", minHeight: '100vh', background: '#f8fafc' }}>
       <header style={{ background: '#0f172a', color: '#fff', padding: '20px 32px' }}>
         <div style={{ maxWidth: 900, margin: '0 auto' }}>
           <Link href="/" style={{ color: '#94a3b8', fontSize: 13, textDecoration: 'none' }}>← 一覧に戻る</Link>
-          <h1 style={{ fontSize: 28, fontWeight: 800, margin: '8px 0 4px' }}>{m.name}</h1>
-          <p style={{ fontSize: 13, color: '#94a3b8', margin: 0 }}>{m.prefecture} · {m.region}</p>
+          <h1 style={{ fontSize: 28, fontWeight: 800, margin: '8px 0 4px' }}>{m.name as string}</h1>
+          <p style={{ fontSize: 13, color: '#94a3b8', margin: 0 }}>{m.prefecture as string} · {m.region as string}</p>
         </div>
       </header>
 
@@ -96,41 +88,41 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         <Section title="💴 生活費（推計）">
           <StatCard label="単身月額生活費" value={fmt万(m.total_monthly_cost_single)} sub="家賃・食費・光熱費込み" />
           <StatCard label="1LDK家賃目安" value={fmt万1(m.rent_1ldk_estimate)} />
-          <StatCard label="車の必要度" value={carLabel} sub={`スコア ${m.car_necessity_score ?? '-'}/5`} />
+          <StatCard label="車の必要度" value={carLabel} sub={`スコア ${carScore ?? '-'}/5`} />
         </Section>
 
         <Section title="🚅 アクセス">
           <StatCard label="東京まで" value={m.time_to_tokyo != null ? `${m.time_to_tokyo}分` : '-'} />
-          <StatCard label="最寄り新幹線駅" value={m.nearest_shinkansen ?? '-'} />
-          <StatCard label="最寄り空港" value={m.nearest_airport ?? '-'} />
+          <StatCard label="最寄り新幹線駅" value={(m.nearest_shinkansen as string | null) ?? '-'} />
+          <StatCard label="最寄り空港" value={(m.nearest_airport as string | null) ?? '-'} />
           <StatCard label="公共交通スコア" value={m.public_transport_score != null ? `${m.public_transport_score}/5` : '-'} />
         </Section>
 
         <Section title="🔒 安全・治安">
           <StatCard label="刑法犯認知件数" value={m.criminal_rate != null ? `${m.criminal_rate}件` : '-'} sub="人口10万人あたり（都道府県値）" />
-          <StatCard label="治安評価" value={safetyLabel(m.criminal_rate)} />
+          <StatCard label="治安評価" value={safetyLabel(m.criminal_rate as number | null)} />
         </Section>
 
-        {raw.lifestyle_score != null && (
+        {m.lifestyle_score != null && (
           <Section title="⭐ 生活リアリティ指数">
-            <StatCard label="総合スコア" value={`${raw.lifestyle_score}/100`} sub="施設充実度・コスパ総合" />
-            {raw.score_costperf != null && <StatCard label="コスパ" value={`${raw.score_costperf}/100`} />}
-            {raw.score_shopping != null && <StatCard label="ショッピング" value={`${raw.score_shopping}/100`} />}
-            {raw.score_fitness != null && <StatCard label="フィットネス" value={`${raw.score_fitness}/100`} />}
-            {raw.score_entertainment != null && <StatCard label="エンタメ" value={`${raw.score_entertainment}/100`} />}
-            {raw.score_childcare != null && <StatCard label="子育て" value={`${raw.score_childcare}/100`} />}
-            {raw.score_medical != null && <StatCard label="医療" value={`${raw.score_medical}/100`} />}
+            <StatCard label="総合スコア" value={`${m.lifestyle_score}/100`} sub="施設充実度・コスパ総合" />
+            {m.score_costperf != null && <StatCard label="コスパ" value={`${m.score_costperf}/100`} />}
+            {m.score_shopping != null && <StatCard label="ショッピング" value={`${m.score_shopping}/100`} />}
+            {m.score_fitness != null && <StatCard label="フィットネス" value={`${m.score_fitness}/100`} />}
+            {m.score_entertainment != null && <StatCard label="エンタメ" value={`${m.score_entertainment}/100`} />}
+            {m.score_childcare != null && <StatCard label="子育て" value={`${m.score_childcare}/100`} />}
+            {m.score_medical != null && <StatCard label="医療" value={`${m.score_medical}/100`} />}
           </Section>
         )}
 
-        {raw.cafe_starbucks != null && (
+        {m.cafe_starbucks != null && (
           <Section title="🏪 施設データ">
-            <StatCard label="スターバックス" value={`${raw.cafe_starbucks}軒`} />
-            {raw.gym_24h_count != null && <StatCard label="24時間ジム" value={`${raw.gym_24h_count}軒`} />}
-            {raw.cinema_count != null && <StatCard label="映画館" value={`${raw.cinema_count}軒${raw.cinema_has_imax ? ' (IMAX)' : ''}`} />}
-            {raw.mall_count != null && <StatCard label="モール" value={`${raw.mall_count}軒`} sub={raw.mall_best_tier ? `最高Tier: ${raw.mall_best_tier}` : undefined} />}
-            {raw.waiting_children != null && <StatCard label="待機児童" value={`${raw.waiting_children}人`} sub={raw.waiting_children === 0 ? '✓ ゼロ' : undefined} />}
-            {raw.pediatric_clinics != null && <StatCard label="小児科" value={`${raw.pediatric_clinics}件`} />}
+            <StatCard label="スターバックス" value={`${m.cafe_starbucks}軒`} />
+            {m.gym_24h_count != null && <StatCard label="24時間ジム" value={`${m.gym_24h_count}軒`} />}
+            {m.cinema_count != null && <StatCard label="映画館" value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} />}
+            {m.mall_count != null && <StatCard label="モール" value={`${m.mall_count}軒`} sub={m.mall_best_tier ? `最高Tier: ${m.mall_best_tier}` : undefined} />}
+            {m.waiting_children != null && <StatCard label="待機児童" value={`${m.waiting_children}人`} sub={m.waiting_children === 0 ? '✓ ゼロ' : undefined} />}
+            {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} />}
           </Section>
         )}
 

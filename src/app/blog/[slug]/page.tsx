@@ -88,9 +88,9 @@ export default async function BlogPostPage({ params }: { params: Promise<{ slug:
         )}
 
         {post.content ? (
-          <div style={{ fontSize: 15, lineHeight: 1.9, color: '#1e293b' }} className="markdown-body">
+          <div style={{ fontSize: 15, lineHeight: 1.9, color: '#1e293b' }}>
             <ReactMarkdown>{post.content}</ReactMarkdown>
-          </div
+          </div>
         ) : (
           <div style={{ textAlign: 'center', padding: '60px 0', color: '#94a3b8' }}>
             <div style={{ fontSize: 16 }}>記事を準備中です</div>

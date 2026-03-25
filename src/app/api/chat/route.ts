@@ -2,9 +2,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import Anthropic from '@anthropic-ai/sdk'
 import { supabase } from '@/lib/supabase'
 
-const anthropic = new Anthropic({
-  apiKey: process.env.ANTHROPIC_API_KEY!,
-})
+function getAnthropicClient() {
+  const apiKey = process.env.ANTHROPIC_API_KEY
+  if (!apiKey) throw new Error('ANTHROPIC_API_KEY is not set')
+  return new Anthropic({ apiKey })
+}
 
 // 527市町村のサマリーをsystem promptに含める（軽量版）
 async function getMunicipalitySummary(): Promise<string> {
@@ -65,7 +67,8 @@ export async function POST(req: NextRequest) {
     const municipalityData = await getMunicipalitySummary()
     const systemPrompt = SYSTEM_PROMPT_BASE + municipalityData
 
-    const response = await anthropic.messages.create({
+    const anthropicClient = getAnthropicClient()
+    const response = await anthropicClient.messages.create({
       model: 'claude-haiku-4-5-20251001',
       max_tokens: 1024,
       system: systemPrompt,

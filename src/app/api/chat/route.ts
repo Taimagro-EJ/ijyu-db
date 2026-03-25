@@ -61,7 +61,6 @@ const SYSTEM_PROMPT_BASE = `あなたは「移住DB」のAI移住コンサルタ
 
 export async function POST(req: NextRequest) {
   try {
-    console.log('ENV CHECK:', process.env.ANTHROPIC_API_KEY ? 'KEY_EXISTS_LEN=' + process.env.ANTHROPIC_API_KEY.length : 'KEY_MISSING')
     const { messages } = await req.json()
 
     // system promptにデータを含める（キャッシュのためサーバー側で取得）

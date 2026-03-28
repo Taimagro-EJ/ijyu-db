@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Noto_Sans_JP, DM_Mono, Shippori_Mincho } from "next/font/google";
+import { Noto_Sans_JP, DM_Mono, Shippori_Mincho, BIZ_UDPGothic, Zen_Maru_Gothic } from "next/font/google";
 import "./globals.css";
 
 const notoSansJP = Noto_Sans_JP({
@@ -23,6 +23,18 @@ const shipporiMincho = Shippori_Mincho({
   display: "swap",
 });
 
+const bizUDPGothic = BIZ_UDPGothic({
+  variable: "--font-biz-ud",
+  subsets: ["latin"],
+  weight: ["400", "700"],
+  display: "swap",
+});
+const zenMaruGothic = Zen_Maru_Gothic({
+  variable: "--font-zen-maru",
+  subsets: ["latin"],
+  weight: ["400", "500", "700"],
+  display: "swap",
+});
 export const metadata: Metadata = {
   title: {
     default: "移住DB｜全国527市町村の移住データを比較",
@@ -62,7 +74,7 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <body
-        className={`${notoSansJP.variable} ${dmMono.variable} ${shipporiMincho.variable} antialiased`}
+        className={`${notoSansJP.variable} ${dmMono.variable} ${shipporiMincho.variable} ${bizUDPGothic.variable} ${zenMaruGothic.variable} antialiased`}
       >
         {gaId && (
           <>

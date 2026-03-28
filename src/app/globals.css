@@ -47,7 +47,7 @@
 body {
   background: var(--color-bg);
   color: var(--color-text-primary);
-  font-family: 'Noto Sans JP', sans-serif;
+  font-family: var(--font-biz-ud), 'BIZ UDPGothic', 'Noto Sans JP', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }

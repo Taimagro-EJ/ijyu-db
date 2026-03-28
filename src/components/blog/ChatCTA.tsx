@@ -20,7 +20,7 @@ export default function ChatCTA({ cityName }: { cityName?: string }) {
             className="inline-block px-6 py-2.5 bg-[#D46B3A] text-white text-sm font-medium
                        rounded-lg hover:bg-[#C05A2E] transition-colors"
           >
-            AIに無料相談する →
+            AIに無料相談する &#8594;
           </a>
         </div>
       </div>

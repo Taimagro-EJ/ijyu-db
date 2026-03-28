@@ -18,7 +18,7 @@ export default function PrivacyPage() {
         <h1 style={{ fontSize: 28, fontWeight: 800, color: '#1A1814', marginBottom: 8, fontFamily: "'Shippori Mincho', serif" }}>
           プライバシーポリシー
         </h1>
-        <p style={{ fontSize: 13, color: '#9E9488', marginBottom: 40 }}>最終更新日：2026年3月15日</p>
+        <p style={{ fontSize: 13, color: '#9E9488', marginBottom: 40 }}>最終更新日：2026年3月28日</p>
 
         <Section title="1. 基本方針">
           <p>移住DB（以下「当サイト」）は、ユーザーの個人情報の保護を重要と考え、個人情報保護法その他の関連法令を遵守します。</p>
@@ -46,12 +46,14 @@ export default function PrivacyPage() {
           <p>当サイトでは、利便性の向上およびアクセス解析のためにCookieを使用しています。Cookieはブラウザの設定から無効にすることができますが、一部の機能が利用できなくなる場合があります。</p>
         </Section>
 
-        <Section title="5. Google Analyticsについて">
-          <p>当サイトでは、Googleが提供するアクセス解析ツール「Google Analytics」を使用しています。Google AnalyticsはCookieを使用してデータを収集しますが、個人を特定する情報は含まれません。Google Analyticsのデータ収集を無効にする場合は、<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>Google Analytics オプトアウトアドオン</a>をご利用ください。</p>
+        <Section title="5. Google アナリティクスについて">
+        <p>当サイトでは、Googleが提供するアクセス解析ツール「Google アナリティクス 4（GA4）」を使用しています。GA4はCookieを使用してアクセスデータ（ページビュー数、滞在時間、使用デバイス等）を収集しますが、個人を特定する情報は含まれません。収集されたデータはサイト改善のみに使用します。データ収集を無効にする場合は、<a href="https://tools.google.com/dlpage/gaoptout" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>Google Analytics オプトアウトアドオン</a>をご利用ください。Googleのプライバシーポリシーは<a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>こちら</a>をご覧ください。</p>
         </Section>
-
-        <Section title="6. Google AdSenseについて">
-          <p>当サイトでは、Googleが提供する広告配信サービス「Google AdSense」を使用しています。Google AdSenseは、ユーザーの興味に基づいた広告を表示するためにCookieを使用することがあります。Googleによる広告のカスタマイズを無効にする場合は、<a href="https://www.google.com/settings/ads" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>広告設定</a>をご利用ください。</p>
+        
+        <Section title="6. 広告配信（Google AdSense）について">
+          <p>当サイトでは、Googleが提供する広告配信サービス「Google AdSense」を利用しています。Google AdSenseは、ユーザーの興味・関心に基づいた広告（インタレストベース広告）を配信するために、CookieやWebビーコンを使用することがあります。</p>
+          <p style={{ marginTop: 8 }}>これにより、当サイトや他のサイトへの過去のアクセス情報に基づいた広告が表示される場合があります。収集されるデータには氏名・住所・メールアドレス・電話番号等の個人を特定できる情報は含まれません。</p>
+          <p style={{ marginTop: 8 }}>パーソナライズ広告を無効にする場合は、<a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>Googleの広告設定</a>をご利用ください。また、<a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>aboutads.info</a>にてサードパーティのCookieを無効にすることもできます。Google AdSenseに関する詳細は<a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>Googleの広告ポリシー</a>をご覧ください。</p>
         </Section>
 
         <Section title="7. 第三者への提供">

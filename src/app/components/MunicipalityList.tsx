@@ -326,7 +326,7 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
       return [...base]
         .map(m => ({
           ...m,
-          customScore: Math.round((
+          customScore: Math.round(
             (m.score_shopping ?? 0) * (norm.shopping ?? 0) +
             (m.score_cafe ?? 0) * (norm.cafe ?? 0) +
             (m.score_dining ?? 0) * (norm.dining ?? 0) +

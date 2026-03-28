@@ -307,10 +307,10 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
   const handleWeightsChange = useCallback((w: Record<string, number>) => {
     setWeights(w)
     setSortKey('custom')
+    setPage(1)
   }, [])
 
   const filtered = useMemo(() => {
-    setPage(1)
     const qf = QUICK_FILTERS.find(q => q.id === filters.quickFilter)
     const base = municipalities
       .filter(m => filters.region === '全て' || m.region === filters.region)
@@ -392,7 +392,7 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
           </span>
           <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
             {(['lifestyle', 'custom', 'name', 'cost', 'temp', 'tokyo'] as const).map(key => (
-              <button key={key} onClick={() => setSortKey(key)} style={{
+              <button key={key} onClick={() => { setSortKey(key); setPage(1); }} style={{
                 fontSize: 12, padding: '5px 12px', borderRadius: 999, border: '1px solid',
                 borderColor: sortKey === key ? 'var(--color-accent)' : 'var(--color-border)',
                 background: sortKey === key ? 'var(--color-accent)' : 'var(--color-bg-card)',

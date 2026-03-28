@@ -334,7 +334,7 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
             (m.score_entertainment ?? 0) * (norm.entertainment ?? 0) +
             (m.score_family ?? 0) * (norm.family ?? 0) +
             (m.score_grocery ?? 0) * (norm.grocery ?? 0)
-          ) * 10) / 10,
+          ),
         }))
         .sort((a, b) => (b.customScore ?? 0) - (a.customScore ?? 0))
     }

@@ -62,6 +62,13 @@ function getCatchCopy(m: Municipality): string {
   return 'データが語る、あなたの新しい日常。'
 }
 
+// カードバリエーション判定
+function getCardVariant(rank: number, index: number): 'featured' | 'compact' | 'standard' {
+  if (rank <= 25) return 'featured'   // TOP25は大きなカード
+  if (index % 7 === 0) return 'compact' // 7枚に1枚はコンパクト
+  return 'standard'
+}
+
 // ── スコアバー ────────────────────────────────
 function ScoreBar({ value, color }: { value: number | null; color: string }) {
   const v = value ?? 0
@@ -101,12 +108,14 @@ function FacilityRow({ icon, label, value, unit, badge, highlight }: {
 // ── 市町村カード（React.memoでメモ化）────────────
 type MunicipalityWithScore = Municipality & { customScore?: number }
 
-const MunicipalityCard = memo(function MunicipalityCard({ m }: { m: MunicipalityWithScore }) {
+const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: MunicipalityWithScore; rank?: number }) {
   const [isExpanded, setIsExpanded] = useState(false)
   const safety = safetyInfo(m.criminal_rate)
   const catchCopy = getCatchCopy(m)
   const lifestyleScore = m.lifestyle_score ?? 0
   const scoreColor = lifestyleScore >= 70 ? '#4A7C59' : lifestyleScore >= 45 ? '#D46B3A' : '#B84C3A'
+  const variant = getCardVariant(rank, rank - 1)
+  const photoHeight = variant === 'featured' ? 200 : variant === 'compact' ? 0 : 140
 
   return (
     <div
@@ -117,37 +126,79 @@ const MunicipalityCard = memo(function MunicipalityCard({ m }: { m: Municipality
       <Link href={`/municipalities/${m.slug}`} style={{ textDecoration: 'none', display: 'block', height: '100%' }}>
         <div style={{
           background: 'var(--color-bg-card)',
-          borderRadius: 16,
+          borderRadius: variant === 'featured' ? '20px 24px 18px 16px' : 16,
           border: isExpanded ? '1px solid rgba(212,107,58,0.35)' : '1px solid var(--color-border)',
           overflow: 'hidden',
           display: 'flex', flexDirection: 'column', height: '100%',
           cursor: 'pointer',
-          transition: 'transform 0.25s ease, box-shadow 0.25s ease, border-color 0.2s ease',
-          boxShadow: isExpanded ? '0 4px 20px rgba(0,0,0,0.12)' : 'none',
+          transition: 'transform 0.3s ease, box-shadow 0.3s ease, border-color 0.2s ease',
+          boxShadow: isExpanded
+            ? '0 4px 20px rgba(0,0,0,0.12)'
+            : variant === 'featured' ? '0 2px 12px rgba(0,0,0,0.06)' : 'none',
         }}>
-          <div style={{ position: 'relative', height: 140, overflow: 'hidden', background: 'var(--color-base-light)' }}>
-            {m.image_url ? (
-              <Image src={m.image_url} alt={`${m.name}の風景`} fill
-                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                style={{ objectFit: 'cover' }} priority={false} />
-            ) : (
-              <div style={{
-                width: '100%', height: '100%',
-                background: `linear-gradient(135deg, var(--color-base-light) 0%, var(--color-accent-soft) 100%)`,
-                display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32,
-              }}>🏘</div>
-            )}
-            <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 64, background: 'linear-gradient(transparent, rgba(26,24,20,0.55))' }} />
-            <div style={{ position: 'absolute', bottom: 8, left: 12, right: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
-              <div>
-                <div style={{ fontSize: 18, fontWeight: 700, color: '#fff', fontFamily: "'Shippori Mincho', serif", letterSpacing: '-0.02em', textShadow: '0 1px 6px rgba(0,0,0,0.5)' }}>{m.name}</div>
-                <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.8)' }}>{m.prefecture} · {m.region}</div>
-              </div>
-              {m.is_featured && <span className="badge badge-featured">注目</span>}
-            </div>
-          </div>
 
-          <div style={{ padding: '14px 18px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
+          {/* 写真エリア（compactは非表示） */}
+          {photoHeight > 0 && (
+            <div style={{ position: 'relative', height: photoHeight, overflow: 'hidden', background: 'var(--color-base-light)' }}>
+              {m.image_url ? (
+                <Image src={m.image_url} alt={`${m.name}の風景`} fill
+                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                  style={{ objectFit: 'cover', filter: 'brightness(1.03) saturate(0.88) contrast(1.05)' }} priority={variant === 'featured'} />
+              ) : (
+                <div style={{
+                  width: '100%', height: '100%',
+                  background: `linear-gradient(135deg, var(--color-base-light) 0%, var(--color-accent-soft) 100%)`,
+                  display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 32,
+                }}>🏘</div>
+              )}
+              <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 64, background: 'linear-gradient(transparent, rgba(26,24,20,0.55))' }} />
+
+              {/* featuredバッジ */}
+              {variant === 'featured' && (
+                <div style={{
+                  position: 'absolute', top: 12, left: 12,
+                  background: '#D46B3A', color: '#fff',
+                  fontSize: 9, fontWeight: 700, letterSpacing: '0.08em',
+                  padding: '3px 8px', borderRadius: 999,
+                  fontFamily: "'Zen Maru Gothic', sans-serif",
+                }}>TOP {rank}</div>
+              )}
+
+              <div style={{ position: 'absolute', bottom: 8, left: 12, right: 8, display: 'flex', justifyContent: 'space-between', alignItems: 'flex-end' }}>
+                <div>
+                  <div style={{
+                    fontSize: variant === 'featured' ? 22 : 18,
+                    fontWeight: 700, color: '#fff',
+                    fontFamily: "'Shippori Mincho', serif",
+                    letterSpacing: '-0.02em', textShadow: '0 1px 6px rgba(0,0,0,0.5)',
+                  }}>{m.name}</div>
+                  <div style={{ fontSize: 10, color: 'rgba(255,255,255,0.8)' }}>{m.prefecture} · {m.region}</div>
+                </div>
+                {m.is_featured && <span className="badge badge-featured">注目</span>}
+              </div>
+            </div>
+          )}
+
+          <div style={{ padding: variant === 'compact' ? '12px 14px' : '14px 18px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
+
+            {/* compactは市名をここに表示 */}
+            {variant === 'compact' && (
+              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                <div>
+                  <div style={{ fontSize: 15, fontWeight: 700, color: 'var(--color-text-primary)', fontFamily: "'Shippori Mincho', serif" }}>{m.name}</div>
+                  <div style={{ fontSize: 10, color: 'var(--color-text-muted)' }}>{m.prefecture}</div>
+                </div>
+                {lifestyleScore > 0 && (
+                  <div style={{
+                    width: 36, height: 36, borderRadius: '50%',
+                    background: scoreColor, color: '#fff',
+                    display: 'flex', alignItems: 'center', justifyContent: 'center',
+                    fontSize: 13, fontWeight: 700, fontFamily: "'DM Mono', monospace",
+                  }}>{lifestyleScore}</div>
+                )}
+              </div>
+            )}
+
             <div style={{ fontSize: 12, color: 'var(--color-text-secondary)', fontStyle: 'italic', lineHeight: 1.5, borderLeft: '2px solid var(--color-accent-soft)', paddingLeft: 10 }}>{catchCopy}</div>
 
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: 1, background: 'var(--color-border)', borderRadius: 10, overflow: 'hidden' }}>
@@ -163,7 +214,7 @@ const MunicipalityCard = memo(function MunicipalityCard({ m }: { m: Municipality
               <span className={`badge ${safety.badge}`}>{safety.label}</span>
             </div>
 
-            {m.lifestyle_score !== null && (
+            {m.lifestyle_score !== null && variant !== 'compact' && (
               <div>
                 <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--color-text-muted)', marginBottom: 4 }}>
                   <span>生活リアリティ指数</span>
@@ -230,6 +281,7 @@ const MunicipalityCard = memo(function MunicipalityCard({ m }: { m: Municipality
   return prev.m.slug === next.m.slug
     && prev.m.lifestyle_score === next.m.lifestyle_score
     && prev.m.customScore === next.m.customScore
+    && prev.rank === next.rank
 })
 
 function DataCell({ label, value, color }: { label: string; value: string; color?: string }) {
@@ -375,8 +427,6 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '28px 24px' }}>
         <FilterBar filters={filters} onChange={setFilters} />
-
-        {/* ★ 重みスライダー */}
         <WeightSlider weights={weights} onWeightsChange={handleWeightsChange} />
 
         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: 16 }}>
@@ -405,8 +455,13 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
           </div>
         </div>
 
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: 16 }}>
-          {paged.map(m => <MunicipalityCard key={m.id} m={m as MunicipalityWithScore} />)}
+        {/* Masonryレイアウト */}
+        <div style={{ columns: '300px', columnGap: 12 }}>
+          {paged.map((m, i) => (
+            <div key={m.id} style={{ breakInside: 'avoid', marginBottom: 12 }}>
+              <MunicipalityCard m={m as MunicipalityWithScore} rank={i + 1} />
+            </div>
+          ))}
         </div>
 
         {hasMore && (

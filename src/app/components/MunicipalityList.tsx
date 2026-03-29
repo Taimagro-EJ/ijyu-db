@@ -20,6 +20,118 @@ const QUICK_FILTERS = [
   { id: 'safe',       label: '🛡 安全',      filter: (m: Municipality) => (m.criminal_rate ?? 999) < 200 },
 ]
 
+// ── 今日の発見データ ─────────────────────────────
+const DISCOVERIES = [
+  {
+    headline: '待機児童ゼロ × 移住支援金100万円。両方揃う市町村は527件中42件。',
+    body: '子育て支援と経済支援を同時に提供できる自治体は全体の約8%。北陸・東北に多く集中しており、意外にも都市近郊にも存在する。',
+    link: '/blog/kosodate-ijyu-kogo-shinai-data',
+    tag: '子育て',
+  },
+  {
+    headline: '東京から2時間以内、家賃4万円台の街が43件ある。',
+    body: '「東京に近いから高い」という思い込みを527件のデータが覆す。神奈川・埼玉を除けば、群馬・栃木・茨城に穴場が集中している。',
+    link: '/blog/tokyo-2h-yachin-4man-ana-ba',
+    tag: 'コスパ',
+  },
+  {
+    headline: '犯罪率が最も低い市町村は、実は人口1万人以下の小さな町。',
+    body: '人口規模と治安は比例しない。527市町村の犯罪率データを分析すると、小規模自治体が上位を独占する傾向が見られる。',
+    link: '/blog/hanzairitsu-yachin-soukan-527',
+    tag: '安全',
+  },
+  {
+    headline: '年間日照時間が2000時間超の移住先が48件。冬でも晴天が続く地域とは？',
+    body: '長野・山梨・静岡の内陸部は、太平洋側気候と盆地効果で冬の日照時間が全国屈指。「晴れの国」を探すなら内陸がねらい目。',
+    link: '/',
+    tag: '気候',
+  },
+  {
+    headline: '月13万円で暮らせる市町村が全国に116件。生活費最安値ランキング。',
+    body: '東京の平均生活費（推計22万円）の6割以下で暮らせる街が存在する。家賃・食費・光熱費込みの実態データで比較した。',
+    link: '/blog/low-cost-living-ranking',
+    tag: '生活費',
+  },
+  {
+    headline: '移住後に後悔した人の共通点：「データより感情で決めた」。',
+    body: '527市町村のデータが示す移住成功のパターンは、生活コスト・アクセス・子育て環境の三角形が整っている地域。感情と数字を両立する選び方とは。',
+    link: '/blog/ijyu-yokatta-koukai-data-kyotsuten',
+    tag: '移住Tips',
+  },
+  {
+    headline: '群馬県の移住支援が手厚い理由：11市町村が100万円超の支援金を用意。',
+    body: '群馬県は東京から最短50分圏内にもかかわらず、移住支援金の充実度が全国トップクラス。データが示す「東京隣接 × 支援充実」の穴場。',
+    link: '/blog/gunma-ijyu-data-reality',
+    tag: '支援制度',
+  },
+]
+
+// DiscoveryCard（曜日でローテーション）
+function DiscoveryCard() {
+  const discovery = useMemo(() => {
+    const dayOfWeek = new Date().getDay()
+    return DISCOVERIES[dayOfWeek % DISCOVERIES.length]
+  }, [])
+
+  return (
+    <div style={{
+      position: 'relative', overflow: 'hidden',
+      borderRadius: 20, marginBottom: 24,
+      background: 'linear-gradient(135deg, #F2F0EC 0%, #EAE6E0 100%)',
+      padding: '28px 32px',
+      border: '1px solid #E8E4DF',
+    }}>
+      {/* 有機的な装飾ブロブ */}
+      <div style={{
+        position: 'absolute', top: -60, right: -60,
+        width: 200, height: 200, borderRadius: '50%',
+        background: 'rgba(212,107,58,0.06)',
+        filter: 'blur(40px)', pointerEvents: 'none',
+      }} />
+      <div style={{
+        position: 'absolute', bottom: -40, left: -40,
+        width: 160, height: 160, borderRadius: '50%',
+        background: 'rgba(74,124,89,0.05)',
+        filter: 'blur(30px)', pointerEvents: 'none',
+      }} />
+
+      {/* タグ */}
+      <p style={{
+        fontSize: 10, letterSpacing: '0.12em', color: '#9E9488',
+        marginBottom: 10, fontFamily: "'Zen Maru Gothic', sans-serif",
+      }}>
+        📊 今日のデータ発見 · {discovery.tag}
+      </p>
+
+      {/* 見出し */}
+      <h2 style={{
+        fontSize: 18, fontWeight: 800, color: '#1A1814',
+        lineHeight: 1.6, marginBottom: 10,
+        fontFamily: "'Shippori Mincho', serif",
+      }}>
+        {discovery.headline}
+      </h2>
+
+      {/* 本文 */}
+      <p style={{
+        fontSize: 13, color: '#6B6457', lineHeight: 1.85,
+        marginBottom: 16, maxWidth: 640,
+      }}>
+        {discovery.body}
+      </p>
+
+      {/* リンク */}
+      <Link href={discovery.link} style={{
+        fontSize: 13, color: '#D46B3A', textDecoration: 'none',
+        fontWeight: 600, borderBottom: '1px solid rgba(212,107,58,0.3)',
+        paddingBottom: 1,
+      }}>
+        詳しく見る
+      </Link>
+    </div>
+  )
+}
+
 type SortKey = 'name' | 'cost' | 'temp' | 'tokyo' | 'lifestyle' | 'custom'
 
 function tempColor(t: number | null) {
@@ -62,14 +174,12 @@ function getCatchCopy(m: Municipality): string {
   return 'データが語る、あなたの新しい日常。'
 }
 
-// カードバリエーション判定
 function getCardVariant(rank: number, index: number): 'featured' | 'compact' | 'standard' {
-  if (rank <= 25) return 'featured'   // TOP25は大きなカード
-  if (index % 7 === 0) return 'compact' // 7枚に1枚はコンパクト
+  if (rank <= 25) return 'featured'
+  if (index % 7 === 0) return 'compact'
   return 'standard'
 }
 
-// ── スコアバー ────────────────────────────────
 function ScoreBar({ value, color }: { value: number | null; color: string }) {
   const v = value ?? 0
   return (
@@ -79,7 +189,6 @@ function ScoreBar({ value, color }: { value: number | null; color: string }) {
   )
 }
 
-// ── 施設データ行 ─────────────────────────────
 function FacilityRow({ icon, label, value, unit, badge, highlight }: {
   icon: string; label: string; value: number | null; unit: string;
   badge?: string; highlight?: boolean;
@@ -105,7 +214,6 @@ function FacilityRow({ icon, label, value, unit, badge, highlight }: {
   )
 }
 
-// ── 市町村カード（React.memoでメモ化）────────────
 type MunicipalityWithScore = Municipality & { customScore?: number }
 
 const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: MunicipalityWithScore; rank?: number }) {
@@ -136,14 +244,13 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
             ? '0 4px 20px rgba(0,0,0,0.12)'
             : variant === 'featured' ? '0 2px 12px rgba(0,0,0,0.06)' : 'none',
         }}>
-
-          {/* 写真エリア（compactは非表示） */}
           {photoHeight > 0 && (
             <div style={{ position: 'relative', height: photoHeight, overflow: 'hidden', background: 'var(--color-base-light)' }}>
               {m.image_url ? (
                 <Image src={m.image_url} alt={`${m.name}の風景`} fill
                   sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  style={{ objectFit: 'cover', filter: 'brightness(1.03) saturate(0.88) contrast(1.05)' }} priority={variant === 'featured'} />
+                  style={{ objectFit: 'cover', filter: 'brightness(1.03) saturate(0.88) contrast(1.05)' }}
+                  priority={variant === 'featured'} />
               ) : (
                 <div style={{
                   width: '100%', height: '100%',
@@ -153,7 +260,6 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
               )}
               <div style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: 64, background: 'linear-gradient(transparent, rgba(26,24,20,0.55))' }} />
 
-              {/* featuredバッジ */}
               {variant === 'featured' && (
                 <div style={{
                   position: 'absolute', top: 12, left: 12,
@@ -180,8 +286,6 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
           )}
 
           <div style={{ padding: variant === 'compact' ? '12px 14px' : '14px 18px', display: 'flex', flexDirection: 'column', gap: 10, flex: 1 }}>
-
-            {/* compactは市名をここに表示 */}
             {variant === 'compact' && (
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <div>
@@ -245,7 +349,6 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
         </div>
       </Link>
 
-      {/* ホバー展開パネル */}
       {isExpanded && (
         <div style={{
           position: 'absolute', top: 0, left: '100%', zIndex: 50,
@@ -426,6 +529,10 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
       </header>
 
       <div style={{ maxWidth: 1200, margin: '0 auto', padding: '28px 24px' }}>
+
+        {/* 今日の発見カード */}
+        <DiscoveryCard />
+
         <FilterBar filters={filters} onChange={setFilters} />
         <WeightSlider weights={weights} onWeightsChange={handleWeightsChange} />
 

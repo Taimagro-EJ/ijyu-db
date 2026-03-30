@@ -210,6 +210,26 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
   return (
     <div style={{ fontFamily: "'BIZ UDPGothic', 'Noto Sans JP', sans-serif", minHeight: '100vh', background: '#F7F5F2' }}>
 
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "City",
+          "name": m.name,
+          "containedInPlace": { "@type": "State", "name": m.prefecture },
+          "description": `${m.prefecture as string}${m.name as string}への移住データ。生活費・気候・アクセス・支援制度を527市町村で比較。`,
+          "url": `https://www.ijyu-data.com/municipalities/${slug}`,
+          ...(imageUrl ? { "image": imageUrl } : {}),
+          ...((m.latitude && m.longitude) ? { "geo": { "@type": "GeoCoordinates", "latitude": m.latitude, "longitude": m.longitude } } : {}),
+          "additionalProperty": [
+            ...(avgTemp != null ? [{ "@type": "PropertyValue", "name": "年間平均気温", "value": `${avgTemp}℃` }] : []),
+            ...(rent != null ? [{ "@type": "PropertyValue", "name": "1LDK家賃目安", "value": fmt万1(rent) }] : []),
+            ...(timeTokyo != null ? [{ "@type": "PropertyValue", "name": "東京までの所要時間", "value": `${timeTokyo}分` }] : []),
+            ...(m.total_monthly_cost_single != null ? [{ "@type": "PropertyValue", "name": "単身月額生活費", "value": fmt万(m.total_monthly_cost_single) }] : []),
+          ]
+        }) }}
+      />
+
       {/* ヒーロー写真 */}
       <div style={{ position: 'relative', height: 320, overflow: 'hidden', background: '#454034' }}>
         {imageUrl ? (

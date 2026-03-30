@@ -234,7 +234,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             {timeTokyo != null && <span style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: 13, padding: '5px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,0.25)' }}>🚄 東京 {timeTokyo}分</span>}
             {avgTemp != null && <span style={{ background: 'rgba(255,255,255,0.15)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: 13, padding: '5px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,0.25)' }}>🌡 {avgTemp}℃</span>}
             {lifestyleScore > 0 && <span style={{ background: scoreColor, color: '#fff', fontSize: 13, fontWeight: 700, padding: '5px 14px', borderRadius: 999, fontFamily: "'DM Mono', monospace" }}>⭐ {lifestyleScore}点</span>}
-            {sf?.migration_incentive && <span style={{ background: 'rgba(74,124,89,0.8)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: 13, padding: '5px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,0.25)' }}>💰 移住支援金あり</span>}
+            {!!sf?.migration_incentive && <span style={{ background: 'rgba(74,124,89,0.8)', backdropFilter: 'blur(4px)', color: '#fff', fontSize: 13, padding: '5px 12px', borderRadius: 999, border: '1px solid rgba(255,255,255,0.25)' }}>💰 移住支援金あり</span>}
           </div>
         </div>
       </div>
@@ -282,10 +282,10 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         {hasSupportData && (
           <Section title="🏛 移住支援・子育て制度">
             {/* 移住支援金 */}
-            {sf?.migration_incentive != null && (
+            {(sf?.migration_incentive !== undefined && sf?.migration_incentive !== null) && (
               <div style={{ marginBottom: 20 }}>
                 <h3 style={{ fontSize: 13, fontWeight: 600, color: '#9E9488', margin: '0 0 10px', letterSpacing: '0.06em' }}>移住支援金</h3>
-                {sf.migration_incentive ? (
+                {!!sf.migration_incentive ? (
                   <div style={{ background: '#F0F7F2', borderRadius: 14, padding: '16px 20px', border: '1px solid #C5DFD0' }}>
                     <div style={{ display: 'flex', gap: 16, flexWrap: 'wrap', marginBottom: 10 }}>
                       {incentiveAmount && (
@@ -300,7 +300,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
                           <div style={{ fontSize: 22, fontWeight: 700, color: '#2D6648', fontFamily: "'DM Mono', monospace" }}>{fmt万(incentiveSingle)}</div>
                         </div>
                       )}
-                      {sf.migration_incentive_child && (
+                      {!!sf.migration_incentive_child && (
                         <div style={{ textAlign: 'center' }}>
                           <div style={{ fontSize: 10, color: '#6B9E7E', marginBottom: 2 }}>子ども加算（1人あたり）</div>
                           <div style={{ fontSize: 22, fontWeight: 700, color: '#2D6648', fontFamily: "'DM Mono', monospace" }}>{fmt万(sf.migration_incentive_child as number)}</div>
@@ -345,11 +345,11 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             {/* その他支援制度 */}
             <h3 style={{ fontSize: 13, fontWeight: 600, color: '#9E9488', margin: '0 0 10px', letterSpacing: '0.06em' }}>その他の支援制度</h3>
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: 10 }}>
-              <SupportBadge label="給食費無償化" active={schoolLunchFree} note={schoolLunchFree ? '小中学校の給食費が無料' : undefined} />
-              <SupportBadge label="空き家バンク" active={akiyaBank} note={akiyaBank ? '空き家情報を自治体が仲介' : undefined} />
-              {sf?.remote_work_support != null && <SupportBadge label="テレワーク移住支援" active={sf.remote_work_support as boolean} />}
-              {sf?.startup_support != null && <SupportBadge label="起業支援制度" active={sf.startup_support as boolean} />}
-              {sf?.trial_migration != null && <SupportBadge label="お試し移住制度" active={sf.trial_migration as boolean} />}
+              <SupportBadge label="給食費無償化" active={schoolLunchFree as boolean | null} note={schoolLunchFree ? '小中学校の給食費が無料' : undefined} />
+              <SupportBadge label="空き家バンク" active={akiyaBank as boolean | null} note={akiyaBank ? '空き家情報を自治体が仲介' : undefined} />
+              {sf?.remote_work_support !== undefined && sf?.remote_work_support !== null && <SupportBadge label="テレワーク移住支援" active={!!(sf.remote_work_support)} />}
+              {sf?.startup_support !== undefined && sf?.startup_support !== null && <SupportBadge label="起業支援制度" active={!!(sf.startup_support)} />}
+              {sf?.trial_migration !== undefined && sf?.trial_migration !== null && <SupportBadge label="お試し移住制度" active={!!(sf.trial_migration)} />}
             </div>
 
             <p style={{ fontSize: 11, color: '#9E9488', marginTop: 16, lineHeight: 1.7 }}>

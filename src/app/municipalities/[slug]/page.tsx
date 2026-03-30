@@ -159,9 +159,9 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
     ).data?.id ?? '').single(),
   ])
 
-  if (overviewRes.error || !overviewRes.data) notFound()
+  if (error || !data) notFound()
 
-  const m = overviewRes.data as Record<string, unknown>
+  const m = data as Record<string, unknown>
   const sf = familyRes.data as Record<string, unknown> | null
 
   const carScore = m.car_necessity_score as number | null

@@ -151,18 +151,23 @@ function ScoreBar({ value, color }: { value: number; color: string }) {
 export default async function MunicipalityPage({ params }: { params: Promise<{ slug: string }> }) {
   const { slug } = await params
 
-  // 並列フェッチ（municipality_overview + stats_family）
-  const [overviewRes, familyRes] = await Promise.all([
-    supabase.from('municipality_overview').select('*').eq('slug', slug).single(),
-    supabase.from('stats_family').select('*').eq('municipality_id', (
-      await supabase.from('municipalities').select('id').eq('slug', slug).single()
-    ).data?.id ?? '').single(),
-  ])
-
+  const { data, error } = await supabase
+    .from('municipality_overview')
+    .select('*')
+    .eq('slug', slug)
+    .single()
   if (error || !data) notFound()
 
   const m = data as Record<string, unknown>
-  const sf = familyRes.data as Record<string, unknown> | null
+  const municipalityId = m.id as string
+
+  const { data: sfData } = await supabase
+    .from('stats_family')
+    .select('*')
+    .eq('municipality_id', municipalityId)
+    .single()
+
+  const sf = sfData as Record<string, unknown> | null
 
   const carScore = m.car_necessity_score as number | null
   const carLabel = (['', '必須', '高い', '普通', '低い', '不要'] as const)[carScore ?? 0] ?? '-'

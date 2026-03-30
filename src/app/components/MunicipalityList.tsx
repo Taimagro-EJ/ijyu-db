@@ -43,7 +43,7 @@ const DISCOVERIES = [
   {
     headline: '年間日照時間が2000時間超の移住先が48件。冬でも晴天が続く地域とは？',
     body: '長野・山梨・静岡の内陸部は、太平洋側気候と盆地効果で冬の日照時間が全国屈指。「晴れの国」を探すなら内陸がねらい目。',
-    link: '/',
+    link: '/blog/warm-climate-no-snow-ranking',
     tag: '気候',
   },
   {
@@ -349,35 +349,69 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
         </div>
       </Link>
 
-      {isExpanded && (
-        <div style={{
-          position: 'absolute', top: 0, left: '100%', zIndex: 50,
-          width: 220, background: 'var(--color-bg-card)',
-          borderRadius: '0 16px 16px 0',
-          border: '1px solid rgba(212,107,58,0.35)', borderLeft: 'none',
-          boxShadow: '6px 0 24px rgba(0,0,0,0.12)',
-          padding: '16px 14px', pointerEvents: 'none',
-        }}>
-          <div style={{ fontSize: 10, fontWeight: 600, letterSpacing: '0.08em', color: 'var(--color-text-muted)', marginBottom: 12 }}>施設データ</div>
-          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
-            <FacilityRow icon="☕" label="スタバ" value={m.cafe_starbucks} unit="軒" />
-            <FacilityRow icon="🏋️" label="24hジム" value={m.gym_24h_count} unit="軒" />
-            <FacilityRow icon="🎬" label="映画館" value={m.cinema_count} unit="軒" badge={m.cinema_has_imax ? 'IMAX' : undefined} />
-            <FacilityRow icon="🛒" label="モール" value={m.mall_count} unit="軒" badge={m.mall_best_tier ? `Tier ${m.mall_best_tier}` : undefined} />
-            <FacilityRow icon="👶" label="待機児童" value={m.waiting_children} unit="人" highlight={true} />
-            <FacilityRow icon="🏥" label="小児科" value={m.pediatric_clinics} unit="件" />
-          </div>
-          {m.score_costperf !== null && (
-            <div style={{ marginTop: 14, paddingTop: 12, borderTop: '1px solid var(--color-border)' }}>
-              <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, color: 'var(--color-text-muted)', marginBottom: 4 }}>
-                <span>コスパスコア</span>
-                <span style={{ fontFamily: "'DM Mono', monospace", fontWeight: 500 }}>{m.score_costperf}/100</span>
-              </div>
-              <ScoreBar value={m.score_costperf} color="#4A7C59" />
+      {/* カード内オーバーレイ（Nomads.com方式） */}
+      <div style={{
+        position: 'absolute', inset: 0,
+        background: 'rgba(26,24,20,0.88)',
+        backdropFilter: 'blur(2px)',
+        borderRadius: 'inherit',
+        display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',
+        padding: '16px 14px',
+        opacity: isExpanded ? 1 : 0,
+        pointerEvents: isExpanded ? 'auto' : 'none',
+        transition: 'opacity 0.2s ease',
+        zIndex: 10,
+      }}>
+        <div style={{ color: '#fff', display: 'flex', flexDirection: 'column', gap: 7 }}>
+          <p style={{ fontSize: 14, fontWeight: 700, margin: 0, fontFamily: "'Shippori Mincho', serif" }}>{m.name}</p>
+          {(m.cafe_starbucks ?? 0) > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+              <span>☕ スタバ</span>
+              <span style={{ fontFamily: "'DM Mono', monospace" }}>{m.cafe_starbucks}軒</span>
             </div>
           )}
+          {(m.gym_24h_count ?? 0) > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+              <span>🏋️ 24hジム</span>
+              <span style={{ fontFamily: "'DM Mono', monospace" }}>{m.gym_24h_count}軒</span>
+            </div>
+          )}
+          {(m.cinema_count ?? 0) > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+              <span>🎬 映画館</span>
+              <span style={{ fontFamily: "'DM Mono', monospace" }}>{m.cinema_count}軒{m.cinema_has_imax ? ' IMAX' : ''}</span>
+            </div>
+          )}
+          {(m.mall_count ?? 0) > 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+              <span>🛒 モール</span>
+              <span style={{ fontFamily: "'DM Mono', monospace" }}>{m.mall_count}軒{m.mall_best_tier ? ` Tier${m.mall_best_tier}` : ''}</span>
+            </div>
+          )}
+          {m.waiting_children === 0 && (
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 12 }}>
+              <span>👶 待機児童</span>
+              <span style={{ color: '#7AE0A0', fontWeight: 600 }}>0人 ✓</span>
+            </div>
+          )}
+          {/* コスパバー */}
+          <div style={{ borderTop: '1px solid rgba(255,255,255,0.2)', paddingTop: 8, marginTop: 2 }}>
+            <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: 11, marginBottom: 4 }}>
+              <span style={{ color: 'rgba(255,255,255,0.7)' }}>コスパ</span>
+              <span style={{ fontFamily: "'DM Mono', monospace" }}>{(m as MunicipalityWithScore).customScore ?? m.lifestyle_score ?? '–'}/100</span>
+            </div>
+            <div style={{ height: 3, background: 'rgba(255,255,255,0.2)', borderRadius: 999 }}>
+              <div style={{ height: '100%', width: `${m.lifestyle_score ?? 0}%`, background: '#7AE0A0', borderRadius: 999 }} />
+            </div>
+          </div>
+          {/* スマホ用ボタン */}
+          <div style={{ display: 'none' }} className="sm-show-block">
+            <span style={{ display: 'block', textAlign: 'center', fontSize: 12, color: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 8, padding: '6px' }}>
+              詳細を見る →
+            </span>
+          </div>
         </div>
-      )}
+      </div>
     </div>
   )
 }, (prev, next) => {

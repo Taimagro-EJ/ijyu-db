@@ -352,7 +352,7 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
       {/* カード内オーバーレイ（Nomads.com方式） */}
       <div style={{
         position: 'absolute', inset: 0,
-        background: 'rgba(26,24,20,0.72)',
+        background: 'rgba(26,24,20,0.60)',
         backdropFilter: 'blur(2px)',
         borderRadius: 'inherit',
         display: 'flex', flexDirection: 'column', justifyContent: 'flex-end',

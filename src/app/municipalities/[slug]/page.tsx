@@ -161,7 +161,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   const rent = data.rent_1ldk_estimate ? `家賃${(data.rent_1ldk_estimate / 10000).toFixed(1)}万` : ''
   const tokyo = data.time_to_tokyo ? `東京${data.time_to_tokyo}分` : ''
   const score = data.lifestyle_score ? `充実度${data.lifestyle_score}点` : ''
-  const title = `${data.name}（${data.prefecture}）の移住データ | 移住DB`
+  const title = `${data.name}（${data.prefecture}）の移住データ`
   const description = `${data.name}の移住情報。${[rent, tokyo, score].filter(Boolean).join('・')}。527市町村のデータベースで比較。`
   return {
     title, description,

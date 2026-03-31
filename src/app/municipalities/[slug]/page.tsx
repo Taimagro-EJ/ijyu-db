@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
@@ -146,6 +147,32 @@ function ScoreBar({ value, color }: { value: number; color: string }) {
       <div style={{ height: '100%', width: `${value}%`, backgroundColor: color, borderRadius: 999, transition: 'width 0.7s ease' }} />
     </div>
   )
+}
+
+
+export async function generateMetadata({ params }: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const { slug } = await params
+  const { data } = await supabase
+    .from('municipality_overview')
+    .select('name, prefecture, rent_1ldk_estimate, lifestyle_score, time_to_tokyo, image_url')
+    .eq('slug', slug)
+    .single()
+  if (!data) return { title: '市町村データ | 移住DB' }
+  const rent = data.rent_1ldk_estimate ? `家賃${(data.rent_1ldk_estimate / 10000).toFixed(1)}万` : ''
+  const tokyo = data.time_to_tokyo ? `東京${data.time_to_tokyo}分` : ''
+  const score = data.lifestyle_score ? `充実度${data.lifestyle_score}点` : ''
+  const title = `${data.name}（${data.prefecture}）の移住データ | 移住DB`
+  const description = `${data.name}の移住情報。${[rent, tokyo, score].filter(Boolean).join('・')}。527市町村のデータベースで比較。`
+  return {
+    title, description,
+    openGraph: {
+      title, description, type: 'article',
+      url: `https://www.ijyu-data.com/municipalities/${slug}`,
+      siteName: '移住DB',
+      ...(data.image_url ? { images: [{ url: data.image_url, width: 1200, height: 630 }] } : {}),
+    },
+    twitter: { card: 'summary_large_image', title, description },
+  }
 }
 
 export default async function MunicipalityPage({ params }: { params: Promise<{ slug: string }> }) {

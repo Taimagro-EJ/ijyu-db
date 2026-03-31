@@ -46,3 +46,5 @@ fetch_wikimedia_images.py
 venv311/
 fetch_*.py
 .env
+__pycache__/
+*.pyc

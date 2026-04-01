@@ -77,9 +77,22 @@ export default function FacilityCard({ municipalityId, category, label, value, s
                     {f.is_24h && <span style={{ marginLeft: 6, fontSize: 10, background: '#F0DBC8', color: '#D46B3A', padding: '1px 6px', borderRadius: 4 }}>24h</span>}
                     {f.has_imax && <span style={{ marginLeft: 6, fontSize: 10, background: '#E8F0FE', color: '#3D5A80', padding: '1px 6px', borderRadius: 4 }}>IMAX</span>}
                   </span>
-                  <span style={{ color: '#9E9488', fontFamily: "'DM Mono', monospace", fontSize: 11 }}>
-                    {f.distance_from_center_km}km
-                  </span>
+                  <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
+                    <span style={{ color: '#9E9488', fontFamily: "'DM Mono', monospace", fontSize: 11 }}>
+                      {f.distance_from_center_km}km
+                    </span>
+                    {f.lat && f.lng && (
+                      
+                        href={`https://www.google.com/maps?q=${f.lat},${f.lng}`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        onClick={(e) => e.stopPropagation()}
+                        style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}
+                      >
+                        📍 地図
+                      </a>
+                    )}
+                  </div>
                 </div>
               ))}
               <p style={{ fontSize: 10, color: '#9E9488', marginTop: 4 }}>

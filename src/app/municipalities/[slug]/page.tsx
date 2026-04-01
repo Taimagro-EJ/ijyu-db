@@ -462,7 +462,6 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} category="gym" label="24時間ジム" value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
               {m.cinema_count != null && <FacilityCard municipalityId={municipalityId} category="cinema" label="映画館" value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} source={SOURCES.facility} />}
               {m.mall_count != null && <FacilityCard municipalityId={municipalityId} category="mall" label="モール" value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} source={SOURCES.facility} />}
-              {waitingChildren != null && <StatCard label="待機児童" value={`${waitingChildren}人`} sub={waitingChildren === 0 ? '✓ ゼロ達成' : undefined} source={SOURCES.support} />}
               {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} source={SOURCES.facility} />}
             </div>
           </Section>

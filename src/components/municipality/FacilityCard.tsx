@@ -20,6 +20,21 @@ interface FacilityCardProps {
   source?: string
 }
 
+function MapsLink({ lat, lng }: { lat: number; lng: number }) {
+  const url = 'https://www.google.com/maps?q=' + lat + ',' + lng
+  return (
+    
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      onClick={(e) => e.stopPropagation()}
+      style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}
+    >
+      📍 地図
+    </a>
+  )
+}
+
 export default function FacilityCard({ municipalityId, category, label, value, sub, source }: FacilityCardProps) {
   const [open, setOpen] = useState(false)
   const [facilities, setFacilities] = useState<Facility[]>([])
@@ -55,10 +70,7 @@ export default function FacilityCard({ municipalityId, category, label, value, s
       </div>
 
       {open && (
-        <div style={{
-          marginTop: 8, background: '#fff', borderRadius: 10,
-          border: '1px solid #E8E4DF', padding: '12px 16px',
-        }}>
+        <div style={{ marginTop: 8, background: '#fff', borderRadius: 10, border: '1px solid #E8E4DF', padding: '12px 16px' }}>
           {loading ? (
             <p style={{ fontSize: 12, color: '#9E9488' }}>読み込み中...</p>
           ) : facilities.length === 0 ? (
@@ -73,34 +85,18 @@ export default function FacilityCard({ municipalityId, category, label, value, s
                 }}>
                   <span style={{ color: '#454034', fontWeight: 500 }}>
                     {f.facility_name}
-                    {f.is_24h && (
-                      <span style={{ marginLeft: 6, fontSize: 10, background: '#F0DBC8', color: '#D46B3A', padding: '1px 6px', borderRadius: 4 }}>24h</span>
-                    )}
-                    {f.has_imax && (
-                      <span style={{ marginLeft: 6, fontSize: 10, background: '#E8F0FE', color: '#3D5A80', padding: '1px 6px', borderRadius: 4 }}>IMAX</span>
-                    )}
+                    {f.is_24h && <span style={{ marginLeft: 6, fontSize: 10, background: '#F0DBC8', color: '#D46B3A', padding: '1px 6px', borderRadius: 4 }}>24h</span>}
+                    {f.has_imax && <span style={{ marginLeft: 6, fontSize: 10, background: '#E8F0FE', color: '#3D5A80', padding: '1px 6px', borderRadius: 4 }}>IMAX</span>}
                   </span>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
                     <span style={{ color: '#9E9488', fontFamily: "'DM Mono', monospace", fontSize: 11 }}>
                       {f.distance_from_center_km}km
                     </span>
-                    {f.lat && f.lng && (
-                      
-                        href={"https://www.google.com/maps?q=" + String(f.lat) + "," + String(f.lng)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        onClick={function(e) { e.stopPropagation() }}
-                        style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}
-                      >
-                        📍 地図
-                      </a>
-                    )}
+                    {f.lat && f.lng && <MapsLink lat={f.lat} lng={f.lng} />}
                   </div>
                 </div>
               ))}
-              <p style={{ fontSize: 10, color: '#9E9488', marginTop: 4 }}>
-                ※ 中心部からの距離順・上位20件
-              </p>
+              <p style={{ fontSize: 10, color: '#9E9488', marginTop: 4 }}>※ 中心部からの距離順・上位20件</p>
             </div>
           )}
         </div>

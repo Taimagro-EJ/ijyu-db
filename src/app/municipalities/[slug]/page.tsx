@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import RadarChart from '@/components/lifestyle/RadarChartWrapper'
+import FacilityCard from '@/components/municipality/FacilityCard'
 
 export const revalidate = 60
 
@@ -457,10 +458,10 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         {hasFacilityData && (
           <Section title="🏪 施設データ">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
-              <StatCard label="スターバックス" value={`${m.cafe_starbucks}軒`} source={SOURCES.facility} />
-              {m.gym_24h_count != null && <StatCard label="24時間ジム" value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
-              {m.cinema_count != null && <StatCard label="映画館" value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} source={SOURCES.facility} />}
-              {m.mall_count != null && <StatCard label="モール" value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} source={SOURCES.facility} />}
+              <FacilityCard municipalityId={municipalityId} category="cafe" label="スターバックス" value={`${m.cafe_starbucks}軒`} source={SOURCES.facility} />
+              {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} category="gym" label="24時間ジム" value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
+              {m.cinema_count != null && <FacilityCard municipalityId={municipalityId} category="cinema" label="映画館" value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} source={SOURCES.facility} />}
+              {m.mall_count != null && <FacilityCard municipalityId={municipalityId} category="mall" label="モール" value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} source={SOURCES.facility} />}
               {waitingChildren != null && <StatCard label="待機児童" value={`${waitingChildren}人`} sub={waitingChildren === 0 ? '✓ ゼロ達成' : undefined} source={SOURCES.support} />}
               {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} source={SOURCES.facility} />}
             </div>

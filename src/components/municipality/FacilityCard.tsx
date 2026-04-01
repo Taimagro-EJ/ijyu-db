@@ -20,8 +20,8 @@ interface FacilityCardProps {
   source?: string
 }
 
-function MapsLink({ lat, lng }: { lat: number; lng: number }) {
-  const url = 'https://www.google.com/maps?q=' + lat + ',' + lng
+function MapsLink({ lat, lng, name }: { lat: number; lng: number; name: string }) {
+  const url = 'https://www.google.com/maps/search/' + encodeURIComponent(name) + '/@' + lat + ',' + lng + ',15z'
   return <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}>📍 地図</a>
 }
 
@@ -82,7 +82,7 @@ export default function FacilityCard({ municipalityId, category, label, value, s
                     <span style={{ color: '#9E9488', fontFamily: "'DM Mono', monospace", fontSize: 11 }}>
                       {f.distance_from_center_km}km
                     </span>
-                    {f.lat && f.lng && <MapsLink lat={f.lat} lng={f.lng} />}
+                    {f.lat && f.lng && <MapsLink lat={f.lat} lng={f.lng} name={f.facility_name} />}
                   </div>
                 </div>
               ))}

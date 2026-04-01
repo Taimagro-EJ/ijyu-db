@@ -22,17 +22,7 @@ interface FacilityCardProps {
 
 function MapsLink({ lat, lng }: { lat: number; lng: number }) {
   const url = 'https://www.google.com/maps?q=' + lat + ',' + lng
-  return (
-    
-      href={url}
-      target="_blank"
-      rel="noopener noreferrer"
-      onClick={(e) => e.stopPropagation()}
-      style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}
-    >
-      📍 地図
-    </a>
-  )
+  return <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}>📍 地図</a>
 }
 
 export default function FacilityCard({ municipalityId, category, label, value, sub, source }: FacilityCardProps) {

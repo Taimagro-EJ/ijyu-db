@@ -48,3 +48,6 @@ fetch_*.py
 .env
 __pycache__/
 *.pyc
+data/*.pbf
+data/*.geojson
+data/download.log

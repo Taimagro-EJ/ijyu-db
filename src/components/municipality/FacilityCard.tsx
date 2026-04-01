@@ -28,7 +28,7 @@ export default function FacilityCard({ municipalityId, category, label, value, s
   const handleClick = async () => {
     if (open) { setOpen(false); return }
     setLoading(true)
-    const res = await fetch(`/api/facilities?municipality_id=${municipalityId}&category=${category}`)
+    const res = await fetch('/api/facilities?municipality_id=' + municipalityId + '&category=' + category)
     const data = await res.json()
     setFacilities(data)
     setLoading(false)
@@ -58,7 +58,6 @@ export default function FacilityCard({ municipalityId, category, label, value, s
         <div style={{
           marginTop: 8, background: '#fff', borderRadius: 10,
           border: '1px solid #E8E4DF', padding: '12px 16px',
-          gridColumn: '1 / -1',
         }}>
           {loading ? (
             <p style={{ fontSize: 12, color: '#9E9488' }}>読み込み中...</p>
@@ -74,8 +73,12 @@ export default function FacilityCard({ municipalityId, category, label, value, s
                 }}>
                   <span style={{ color: '#454034', fontWeight: 500 }}>
                     {f.facility_name}
-                    {f.is_24h && <span style={{ marginLeft: 6, fontSize: 10, background: '#F0DBC8', color: '#D46B3A', padding: '1px 6px', borderRadius: 4 }}>24h</span>}
-                    {f.has_imax && <span style={{ marginLeft: 6, fontSize: 10, background: '#E8F0FE', color: '#3D5A80', padding: '1px 6px', borderRadius: 4 }}>IMAX</span>}
+                    {f.is_24h && (
+                      <span style={{ marginLeft: 6, fontSize: 10, background: '#F0DBC8', color: '#D46B3A', padding: '1px 6px', borderRadius: 4 }}>24h</span>
+                    )}
+                    {f.has_imax && (
+                      <span style={{ marginLeft: 6, fontSize: 10, background: '#E8F0FE', color: '#3D5A80', padding: '1px 6px', borderRadius: 4 }}>IMAX</span>
+                    )}
                   </span>
                   <div style={{ display: 'flex', alignItems: 'center', gap: 8, flexShrink: 0 }}>
                     <span style={{ color: '#9E9488', fontFamily: "'DM Mono', monospace", fontSize: 11 }}>
@@ -83,10 +86,10 @@ export default function FacilityCard({ municipalityId, category, label, value, s
                     </span>
                     {f.lat && f.lng && (
                       
-                        href={"https://www.google.com/maps?q=" + f.lat + "," + f.lng}
+                        href={"https://www.google.com/maps?q=" + String(f.lat) + "," + String(f.lng)}
                         target="_blank"
                         rel="noopener noreferrer"
-                        onClick={(e) => e.stopPropagation()}
+                        onClick={function(e) { e.stopPropagation() }}
                         style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}
                       >
                         📍 地図

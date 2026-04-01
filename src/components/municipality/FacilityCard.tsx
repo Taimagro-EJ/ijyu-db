@@ -83,7 +83,7 @@ export default function FacilityCard({ municipalityId, category, label, value, s
                     </span>
                     {f.lat && f.lng && (
                       
-                        href={`https://www.google.com/maps?q=${f.lat},${f.lng}`}
+                        href={"https://www.google.com/maps?q=" + f.lat + "," + f.lng}
                         target="_blank"
                         rel="noopener noreferrer"
                         onClick={(e) => e.stopPropagation()}

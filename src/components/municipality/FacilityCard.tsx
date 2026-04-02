@@ -13,19 +13,22 @@ interface Facility {
 
 interface FacilityCardProps {
   municipalityId: string
+  municipalityName: string
   category: string
   label: string
   value: string
+  expectedCount?: number
   sub?: string
   source?: string
 }
 
-function MapsLink({ lat, lng, name }: { lat: number; lng: number; name: string }) {
-  const url = 'https://www.google.com/maps/search/' + encodeURIComponent(name) + '/@' + lat + ',' + lng + ',15z'
+function MapsLink({ lat, lng, name, municipalityName }: { lat: number; lng: number; name: string; municipalityName: string }) {
+  const query = encodeURIComponent(name + ' ' + municipalityName)
+  const url = 'https://www.google.com/maps/search/' + query
   return <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}>📍 地図</a>
 }
 
-export default function FacilityCard({ municipalityId, category, label, value, sub, source }: FacilityCardProps) {
+export default function FacilityCard({ municipalityId, municipalityName, category, label, value, expectedCount, sub, source }: FacilityCardProps) {
   const [open, setOpen] = useState(false)
   const [facilities, setFacilities] = useState<Facility[]>([])
   const [loading, setLoading] = useState(false)
@@ -64,7 +67,10 @@ export default function FacilityCard({ municipalityId, category, label, value, s
           {loading ? (
             <p style={{ fontSize: 12, color: '#9E9488' }}>読み込み中...</p>
           ) : facilities.length === 0 ? (
-            <p style={{ fontSize: 12, color: '#9E9488' }}>データなし</p>
+            <div>
+              <p style={{ fontSize: 12, color: '#9E9488' }}>データなし</p>
+              {expectedCount && expectedCount > 0 ? <p style={{ fontSize: 10, color: '#9E9488', marginTop: 4, fontStyle: 'italic' }}>※ OpenStreetMapに未登録のため一覧表示できません。上部の件数（{expectedCount}軒）は別データソースに基づいています。</p> : null}
+            </div>
           ) : (
             <div style={{ display: 'flex', flexDirection: 'column', gap: 6 }}>
               {facilities.map((f, i) => (
@@ -82,7 +88,7 @@ export default function FacilityCard({ municipalityId, category, label, value, s
                     <span style={{ color: '#9E9488', fontFamily: "'DM Mono', monospace", fontSize: 11 }}>
                       {f.distance_from_center_km}km
                     </span>
-                    {f.lat && f.lng && <MapsLink lat={f.lat} lng={f.lng} name={f.facility_name} />}
+                    {f.lat && f.lng && <MapsLink lat={f.lat} lng={f.lng} name={f.facility_name} municipalityName={municipalityName} />}
                   </div>
                 </div>
               ))}

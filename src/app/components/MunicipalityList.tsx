@@ -404,9 +404,9 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
               <div style={{ height: '100%', width: `${m.lifestyle_score ?? 0}%`, background: '#7AE0A0', borderRadius: 999 }} />
             </div>
           </div>
-          {/* スマホ用ボタン */}
-          <div style={{ display: 'none' }} className="sm-show-block">
-            <span style={{ display: 'block', textAlign: 'center', fontSize: 12, color: 'rgba(255,255,255,0.8)', border: '1px solid rgba(255,255,255,0.3)', borderRadius: 8, padding: '6px' }}>
+          {/* 詳細ボタン（常に表示） */}
+          <div style={{ marginTop: 8 }}>
+            <span style={{ display: 'block', textAlign: 'center', fontSize: 12, color: 'rgba(255,255,255,0.9)', background: 'rgba(212,107,58,0.8)', borderRadius: 8, padding: '8px', fontWeight: 600 }}>
               詳細を見る →
             </span>
           </div>

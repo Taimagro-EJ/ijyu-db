@@ -24,7 +24,7 @@ interface FacilityCardProps {
 
 function MapsLink({ lat, lng, name, municipalityName }: { lat: number; lng: number; name: string; municipalityName: string }) {
   const query = encodeURIComponent(name + ' ' + municipalityName)
-  const url = 'https://www.google.com/maps/search/' + query + '/@' + lat + ',' + lng + ',15z' + '/@' + lat + ',' + lng + ',15z'
+  const url = 'https://maps.google.com/maps?q=' + query + '&ll=' + lat + ',' + lng + '&spn=0.005,0.005' + '/@' + lat + ',' + lng + ',15z'
   return <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}>📍 地図</a>
 }
 
@@ -80,7 +80,7 @@ export default function FacilityCard({ municipalityId, municipalityName, categor
                   borderBottom: i < facilities.length - 1 ? '1px solid #F2F0EC' : 'none',
                 }}>
                   <span style={{ color: '#454034', fontWeight: 500 }}>
-                    {f.facility_name}
+                    {f.facility_name && f.facility_name.length < 6 ? f.facility_name + ' ' + municipalityName : f.facility_name}
                     {f.is_24h && <span style={{ marginLeft: 6, fontSize: 10, background: '#F0DBC8', color: '#D46B3A', padding: '1px 6px', borderRadius: 4 }}>24h</span>}
                     {f.has_imax && <span style={{ marginLeft: 6, fontSize: 10, background: '#E8F0FE', color: '#3D5A80', padding: '1px 6px', borderRadius: 4 }}>IMAX</span>}
                   </span>

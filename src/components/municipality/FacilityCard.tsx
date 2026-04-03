@@ -24,7 +24,7 @@ interface FacilityCardProps {
 
 function MapsLink({ lat, lng, name, municipalityName }: { lat: number; lng: number; name: string; municipalityName: string }) {
   const query = encodeURIComponent(name + ' ' + municipalityName)
-  const url = 'https://www.google.com/maps/search/' + query + '/@' + lat + ',' + lng + ',15z'
+  const url = 'https://www.google.com/maps/search/' + query + '/@' + lat + ',' + lng + ',15z' + '/@' + lat + ',' + lng + ',15z'
   return <a href={url} target="_blank" rel="noopener noreferrer" onClick={(e) => e.stopPropagation()} style={{ fontSize: 10, color: '#D46B3A', textDecoration: 'none', whiteSpace: 'nowrap' }}>📍 地図</a>
 }
 

@@ -4,6 +4,7 @@ import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
 import RadarChart from '@/components/lifestyle/RadarChartWrapper'
+import SourceNote from '@/components/municipality/SourceNote'
 import FacilityCard from '@/components/municipality/FacilityCard'
 
 export const revalidate = 60
@@ -297,6 +298,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <StatCard label="年間日照時間" value={m.sunshine_hours_annual != null ? `${m.sunshine_hours_annual}h` : '-'} source={SOURCES.climate} />
             <StatCard label="年間降水量" value={m.precipitation_annual != null ? `${m.precipitation_annual}mm` : '-'} source={SOURCES.climate} />
           </div>
+          <SourceNote sourceKey="climate" />
         </Section>
 
         {/* 生活費 */}
@@ -306,6 +308,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
           <div style={{ marginTop: 16 }}>
             <StatCard label="車の必要度" value={carLabel} sub={`スコア ${carScore ?? '-'}/5`} />
           </div>
+          <SourceNote sourceKey="rent" />
         </Section>
 
         {/* アクセス */}
@@ -324,6 +327,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
           <div style={{ marginTop: 16 }}>
             <StatCard label="治安評価" value={safetyLabel(criminalRate)} />
           </div>
+          <SourceNote sourceKey="crime" />
         </Section>
 
         {/* ★ 移住支援・子育て制度 */}

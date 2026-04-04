@@ -341,15 +341,6 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
             </div>
           </div>
 
-          <div style={{ padding: '10px 18px', borderTop: '1px solid var(--color-border)', display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-            <span style={{ fontSize: 11, color: 'var(--color-text-muted)' }}>詳細を見る →</span>
-            <button
-              onClick={e => { e.preventDefault(); e.stopPropagation() }}
-              style={{ background: 'none', border: '1px solid var(--color-border)', borderRadius: 999, padding: '4px 12px', fontSize: 11, color: 'var(--color-text-muted)', cursor: 'pointer', transition: 'all 0.2s' }}
-              onMouseEnter={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-accent)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-accent)' }}
-              onMouseLeave={e => { (e.currentTarget as HTMLButtonElement).style.borderColor = 'var(--color-border)'; (e.currentTarget as HTMLButtonElement).style.color = 'var(--color-text-muted)' }}
-            >♡ 気になる</button>
-          </div>
         </div>
       </Link>
 

@@ -468,6 +468,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               {m.mall_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="mall" label="モール" expectedCount={m.mall_count as number} value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} source={SOURCES.facility} />}
               {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} source={SOURCES.facility} />}
             </div>
+          <SourceNote sourceKey="facilities" />
           </Section>
         )}
 

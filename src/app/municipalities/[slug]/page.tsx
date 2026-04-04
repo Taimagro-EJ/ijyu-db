@@ -488,15 +488,22 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
           </div>
         </div>
 
-        {/* データの限界 */}
-        <div style={{ padding: '16px 20px', background: '#F2F0EC', borderRadius: 12, border: '1px solid #E8E4DF' }}>
-          <p style={{ fontSize: 11, fontWeight: 600, color: '#6B6457', margin: '0 0 8px' }}>⚠️ データの限界について</p>
-          <ul style={{ fontSize: 11, color: '#9E9488', lineHeight: 1.8, margin: 0, paddingLeft: 16 }}>
-            <li>施設データはOpenStreetMapに依存しており、未登録の施設は反映されません</li>
-            <li>家賃は推計値であり、実際の物件により大きく異なります</li>
-            <li>犯罪データは都道府県単位のため、市区町村ごとの差異を反映していません</li>
-            <li>支援制度の情報は変更される場合があります。最新情報は各自治体の公式サイトでご確認ください</li>
-          </ul>
+        {/* データについて */}
+        <div style={{ marginTop: 32, paddingTop: 24, borderTop: '1px solid #E8E4DF' }}>
+          <h3 style={{ fontSize: 13, fontWeight: 700, color: '#454034', margin: '0 0 12px', fontFamily: "'Shippori Mincho', serif" }}>📊 データについて</h3>
+          <div style={{ fontSize: 11, color: '#9E9488', lineHeight: 1.8 }}>
+            <p style={{ margin: '0 0 8px' }}>移住DBのデータは以下の公的統計・オープンデータを組み合わせて構成しています。</p>
+            <ul style={{ margin: '0 0 12px', paddingLeft: 16 }}>
+              <li>施設データ: <a href="https://download.geofabrik.de/asia/japan.html" target="_blank" rel="noopener noreferrer" style={{ color: '#9E9488', textDecoration: 'underline' }}>OpenStreetMap（Geofabrik 2026年3月版）</a> — 半径5〜30km以内の施設をカウント</li>
+              <li>人口: <a href="https://www.e-stat.go.jp/" target="_blank" rel="noopener noreferrer" style={{ color: '#9E9488', textDecoration: 'underline' }}>総務省 住民基本台帳（2020年版）</a></li>
+              <li>家賃: <a href="https://www.reinfolib.mlit.go.jp/" target="_blank" rel="noopener noreferrer" style={{ color: '#9E9488', textDecoration: 'underline' }}>国土交通省 不動産情報ライブラリ（2025年版）</a></li>
+              <li>気候: <a href="https://www.data.jma.go.jp/" target="_blank" rel="noopener noreferrer" style={{ color: '#9E9488', textDecoration: 'underline' }}>気象庁 過去の気象データ（2024年版）</a></li>
+              <li>犯罪率: <a href="https://www.npa.go.jp/publications/statistics/" target="_blank" rel="noopener noreferrer" style={{ color: '#9E9488', textDecoration: 'underline' }}>警察庁 犯罪統計（2024年版・都道府県単位）</a></li>
+              <li>移住支援金: <a href="https://www.chisou.go.jp/sousei/ijyu_shienkin.html" target="_blank" rel="noopener noreferrer" style={{ color: '#9E9488', textDecoration: 'underline' }}>内閣官房 地方創生 移住支援金（2025年版）</a></li>
+              <li>生活リアリティ指数: 移住DB独自算出（v7 — 施設密度60% + 環境40%）</li>
+            </ul>
+            <p style={{ margin: 0, color: '#B0A99D' }}>最終更新: 2026年3月 ／ データの誤りを見つけた場合は<a href="/contact" style={{ color: '#B0A99D', textDecoration: 'underline' }}>お問い合わせ</a>ください。</p>
+          </div>
         </div>
       </div>
     </div>

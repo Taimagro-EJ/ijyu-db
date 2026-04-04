@@ -159,3 +159,49 @@ html {
 .badge-warning { background: #FDF3E3; color: var(--color-warning); }
 .badge-negative { background: #FDECEA; color: var(--color-negative); }
 .badge-featured { background: var(--color-accent-soft); color: var(--color-accent); }
+
+/* ===== デザインアイデンティティ強化 ===== */
+
+/* 和紙テクスチャ */
+body {
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+}
+
+/* カード浮き上がり影 */
+.card-floating {
+  transition: transform 300ms ease-out, box-shadow 300ms ease-out;
+}
+.card-floating:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(69, 64, 52, 0.12);
+}
+
+/* 見出しの字間 */
+h1, h2, h3, .heading-spaced {
+  letter-spacing: 0.04em;
+}
+
+/* カテゴリ別自然色 */
+:root {
+  --cat-shopping: #A07855;
+  --cat-cafe: #6B4F36;
+  --cat-fitness: #4A7C59;
+  --cat-entertainment: #3D5A80;
+  --cat-childcare: #C4922A;
+  --cat-climate: #7BA098;
+  --cat-safety: #5B8C5A;
+  --cat-costperf: #B8860B;
+}
+
+/* 有機的区切り線 */
+.divider-organic {
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, #E8E4DF 10%, #D4CCC2 30%, #E8E4DF 60%, transparent 100%);
+  border: none;
+  margin: 0;
+}
+
+/* 写真フィルター */
+.municipality-photo {
+  filter: brightness(1.03) saturate(0.88) contrast(1.05);
+}

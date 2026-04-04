@@ -335,6 +335,9 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
               {m.avg_temp_annual !== null && m.avg_temp_annual >= 18 && <Tag label="☀️ 温暖" bg="#FFF7ED" color="#9A3412" />}
               {m.min_temp_winter !== null && m.min_temp_winter < -5 && <Tag label="❄️ 寒冷地" bg="#EFF6FF" color="#1E3A8A" />}
               {m.nearest_shinkansen && <Tag label={`🚅 ${m.nearest_shinkansen}`} bg="var(--color-base-light)" color="var(--color-base-dark)" />}
+              {m.waiting_children === 0 && <Tag label="👶 待機ゼロ" bg="#F0FDF4" color="#166534" />}
+              {m.criminal_rate !== null && m.criminal_rate < 150 && <Tag label="🔒 治安良好" bg="#F0FDF4" color="#166534" />}
+              {m.sunshine_hours_annual !== null && m.sunshine_hours_annual >= 2000 && <Tag label="🌞 日照充実" bg="#FFF7ED" color="#9A3412" />}
             </div>
           </div>
 

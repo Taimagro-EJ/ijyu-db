@@ -406,9 +406,7 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
           </div>
           {/* 詳細ボタン（常に表示） */}
           <div style={{ marginTop: 8 }}>
-            <span style={{ display: 'block', textAlign: 'center', fontSize: 12, color: 'rgba(255,255,255,0.9)', background: 'rgba(212,107,58,0.8)', borderRadius: 8, padding: '8px', fontWeight: 600 }}>
-              詳細を見る →
-            </span>
+            <a href={'/municipalities/' + m.slug} onClick={(e) => e.stopPropagation()} style={{ display: 'block', textAlign: 'center', fontSize: 12, fontWeight: 600, color: '#fff', background: 'rgba(212,107,58,0.9)', borderRadius: 8, padding: '8px', textDecoration: 'none' }}>詳細を見る →</a>
           </div>
         </div>
       </div>

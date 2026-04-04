@@ -243,7 +243,7 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
           boxShadow: isExpanded
             ? '0 8px 24px rgba(69,64,52,0.14)'
             : variant === 'featured' ? '0 2px 12px rgba(0,0,0,0.06)' : '0 1px 4px rgba(0,0,0,0.04)',
-          transform: isExpanded ? 'translateY(-2px)' : 'translateY(0)',
+
         }}>
           {photoHeight > 0 && (
             <div style={{ position: 'relative', height: photoHeight, overflow: 'hidden', background: 'var(--color-base-light)' }}>

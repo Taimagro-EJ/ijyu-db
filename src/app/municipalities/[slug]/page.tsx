@@ -291,6 +291,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
       <div style={{ maxWidth: 900, margin: '0 auto', padding: '40px 24px' }}>
 
         {/* 気候 */}
+        <SectionHeader chapter="CHAPTER 01" title="気候・環境" subtitle="この街の自然条件" />
         <Section title="🌤 気候">
           <DataBarWithSource label="年間平均気温" value={avgTemp} max={25} unit="℃" context={tempContext(avgTemp)} source={SOURCES.climate} color="#C4922A" />
           <DataBarWithSource label="冬の最低気温" value={m.min_temp_winter as number | null} max={20} unit="℃" invert source={SOURCES.climate} color="#3B7BC4" />
@@ -302,6 +303,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         </Section>
 
         {/* 生活費 */}
+        <SectionHeader chapter="CHAPTER 02" title="生活費" subtitle="お金のリアル" />
         <Section title="💴 生活費（推計）">
           <DataBarWithSource label="1LDK家賃目安" value={rent != null ? rent / 10000 : null} max={15} unit="万円" context={rentContext(rent)} source={SOURCES.rent} invert color="#4A7C59" />
           <DataBarWithSource label="単身月額生活費（推計）" value={m.total_monthly_cost_single != null ? (m.total_monthly_cost_single as number) / 10000 : null} max={25} unit="万円" source={SOURCES.cost} invert color="#4A7C59" context="家賃・食費・光熱費込み" />

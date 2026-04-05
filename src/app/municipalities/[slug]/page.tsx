@@ -327,6 +327,26 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <StatCard label="最寄り空港" value={(m.nearest_airport as string | null) ?? '-'} />
             <StatCard label="公共交通スコア" value={m.public_transport_score != null ? `${m.public_transport_score}/5` : '-'} />
           </div>
+          {(() => {
+            const pref = m.prefecture as string
+            const linearStation =
+              pref === '神奈川県' ? '神奈川県駅（橋本市）東京約10分' :
+              pref === '山梨県' ? '山梨県駅（甲府市）東京約25分' :
+              pref === '長野県' ? '長野県駅（飯田市）東京約45分' :
+              pref === '岐阜県' ? '岐阜県駅（中津川市）名古屋約10分' :
+              pref === '愛知県' ? '名古屋駅（終点）品川約40分' : null
+            if (!linearStation) return null
+            return (
+              <div style={{ marginTop: 12, padding: '10px 14px', background: 'linear-gradient(135deg, #F0F7FF 0%, #E8F0FE 100%)', borderRadius: 8, border: '1px solid #C5D8F7', display: 'flex', alignItems: 'flex-start', gap: 10 }}>
+                <span style={{ fontSize: 18, flexShrink: 0 }}>🔵</span>
+                <div>
+                  <p style={{ fontSize: 11, color: '#3D5A80', fontWeight: 700, margin: '0 0 3px' }}>リニア中央新幹線（2030年代半ば開業予定）</p>
+                  <p style={{ fontSize: 11, color: '#5B7FA6', margin: 0 }}>最寄りリニア駅: {linearStation}</p>
+                  <p style={{ fontSize: 10, color: '#9E9488', margin: '2px 0 0' }}>品川〜名古屋を約40分で結ぶ予定。工事遅延により2030年代半ばの見込み。</p>
+                </div>
+              </div>
+            )
+          })()}
           <div style={{ marginTop: 16, padding: '12px 16px', background: '#F7F5F2', borderRadius: 10, border: '1px solid #E8E4DF' }}>
             <p style={{ fontSize: 11, color: '#9E9488', margin: '0 0 8px', fontWeight: 600, letterSpacing: '0.06em' }}>🗺 Google Maps 経路検索</p>
             <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>

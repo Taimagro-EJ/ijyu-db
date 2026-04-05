@@ -24,7 +24,16 @@
     "type": "cross_ranking",
     "target_keyword": "東京 近い 移住先 家賃 安い",
     "facility_filter": {},
-    "stat_conditions": {"time_to_tokyo": ["lte", 120], "rent_1ldk_estimate": ["lte", 45000]},
+    "stat_conditions": {
+      "time_to_tokyo": [
+        "lte",
+        120
+      ],
+      "rent_1ldk_estimate": [
+        "lte",
+        45000
+      ]
+    },
     "youtube_short_hook": "東京2時間圏内で家賃4万円台の市町村が実在する",
     "x_post_template": "東京通勤しながら家賃4万台は夢じゃない。527市町村データで全数検証した→ {url}",
     "chat_ui_cta": "あなたの通勤時間・家賃条件で検索してみませんか？",
@@ -42,7 +51,9 @@
     "slug": "kosodate-ijyu-kogo-shinai-data",
     "type": "cross_ranking",
     "target_keyword": "子育て 移住 おすすめ 支援",
-    "facility_filter": {"pediatric_clinics": 3},
+    "facility_filter": {
+      "pediatric_clinics": 3
+    },
     "stat_conditions": {},
     "youtube_short_hook": "子育て移住で失敗しないための3つのデータ指標",
     "x_post_template": "子育て移住で重要な3つの数字：待機児童・医療費無料年齢・移住支援金。527市町村データで比較した→ {url}",
@@ -105,6 +116,275 @@
       "長野移住の最大のデメリット：冬のコスト（暖房費・除雪・タイヤ）",
       "データが示す長野移住に向いている人・向いていない人",
       "[HUMAN_INSIGHT] 実際に松本に住んでわかったこと"
+    ]
+  },
+  {
+    "id": 11,
+    "title": "夏涼しい移住先ランキング：最高気温データで選ぶ避暑地移住TOP10",
+    "slug": "natsu-suzushii-ijyu-ranking",
+    "type": "cross_ranking",
+    "target_keyword": "涼しい 移住先 おすすめ",
+    "note": "猛暑日が年々増える中、夏の気温データで移住先を選ぶ需要が高まっている",
+    "facility_filter": {},
+    "stat_conditions": {
+      "max_temp_summer": [
+        "lte",
+        30
+      ]
+    },
+    "h2_outline": [
+      "なぜ「夏涼しい街」に移住者が集まるのか",
+      "最高気温データで見る涼しい街TOP10（527市町村比較）",
+      "涼しい街の家賃・施設・アクセスも比較",
+      "避暑地移住の落とし穴：冬の寒さとのトレードオフ",
+      "[HUMAN_INSIGHT] 松本の夏は本当に涼しいか（実体験）"
+    ]
+  },
+  {
+    "id": 12,
+    "title": "待機児童ゼロの移住先まとめ：子育て世代が選ぶべき527市町村データ",
+    "slug": "taikijido-zero-kosodate-ijyu",
+    "type": "cross_ranking",
+    "target_keyword": "待機児童 ゼロ 移住",
+    "note": "待機児童問題は都市部の子育て世代に刺さる。データで解決策を示す",
+    "facility_filter": {},
+    "stat_conditions": {
+      "waiting_children": [
+        "eq",
+        0
+      ]
+    },
+    "h2_outline": [
+      "待機児童ゼロの市町村は527件中何件あるか（最新データ）",
+      "待機児童ゼロ×移住支援金あり×家賃安い：三拍子揃う街TOP10",
+      "待機児童ゼロでも注意すべきこと：保育の質と通園距離",
+      "子育て移住で本当に大切なデータ：医療費助成・小学校距離",
+      "[HUMAN_INSIGHT] 地方の保育園事情：都市部との違い"
+    ]
+  },
+  {
+    "id": 13,
+    "title": "24時間ジムがある地方移住先：フィットネス好きのためのデータ移住ガイド",
+    "slug": "gym-24h-chiho-ijyu-guide",
+    "type": "cross_ranking",
+    "target_keyword": "ジム 移住 地方",
+    "note": "健康意識の高い層向け。地方移住でジムが使えるかどうかは切実な問題",
+    "facility_filter": {
+      "gym_24h_count": 1
+    },
+    "stat_conditions": {},
+    "h2_outline": [
+      "地方移住でジムは続けられるか（527市町村のジム密度データ）",
+      "24時間ジムあり×家賃安い×東京アクセス良好：理想の移住先TOP10",
+      "エニタイム・chocoZAP・ゴールドジム：地方展開状況の実態",
+      "ジムがない街でも運動できる？代替手段とアウトドア環境",
+      "[HUMAN_INSIGHT] 松本市のジム事情：実際に使ってみた"
+    ]
+  },
+  {
+    "id": 14,
+    "title": "家賃3万円台で暮らせる街は実在するか：527市町村の家賃データ完全公開",
+    "slug": "yachin-3man-chiho-ijyu-data",
+    "type": "cross_ranking",
+    "target_keyword": "家賃 安い 移住先 3万",
+    "note": "「家賃3万」はYouTubeやSNSで流布しているが実際のデータは？",
+    "facility_filter": {},
+    "stat_conditions": {
+      "rent_1ldk_estimate": [
+        "lte",
+        35000
+      ]
+    },
+    "h2_outline": [
+      "家賃3万円台の1LDKは本当に存在するか（全国データ検証）",
+      "家賃3万台の街の生活インフラは整っているか",
+      "家賃安い＝生活費安いは本当か：食費・交通費・光熱費の実態",
+      "家賃3万台移住のリアル：仕事・収入はどうするか",
+      "[HUMAN_INSIGHT] 家賃と生活コストのバランス：松本の場合"
+    ]
+  },
+  {
+    "id": 15,
+    "title": "長野県移住ガイド：527市町村データで見る長野の実力と穴場",
+    "slug": "nagano-ijyu-data-guide",
+    "type": "cross_ranking",
+    "target_keyword": "長野 移住 おすすめ",
+    "note": "移住人気上位の長野をデータで徹底分析。松本・長野市・軽井沢を比較",
+    "facility_filter": {},
+    "stat_conditions": {
+      "prefecture": [
+        "eq",
+        "長野県"
+      ]
+    },
+    "h2_outline": [
+      "長野県への移住が人気の理由をデータで検証",
+      "長野県内77市町村の比較：家賃・気温・東京アクセス",
+      "松本市vs長野市vs軽井沢：データで見る住みやすさの差",
+      "長野移住の落とし穴：冬の寒さと車必須問題",
+      "[HUMAN_INSIGHT] 松本市在住2年の実感：良い点・悪い点"
+    ]
+  },
+  {
+    "id": 16,
+    "title": "移住支援金100万円以上もらえる市町村：2025年最新データまとめ",
+    "slug": "ijyu-shienkin-100man-2025",
+    "type": "cross_ranking",
+    "target_keyword": "移住支援金 100万 市町村",
+    "note": "移住支援金は国制度＋自治体上乗せで変動。最新データを整理",
+    "facility_filter": {},
+    "stat_conditions": {
+      "migration_incentive": [
+        "gte",
+        100
+      ]
+    },
+    "h2_outline": [
+      "移住支援金とは何か：国の制度と自治体独自制度の違い",
+      "支援金100万円以上の市町村一覧（2025年データ）",
+      "支援金だけで選んではいけない理由：条件と落とし穴",
+      "支援金×生活費安い×施設充実：総合で得する移住先TOP10",
+      "[HUMAN_INSIGHT] 移住支援金の申請プロセス：実体験から"
+    ]
+  },
+  {
+    "id": 17,
+    "title": "北海道移住の現実：データで見る北海道各市町村の住みやすさ",
+    "slug": "hokkaido-ijyu-data-reality",
+    "type": "cross_ranking",
+    "target_keyword": "北海道 移住 おすすめ 現実",
+    "note": "北海道移住は人気だが冬の厳しさとインフラ問題がある。データで現実を示す",
+    "facility_filter": {},
+    "stat_conditions": {
+      "prefecture": [
+        "eq",
+        "北海道"
+      ]
+    },
+    "h2_outline": [
+      "北海道移住が人気の理由と現実のギャップ",
+      "北海道179市町村のデータ比較：札幌圏vs地方",
+      "冬のデータ：最低気温・積雪・暖房費の実態",
+      "北海道移住で後悔しないために：インフラ・医療・仕事",
+      "[HUMAN_INSIGHT] 北海道移住者の声をデータで裏付ける"
+    ]
+  },
+  {
+    "id": 18,
+    "title": "テレワーク移住の最適解：通信環境×生活費×自然環境のデータ分析",
+    "slug": "telework-ijyu-optimal-data",
+    "type": "cross_ranking",
+    "target_keyword": "テレワーク 移住 おすすめ",
+    "note": "リモートワーカーの移住は条件が特殊。通信環境+コスト+自然を最適化",
+    "facility_filter": {},
+    "stat_conditions": {
+      "rent_1ldk_estimate": [
+        "lte",
+        60000
+      ],
+      "time_to_tokyo": [
+        "lte",
+        180
+      ]
+    },
+    "h2_outline": [
+      "テレワーク移住で本当に必要なデータ：光回線・カフェ・コワーキング",
+      "テレワーク移住のコスト計算：家賃減額×交通費増加のシミュレーション",
+      "テレワーカーに最適な移住先TOP10（データ複合評価）",
+      "テレワーク移住の失敗パターン：通信・孤独・キャリア",
+      "[HUMAN_INSIGHT] 松本でのテレワーク生活：1年間の実感"
+    ]
+  },
+  {
+    "id": 19,
+    "title": "犯罪率が低い移住先ランキング：治安データで選ぶ安全な街TOP10",
+    "slug": "hanzairitsu-hikui-ijyu-ranking",
+    "type": "cross_ranking",
+    "target_keyword": "治安 良い 移住先",
+    "note": "子育て世代・女性一人暮らし・シニアに刺さる治安テーマ",
+    "facility_filter": {},
+    "stat_conditions": {
+      "criminal_rate": [
+        "lte",
+        150
+      ]
+    },
+    "h2_outline": [
+      "移住先の治安はどうやってデータで測るか",
+      "犯罪率が低い市町村TOP10（527市町村比較）",
+      "治安×家賃×子育て環境：総合で安心な街ランキング",
+      "犯罪率データの限界：数字に表れない治安の要素",
+      "[HUMAN_INSIGHT] 地方の治安感：都市部との体感の違い"
+    ]
+  },
+  {
+    "id": 20,
+    "title": "シニア移住のデータガイド：医療・交通・気候で選ぶ老後の街",
+    "slug": "senior-ijyu-data-guide",
+    "type": "cross_ranking",
+    "target_keyword": "シニア 移住 おすすめ",
+    "note": "50-60代の移住は条件が若い世代と異なる。医療・バリアフリー・温暖気候",
+    "facility_filter": {},
+    "stat_conditions": {
+      "avg_temp_annual": [
+        "gte",
+        14
+      ],
+      "criminal_rate": [
+        "lte",
+        200
+      ]
+    },
+    "h2_outline": [
+      "シニア移住で最重要なデータ：医療機関・気候・公共交通",
+      "老後に住みやすい街TOP10（複合データ評価）",
+      "温暖×医療充実×生活費安い：三拍子揃う街はあるか",
+      "シニア移住の失敗パターン：医療・孤独・家族との距離",
+      "[HUMAN_INSIGHT] 親の移住を考える：データで最適地を探す"
+    ]
+  },
+  {
+    "id": 21,
+    "title": "静岡県移住ガイド：温暖な気候と東京アクセスを両立する街のデータ",
+    "slug": "shizuoka-ijyu-data-guide",
+    "type": "cross_ranking",
+    "target_keyword": "静岡 移住 おすすめ",
+    "note": "温暖・東京近い・富士山が見える静岡は移住候補として注目度が高い",
+    "facility_filter": {},
+    "stat_conditions": {
+      "prefecture": [
+        "eq",
+        "静岡県"
+      ]
+    },
+    "h2_outline": [
+      "静岡移住の魅力をデータで検証：気温・日照・アクセス",
+      "静岡県内35市町のデータ比較",
+      "浜松vs静岡市vs沼津：都市規模と生活データの差",
+      "静岡移住の課題：南海トラフと交通費",
+      "[HUMAN_INSIGHT] 静岡移住者のリアルな声"
+    ]
+  },
+  {
+    "id": 22,
+    "title": "福岡県移住完全ガイド：九州最大都市圏のデータで見る住みやすさ",
+    "slug": "fukuoka-ijyu-data-complete",
+    "type": "cross_ranking",
+    "target_keyword": "福岡 移住 おすすめ",
+    "note": "西日本移住の筆頭・福岡をデータで分析。東京一極集中からの脱却先として注目",
+    "facility_filter": {},
+    "stat_conditions": {
+      "prefecture": [
+        "eq",
+        "福岡県"
+      ]
+    },
+    "h2_outline": [
+      "福岡移住が人気の理由をデータで検証",
+      "福岡県内60市町村のデータ比較",
+      "福岡市vs北九州市vs久留米：都市データの差",
+      "福岡移住のコスト：家賃・物価・交通費の実態",
+      "[HUMAN_INSIGHT] 福岡移住者のリアル：東京との比較"
     ]
   }
 ]

@@ -25,7 +25,7 @@ export type Municipality = {
   rent_1ldk_estimate: number | null
   total_monthly_cost_single: number | null
   total_monthly_cost_family: number | null
-  car_necessity_score: number | null
+  car_necessity: number | null
   time_to_tokyo: number | null
   nearest_shinkansen: string | null
   nearest_airport: string | null

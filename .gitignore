@@ -51,3 +51,4 @@ __pycache__/
 data/*.pbf
 data/*.geojson
 data/download.log
+.env*.local

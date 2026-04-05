@@ -332,6 +332,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
 
         {/* ★ 移住支援・子育て制度 */}
         {hasSupportData && (
+          <>
           <SectionHeader chapter="CHAPTER 04" title="移住支援・子育て" subtitle="行政の手厚さ" />
           <Section title="🏛 移住支援・子育て制度">
             {/* 移住支援金 */}
@@ -409,6 +410,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               ※ 支援制度の内容・条件は変更される場合があります。最新情報は各自治体の公式サイトでご確認ください。
             </p>
           </Section>
+          </>
         )}
 
         {/* 生活リアリティ */}

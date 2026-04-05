@@ -35,7 +35,7 @@ export default function FeatureTag({ m }: { m: Municipality }) {
   if (tags.length === 0) return null
 
   return (
-    <div style={{ display: 'flex', flexWrap: 'wrap', gap: 4, marginTop: 8 }}>
+    <div style={{ display: 'flex', flexWrap: 'nowrap', gap: 4, marginTop: 8, overflow: 'hidden', height: 20 }}>
       {tags.slice(0, 3).map((tag, i) => (
         <span key={i} style={{ fontSize: 9, padding: '2px 7px', borderRadius: 999, background: tag.color + '18', color: tag.color, fontWeight: 600, letterSpacing: '0.04em', whiteSpace: 'nowrap' }}>
           {tag.emoji} {tag.label}

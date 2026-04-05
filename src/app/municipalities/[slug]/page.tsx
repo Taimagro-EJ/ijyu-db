@@ -36,13 +36,15 @@ function tokyoContext(m: number | null): string {
   return '完全リモート向け'
 }
 
+const NATIONAL_AVG_TEMP = 15.5
 function tempContext(t: number | null): string {
   if (t === null) return ''
-  if (t >= 20) return '沖縄・四国レベルの温暖さ'
-  if (t >= 17) return '比較的温暖な気候'
-  if (t >= 13) return '全国平均並みの気候'
-  if (t >= 8) return 'やや寒冷な気候'
-  return '寒冷地（冬の防寒対策必須）'
+  const diff = t - NATIONAL_AVG_TEMP
+  const diffStr = diff >= 0 ? `全国平均+${diff.toFixed(1)}℃` : `全国平均${diff.toFixed(1)}℃`
+  if (t >= 18) return `温暖・${diffStr}`
+  if (t >= 13) return `標準的・${diffStr}`
+  if (t >= 10) return `やや涼しい・${diffStr}`
+  return `寒冷地・${diffStr}`
 }
 
 function crimeContext(rate: number | null): string {
@@ -135,7 +137,7 @@ function safetyLabel(rate: number | null) {
 function fmt万(v: unknown): string {
   const n = Number(v)
   if (v === null || v === undefined || isNaN(n)) return '-'
-  return `${Math.round(n / 10000)}万円`
+  return `${(n / 10000).toFixed(1)}万円`
 }
 
 function fmt万1(v: unknown): string {
@@ -293,8 +295,10 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         {/* 気候 */}
         <SectionHeader chapter="CHAPTER 01" title="気候・環境" subtitle="この街の自然条件" />
         <Section title="🌤 気候">
-          <DataBarWithSource label="年間平均気温" value={avgTemp} max={25} unit="℃" context={tempContext(avgTemp)} source={SOURCES.climate} color="#C4922A" />
+          <DataBarWithSource label="年間平均気温" value={avgTemp} max={25} unit="℃" context={tempContext(avgTemp)} source={SOURCES.climate} color={avgTemp != null && avgTemp >= 18 && avgTemp <= 25 ? "#4A7C59" : avgTemp != null && avgTemp >= 13 ? "#C4922A" : "#3B7BC4"} />
+          {avgTemp != null && <p style={{ fontSize: 11, color: avgTemp >= 18 && avgTemp <= 25 ? "#4A7C59" : "#9E9488", marginTop: 2 }}>{avgTemp >= 18 && avgTemp <= 25 ? "✅ 快適気温帯（18〜25℃）内" : avgTemp > 25 ? "⚠️ 快適気温帯（18〜25℃）を上回る" : "❄️ 快適気温帯（18〜25℃）を下回る"}</p>}
           <DataBarWithSource label="冬の最低気温" value={m.min_temp_winter as number | null} max={20} unit="℃" invert source={SOURCES.climate} color="#3B7BC4" />
+          <DataBarWithSource label="夏の最高気温" value={m.max_temp_summer as number | null} max={40} unit="℃" source={SOURCES.climate} color="#D46B3A" context={(m.max_temp_summer as number | null) != null && (m.max_temp_summer as number) <= 30 ? "猛暑日がほぼない" : (m.max_temp_summer as number | null) != null && (m.max_temp_summer as number) <= 33 ? "東京より涼しい夏" : "真夏は暑い"} />
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginTop: 16 }}>
             <StatCard label="年間日照時間" value={m.sunshine_hours_annual != null ? `${m.sunshine_hours_annual}h` : '-'} source={SOURCES.climate} />
             <StatCard label="年間降水量" value={m.precipitation_annual != null ? `${m.precipitation_annual}mm` : '-'} source={SOURCES.climate} />
@@ -320,6 +324,14 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <StatCard label="最寄り新幹線駅" value={(m.nearest_shinkansen as string | null) ?? '-'} />
             <StatCard label="最寄り空港" value={(m.nearest_airport as string | null) ?? '-'} />
             <StatCard label="公共交通スコア" value={m.public_transport_score != null ? `${m.public_transport_score}/5` : '-'} />
+          </div>
+          <div style={{ marginTop: 16, padding: '12px 16px', background: '#F7F5F2', borderRadius: 10, border: '1px solid #E8E4DF' }}>
+            <p style={{ fontSize: 11, color: '#9E9488', margin: '0 0 8px', fontWeight: 600, letterSpacing: '0.06em' }}>🗺 Google Maps 経路検索</p>
+            <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap' }}>
+              <a href={`https://www.google.com/maps/dir/${encodeURIComponent((m.name as string) + (m.prefecture as string))}/東京駅`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, padding: '5px 12px', background: '#fff', border: '1px solid #E8E4DF', borderRadius: 999, color: '#3D5A80', textDecoration: 'none', whiteSpace: 'nowrap' }}>→ 東京駅</a>
+              <a href={`https://www.google.com/maps/dir/${encodeURIComponent((m.name as string) + (m.prefecture as string))}/大阪駅`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, padding: '5px 12px', background: '#fff', border: '1px solid #E8E4DF', borderRadius: 999, color: '#3D5A80', textDecoration: 'none', whiteSpace: 'nowrap' }}>→ 大阪駅</a>
+              <a href={`https://www.google.com/maps/dir/${encodeURIComponent((m.name as string) + (m.prefecture as string))}/名古屋駅`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 12, padding: '5px 12px', background: '#fff', border: '1px solid #E8E4DF', borderRadius: 999, color: '#3D5A80', textDecoration: 'none', whiteSpace: 'nowrap' }}>→ 名古屋駅</a>
+            </div>
           </div>
         </Section>
 
@@ -468,8 +480,8 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         {hasFacilityData && (
           <Section title="🏪 施設データ">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
-              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="スターバックス" expectedCount={m.cafe_starbucks as number} value={`${m.cafe_starbucks}軒`} source={SOURCES.facility} />
-              {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="gym" label="24時間ジム" expectedCount={m.gym_24h_count as number} value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
+              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={m.cafe_starbucks as number} value={`${m.cafe_starbucks}軒`} source={SOURCES.facility} />
+              {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="gym" label="フィットネス" expectedCount={m.gym_24h_count as number} value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
               {m.cinema_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cinema" label="映画館" expectedCount={m.cinema_count as number} value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} source={SOURCES.facility} />}
               {m.mall_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="mall" label="モール" expectedCount={m.mall_count as number} value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} source={SOURCES.facility} />}
               {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} source={SOURCES.facility} />}

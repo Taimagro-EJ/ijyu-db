@@ -4,7 +4,7 @@ interface Municipality {
   waiting_children?: number | null
   criminal_rate?: number | null
   time_to_tokyo?: number | null
-  car_necessity_score?: number | null
+  car_necessity?: number | null
   sunshine_hours_annual?: number | null
 }
 
@@ -27,7 +27,7 @@ export default function FeatureTag({ m }: { m: Municipality }) {
     tags.push({ emoji: '🔒', label: '治安良好', color: '#5B8C5A' })
   if (m.time_to_tokyo != null && m.time_to_tokyo >= 60 && m.time_to_tokyo <= 120)
     tags.push({ emoji: '🚄', label: '東京1〜2時間', color: '#3D5A80' })
-  if (m.car_necessity_score != null && m.car_necessity_score <= 2)
+  if (m.car_necessity != null && m.car_necessity <= 2)
     tags.push({ emoji: '🚶', label: '車なし可', color: '#6B4F36' })
   if (m.sunshine_hours_annual != null && m.sunshine_hours_annual >= 2000)
     tags.push({ emoji: '🌞', label: '日照充実', color: '#B8860B' })

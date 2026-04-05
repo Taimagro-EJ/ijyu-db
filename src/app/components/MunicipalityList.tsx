@@ -15,7 +15,7 @@ const QUICK_FILTERS = [
   { id: 'low_cost',   label: '💰 生活費安い', filter: (m: Municipality) => (m.total_monthly_cost_single ?? 999999) <= 150000 },
   { id: 'warm',       label: '☀️ 温暖',      filter: (m: Municipality) => (m.avg_temp_annual ?? 0) >= 15 },
   { id: 'near_tokyo', label: '🚄 東京近い',  filter: (m: Municipality) => (m.time_to_tokyo ?? 999) <= 120 },
-  { id: 'no_car',     label: '🚶 車なし可',  filter: (m: Municipality) => (m.car_necessity_score ?? 0) >= 4 },
+  { id: 'no_car',     label: '🚶 車なし可',  filter: (m: Municipality) => (m.car_necessity ?? 0) >= 4 },
   { id: 'nature',     label: '🏔 大自然',    filter: (m: Municipality) => (m.avg_temp_annual ?? 99) < 14 },
   { id: 'safe',       label: '🛡 安全',      filter: (m: Municipality) => (m.criminal_rate ?? 999) < 200 },
 ]
@@ -164,7 +164,7 @@ function getCatchCopy(m: Municipality): string {
   const temp = m.avg_temp_annual ?? 0
   const cost = m.total_monthly_cost_single ?? 999999
   const tokyo = m.time_to_tokyo ?? 999
-  const carScore = m.car_necessity_score ?? 3
+  const carScore = m.car_necessity ?? 3
   if (temp >= 20 && cost <= 160000) return '温暖な気候と、ゆとりある暮らし。'
   if (tokyo <= 90 && cost <= 160000) return '東京へすぐ戻れる、静かな毎日。'
   if (tokyo <= 120 && carScore >= 4) return '車なしで、都会にもアクセスできる街。'
@@ -330,8 +330,8 @@ const MunicipalityCard = memo(function MunicipalityCard({ m, rank = 999 }: { m: 
             )}
 
             <div style={{ display: 'flex', gap: 5, flexWrap: 'wrap', marginTop: 'auto' }}>
-              {m.car_necessity_score !== null && m.car_necessity_score <= 2 && <Tag label="🚗 車必須" bg="#FEF2F2" color="#991B1B" />}
-              {m.car_necessity_score !== null && m.car_necessity_score >= 4 && <Tag label="🚃 車不要" bg="#F0FDF4" color="#166534" />}
+              {m.car_necessity !== null && m.car_necessity <= 2 && <Tag label="🚗 車必須" bg="#FEF2F2" color="#991B1B" />}
+              {m.car_necessity !== null && m.car_necessity >= 4 && <Tag label="🚃 車不要" bg="#F0FDF4" color="#166534" />}
               {m.avg_temp_annual !== null && m.avg_temp_annual >= 18 && <Tag label="☀️ 温暖" bg="#FFF7ED" color="#9A3412" />}
               {m.min_temp_winter !== null && m.min_temp_winter < -5 && <Tag label="❄️ 寒冷地" bg="#EFF6FF" color="#1E3A8A" />}
               {m.nearest_shinkansen && <Tag label={`🚅 ${m.nearest_shinkansen}`} bg="var(--color-base-light)" color="var(--color-base-dark)" />}
@@ -498,7 +498,7 @@ export default function MunicipalityList({ municipalities }: { municipalities: M
       .filter(m => filters.region === '全て' || m.region === filters.region)
       .filter(m => filters.maxCost === 999999 || (m.total_monthly_cost_single ?? 999999) <= filters.maxCost)
       .filter(m => filters.maxTemp === 'all' || (filters.maxTemp === 'warm' && (m.avg_temp_annual ?? 0) >= 15) || (filters.maxTemp === 'cold' && (m.avg_temp_annual ?? 99) < 15))
-      .filter(m => !filters.carFree || (m.car_necessity_score ?? 0) >= 4)
+      .filter(m => !filters.carFree || (m.car_necessity ?? 0) >= 4)
       .filter(m => !qf || qf.filter(m))
 
     if (sortKey === 'custom') {

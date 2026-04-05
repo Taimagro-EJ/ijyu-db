@@ -320,6 +320,8 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         {/* アクセス */}
         <Section title="🚅 アクセス">
           <DataBarWithSource label="東京まで" value={timeTokyo} max={300} unit="分" context={tokyoContext(timeTokyo)} source={SOURCES.access} invert color="#3D5A80" />
+          {m.time_to_osaka != null && <DataBarWithSource label="大阪まで" value={m.time_to_osaka as number} max={300} unit="分" source={SOURCES.access} invert color="#3D5A80" />}
+          {m.time_to_nagoya != null && <DataBarWithSource label="名古屋まで" value={m.time_to_nagoya as number} max={300} unit="分" source={SOURCES.access} invert color="#3D5A80" />}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginTop: 16 }}>
             <StatCard label="最寄り新幹線駅" value={(m.nearest_shinkansen as string | null) ?? '-'} />
             <StatCard label="最寄り空港" value={(m.nearest_airport as string | null) ?? '-'} />

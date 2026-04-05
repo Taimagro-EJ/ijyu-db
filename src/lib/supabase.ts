@@ -27,6 +27,8 @@ export type Municipality = {
   total_monthly_cost_family: number | null
   car_necessity: number | null
   time_to_tokyo: number | null
+  time_to_osaka: number | null
+  time_to_nagoya: number | null
   nearest_shinkansen: string | null
   nearest_airport: string | null
   public_transport_score: number | null

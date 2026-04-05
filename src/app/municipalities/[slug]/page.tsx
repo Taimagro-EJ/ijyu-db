@@ -335,7 +335,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         {/* ★ 移住支援・子育て制度 */}
         {hasSupportData && (
           <>
-          <SectionHeader chapter="CHAPTER 04" title="移住支援・子育て" subtitle="行政の手厚さ" />
+          <SectionHeader chapter="CHAPTER 03" title="移住支援・子育て" subtitle="行政の手厚さ" />
           <Section title="🏛 移住支援・子育て制度">
             {/* 移住支援金 */}
             {(sf?.migration_incentive !== undefined && sf?.migration_incentive !== null) && (
@@ -464,7 +464,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         )}
 
         {/* 施設データ */}
-        <SectionHeader chapter="CHAPTER 03" title="施設・暮らし" subtitle="生活インフラの充実度" />
+        <SectionHeader chapter="CHAPTER 04" title="施設・暮らし" subtitle="生活インフラの充実度" />
         {hasFacilityData && (
           <Section title="🏪 施設データ">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>

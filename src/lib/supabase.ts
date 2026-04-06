@@ -32,6 +32,8 @@ export type Municipality = {
   supermarket_count: number | null
   drugstore_count: number | null
   convenience_count: number | null
+  hospital_count: number | null
+  clinic_count: number | null
   homecenter_count: number | null
   homecenter_best_name: string | null
   nearest_shinkansen: string | null

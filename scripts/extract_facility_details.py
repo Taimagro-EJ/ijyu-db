@@ -110,6 +110,8 @@ def main():
         ('data/cafes.geojson', 'cafe'),
         ('data/supermarkets.geojson', 'supermarket'),
         ('data/convenience.geojson', 'convenience'),
+        ('data/hospitals.geojson', 'hospital'),
+        ('data/clinics.geojson', 'clinic'),
         ('data/gyms.geojson', 'gym'),
         ('data/cinemas.geojson', 'cinema'),
         ('data/malls.geojson', 'mall'),

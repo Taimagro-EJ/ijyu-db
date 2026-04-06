@@ -511,8 +511,19 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               {m.supermarket_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="supermarket" label="スーパー" expectedCount={m.supermarket_count as number} value={`${m.supermarket_count}軒`} source={SOURCES.facility} />}
               {m.drugstore_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="drugstore" label="ドラッグストア" expectedCount={m.drugstore_count as number} value={`${m.drugstore_count}軒`} source={SOURCES.facility} />}
               {m.homecenter_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="homecenter" label="ホームセンター" expectedCount={m.homecenter_count as number} value={`${m.homecenter_count}軒`} source={SOURCES.facility} />}
+              {(m as any).hospital_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="hospital" label="🏥 総合病院" expectedCount={(m as any).hospital_count as number} value={`${(m as any).hospital_count}軒`} source={SOURCES.facility} />}
+              {(m as any).clinic_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="clinic" label="🩺 診療所" expectedCount={(m as any).clinic_count as number} value={`${(m as any).clinic_count}軒`} source={SOURCES.facility} />}
             </div>
           <SourceNote sourceKey="facilities" />
+          </Section>
+        )}
+        {/* 医療 */}
+        {(m.hospital_count != null || m.clinic_count != null) && (
+          <Section title="🏥 医療">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+              {m.hospital_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="hospital" label="総合病院" expectedCount={m.hospital_count as number} value={`${m.hospital_count}軒`} source={SOURCES.facility} />}
+              {m.clinic_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="clinic" label="診療所" expectedCount={m.clinic_count as number} value={`${m.clinic_count}軒`} source={SOURCES.facility} />}
+            </div>
           </Section>
         )}
 

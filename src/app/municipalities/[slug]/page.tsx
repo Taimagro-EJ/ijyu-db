@@ -507,8 +507,8 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               {m.cinema_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cinema" label="映画館" expectedCount={m.cinema_count as number} value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} source={SOURCES.facility} />}
               {m.mall_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="mall" label="モール" expectedCount={m.mall_count as number} value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} source={SOURCES.facility} />}
               {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} source={SOURCES.facility} />}
-              {m.convenience_count != null && <StatCard label="🏪 コンビニ" value={`${m.convenience_count as number}件`} source={SOURCES.facility} />}
-              {m.supermarket_count != null && <StatCard label="🛒 スーパー" value={`${m.supermarket_count as number}件`} source={SOURCES.facility} />}
+              {m.convenience_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="convenience" label="コンビニ" expectedCount={m.convenience_count as number} value={`${m.convenience_count}軒`} source={SOURCES.facility} />}
+              {m.supermarket_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="supermarket" label="スーパー" expectedCount={m.supermarket_count as number} value={`${m.supermarket_count}軒`} source={SOURCES.facility} />}
               {m.drugstore_count != null && <StatCard label="💊 ドラッグストア" value={`${m.drugstore_count as number}件`} source={SOURCES.facility} />}
               {m.homecenter_count != null && <StatCard label="🔨 ホームセンター" value={`${m.homecenter_count as number}件`} source={SOURCES.facility} />}
             </div>

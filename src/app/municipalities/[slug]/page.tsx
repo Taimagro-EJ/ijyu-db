@@ -507,6 +507,9 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               {m.cinema_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cinema" label="映画館" expectedCount={m.cinema_count as number} value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} source={SOURCES.facility} />}
               {m.mall_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="mall" label="モール" expectedCount={m.mall_count as number} value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} source={SOURCES.facility} />}
               {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} source={SOURCES.facility} />}
+              {(m as Municipality).supermarket_count != null && <StatCard label="🛒 スーパー" value={`${(m as Municipality).supermarket_count}件`} source={SOURCES.facility} />}
+              {(m as Municipality).drugstore_count != null && <StatCard label="💊 ドラッグストア" value={`${(m as Municipality).drugstore_count}件`} source={SOURCES.facility} />}
+              {(m as Municipality).homecenter_count != null && <StatCard label="🔨 ホームセンター" value={`${(m as Municipality).homecenter_count}件`} source={SOURCES.facility} />}
             </div>
           <SourceNote sourceKey="facilities" />
           </Section>

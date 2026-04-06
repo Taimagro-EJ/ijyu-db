@@ -56,3 +56,15 @@ osmium export "$DATA/malls.osm.pbf" -o "$DATA/malls.geojson" --overwrite
 echo "  → $(python3 -c "import json; d=json.load(open('$DATA/malls.geojson')); print(len(d['features']))")件"
 
 echo "✅ 全カテゴリ抽出完了"
+
+# スーパーマーケット抽出
+osmium tags-filter data/japan-latest.osm.pbf \
+  nwr/shop=supermarket \
+  -o data/supermarkets.osm.pbf
+osmium export data/supermarkets.osm.pbf -o data/supermarkets.geojson --geometry-types=point,polygon
+
+# コンビニ抽出
+osmium tags-filter data/japan-latest.osm.pbf \
+  nwr/shop=convenience \
+  -o data/convenience.osm.pbf
+osmium export data/convenience.osm.pbf -o data/convenience.geojson --geometry-types=point,polygon

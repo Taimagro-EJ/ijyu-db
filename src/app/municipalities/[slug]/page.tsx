@@ -517,15 +517,6 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
           <SourceNote sourceKey="facilities" />
           </Section>
         )}
-        {/* 医療 */}
-        {(m.hospital_count != null || m.clinic_count != null) && (
-          <Section title="🏥 医療">
-            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
-              {m.hospital_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="hospital" label="総合病院" expectedCount={m.hospital_count as number} value={`${m.hospital_count}軒`} source={SOURCES.facility} />}
-              {m.clinic_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="clinic" label="診療所" expectedCount={m.clinic_count as number} value={`${m.clinic_count}軒`} source={SOURCES.facility} />}
-            </div>
-          </Section>
-        )}
 
         {/* CTA */}
         <div style={{ margin: '32px 0', padding: '24px 28px', background: 'linear-gradient(135deg, #F2F0EC 0%, #F0DBC8 100%)', borderRadius: 16, border: '1px solid #E8E4DF' }}>

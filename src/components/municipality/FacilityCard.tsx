@@ -1,6 +1,15 @@
 'use client'
 import { useState } from 'react'
 
+const CATEGORY_BRANDS: Record<string, { top3: string[]; trend: string | null }> = {
+  cafe: { top3: ['スターバックス', 'コメダ珈琲店', 'タリーズコーヒー'], trend: 'ブルーボトルコーヒー' },
+  gym: { top3: ['エニタイムフィットネス', 'chocoZAP', 'ゴールドジム'], trend: 'FIT PLACE24' },
+  mall: { top3: ['イオンモール', 'ららぽーと', 'アリオ'], trend: 'コストコ' },
+  supermarket: { top3: ['イオン', '西友', 'ライフ'], trend: 'ロピア' },
+  cinema: { top3: ['TOHOシネマズ', 'イオンシネマ', '109シネマズ'], trend: null },
+  convenience: { top3: ['セブン-イレブン', 'ファミリーマート', 'ローソン'], trend: null },
+}
+
 interface Facility {
   facility_name: string
   brand_name: string | null
@@ -64,6 +73,26 @@ export default function FacilityCard({ municipalityId, municipalityName, categor
 
       {open && (
         <div style={{ marginTop: 8, background: '#fff', borderRadius: 10, border: '1px solid #E8E4DF', padding: '12px 16px' }}>
+          {/* 人気ブランド3選 */}
+          {CATEGORY_BRANDS[category] && (() => {
+            const brands = CATEGORY_BRANDS[category]
+            const counts = brands.top3.map(brand => ({
+              name: brand,
+              count: facilities.filter(f => f.facility_name && f.facility_name.includes(brand.replace('コーヒー','').replace('フィットネス','').trim())).length
+            }))
+            return (
+              <div style={{ marginBottom: 12, padding: '8px 12px', background: '#F7F5F2', borderRadius: 8 }}>
+                <p style={{ fontSize: 10, color: '#9E9488', margin: '0 0 6px', fontWeight: 600, letterSpacing: '0.06em' }}>人気ブランド（この市町村）</p>
+                <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
+                  {brands.top3.map((brand, i) => {
+                    const cnt = facilities.filter(f => f.facility_name && f.facility_name.includes(brand.split(/[・コーヒーフィットネス]/)[0].trim())).length
+                    return <span key={i} style={{ fontSize: 11, padding: '3px 8px', background: cnt > 0 ? '#E8F0E8' : '#F0EDE8', color: cnt > 0 ? '#4A7C59' : '#9E9488', borderRadius: 999 }}>{brand} {cnt > 0 ? `${cnt}軒` : 'なし'}</span>
+                  })}
+                  {brands.trend && <span style={{ fontSize: 11, padding: '3px 8px', background: '#FFF3E8', color: '#C4922A', borderRadius: 999 }}>🔥 {brands.trend}</span>}
+                </div>
+              </div>
+            )
+          })()}
           {loading ? (
             <p style={{ fontSize: 12, color: '#9E9488' }}>読み込み中...</p>
           ) : facilities.length === 0 ? (

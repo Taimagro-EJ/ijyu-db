@@ -513,6 +513,8 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               {m.homecenter_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="homecenter" label="ホームセンター" expectedCount={m.homecenter_count as number} value={`${m.homecenter_count}軒`} source={SOURCES.facility} />}
               {(m as any).hospital_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="hospital" label="🏥 総合病院" expectedCount={(m as any).hospital_count as number} value={`${(m as any).hospital_count}軒`} source={SOURCES.facility} />}
               {(m as any).clinic_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="clinic" label="🩺 診療所" expectedCount={(m as any).clinic_count as number} value={`${(m as any).clinic_count}軒`} source={SOURCES.facility} />}
+              {(m as any).onsen_count != null && (m as any).onsen_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="onsen" label="♨️ 温泉・銭湯" expectedCount={(m as any).onsen_count as number} value={`${(m as any).onsen_count}軒`} source={SOURCES.facility} />}
+              {(m as any).michinoeki_count != null && (m as any).michinoeki_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="michinoeki" label="🚗 道の駅" expectedCount={(m as any).michinoeki_count as number} value={`${(m as any).michinoeki_count}軒`} source={SOURCES.facility} />}
             </div>
           <SourceNote sourceKey="facilities" />
           </Section>

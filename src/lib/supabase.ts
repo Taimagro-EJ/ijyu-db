@@ -34,6 +34,8 @@ export type Municipality = {
   convenience_count: number | null
   hospital_count: number | null
   clinic_count: number | null
+  onsen_count: number | null
+  michinoeki_count: number | null
   homecenter_count: number | null
   homecenter_best_name: string | null
   nearest_shinkansen: string | null

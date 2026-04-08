@@ -498,26 +498,42 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         )}
 
         {/* 施設データ */}
-        <SectionHeader chapter="CHAPTER 04" title="施設・暮らし" subtitle="生活インフラの充実度" />
+        <SectionHeader chapter="CHAPTER 04" title="まちの機能" subtitle="生活インフラの充実度" />
         {hasFacilityData && (
-          <Section title="🏪 施設データ">
+          {/* A. 安心の基盤 */}
+          <Section title="🏥 安心の基盤">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
-              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={m.cafe_starbucks as number} value={`${m.cafe_starbucks}軒`} source={SOURCES.facility} />
-              {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="gym" label="フィットネス" expectedCount={m.gym_24h_count as number} value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
-              {m.cinema_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cinema" label="映画館" expectedCount={m.cinema_count as number} value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} source={SOURCES.facility} />}
-              {m.mall_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="mall" label="モール" expectedCount={m.mall_count as number} value={`${m.mall_count}軒`} sub={(m.mall_best_tier as string | null) ? `最高Tier: ${m.mall_best_tier}` : undefined} source={SOURCES.facility} />}
+              {(m as any).hospital_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="hospital" label="総合病院" expectedCount={(m as any).hospital_count as number} value={`${(m as any).hospital_count}軒`} source={SOURCES.facility} />}
+              {(m as any).clinic_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="clinic" label="診療所" expectedCount={(m as any).clinic_count as number} value={`${(m as any).clinic_count}軒`} source={SOURCES.facility} />}
               {m.pediatric_clinics != null && <StatCard label="小児科" value={`${m.pediatric_clinics}件`} source={SOURCES.facility} />}
-              {m.convenience_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="convenience" label="コンビニ" expectedCount={m.convenience_count as number} value={`${m.convenience_count}軒`} source={SOURCES.facility} />}
+            </div>
+          </Section>
+          {/* B. 日常の買い物 */}
+          <Section title="🛒 日常の買い物">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
               {m.supermarket_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="supermarket" label="スーパー" expectedCount={m.supermarket_count as number} value={`${m.supermarket_count}軒`} source={SOURCES.facility} />}
+              {m.convenience_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="convenience" label="コンビニ" expectedCount={m.convenience_count as number} value={`${m.convenience_count}軒`} source={SOURCES.facility} />}
               {m.drugstore_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="drugstore" label="ドラッグストア" expectedCount={m.drugstore_count as number} value={`${m.drugstore_count}軒`} source={SOURCES.facility} />}
               {m.homecenter_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="homecenter" label="ホームセンター" expectedCount={m.homecenter_count as number} value={`${m.homecenter_count}軒`} source={SOURCES.facility} />}
-              {(m as any).hospital_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="hospital" label="🏥 総合病院" expectedCount={(m as any).hospital_count as number} value={`${(m as any).hospital_count}軒`} source={SOURCES.facility} />}
-              {(m as any).clinic_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="clinic" label="🩺 診療所" expectedCount={(m as any).clinic_count as number} value={`${(m as any).clinic_count}軒`} source={SOURCES.facility} />}
-              {(m as any).onsen_count != null && (m as any).onsen_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="onsen" label="♨️ 温泉・銭湯" expectedCount={(m as any).onsen_count as number} value={`${(m as any).onsen_count}軒`} source={SOURCES.facility} />}
-              {/* 道の駅: データ品質問題のため一時非表示。OSMのtourism=informationに観光案内板が大量混入 */}
             </div>
-          <SourceNote sourceKey="facilities" />
           </Section>
+          {/* C. 学びと文化 */}
+          <Section title="📚 学びと文化">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+              {(m as any).library_count != null && (m as any).library_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="library" label="図書館" expectedCount={(m as any).library_count as number} value={`${(m as any).library_count}軒`} source={SOURCES.facility} />}
+              {(m as any).bookstore_count != null && (m as any).bookstore_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="bookstore" label="書店" expectedCount={(m as any).bookstore_count as number} value={`${(m as any).bookstore_count}軒`} source={SOURCES.facility} />}
+              {m.cinema_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cinema" label="映画館" expectedCount={m.cinema_count as number} value={`${m.cinema_count}軒${m.cinema_has_imax ? ' (IMAX)' : ''}`} source={SOURCES.facility} />}
+            </div>
+          </Section>
+          {/* D. ウェルビーイング */}
+          <Section title="🧘 ウェルビーイング">
+            <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
+              {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="gym" label="フィットネス" expectedCount={m.gym_24h_count as number} value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
+              {(m as any).onsen_count != null && (m as any).onsen_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="onsen" label="温泉・銭湯" expectedCount={(m as any).onsen_count as number} value={`${(m as any).onsen_count}軒`} source={SOURCES.facility} />}
+              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={m.cafe_starbucks as number} value={`${m.cafe_starbucks}軒`} source={SOURCES.facility} />
+            </div>
+          </Section>
+          <SourceNote sourceKey="facilities" />
         )}
 
         {/* CTA */}

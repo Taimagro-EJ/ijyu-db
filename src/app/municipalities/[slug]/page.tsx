@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import RadarChart from '@/components/lifestyle/RadarChartWrapper'
 import SourceNote from '@/components/municipality/SourceNote'
+import { InternetCTA, MovingCTA } from '@/components/municipality/AffiliateCTA'
 import SectionHeader from '@/components/municipality/SectionHeader'
 import FacilityCard from '@/components/municipality/FacilityCard'
 
@@ -316,6 +317,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
           </div>
           <SourceNote sourceKey="rent" />
         </Section>
+        <InternetCTA />
 
         {/* アクセス */}
         <Section title="🚅 アクセス">
@@ -356,6 +358,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             </div>
           </div>
         </Section>
+        <MovingCTA municipalityName={m.name as string} />
 
         {/* 安全・治安 */}
         <Section title="🔒 安全・治安">

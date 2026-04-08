@@ -112,12 +112,18 @@ def main():
         ('data/convenience.geojson', 'convenience'),
         ('data/hospitals.geojson', 'hospital'),
         ('data/clinics.geojson', 'clinic'),
+        ('data/onsen.geojson', 'onsen'),
+        ('data/libraries.geojson', 'library'),
+        ('data/bookstores.geojson', 'bookstore'),
         ('data/gyms.geojson', 'gym'),
         ('data/cinemas.geojson', 'cinema'),
         ('data/malls.geojson', 'mall'),
     ]
     total = 0
     for filepath, category in FILES:
+        # 既存データを削除してから投入（重複防止）
+        supabase.table('facility_details').delete().eq('category', category).execute()
+        print(f'  🗑️ {category}の既存データを削除')
         full_path = os.path.expanduser(f'~/ijyu-db/{filepath}')
         if not os.path.exists(full_path):
             print(f"  ⚠️ {filepath} が見つかりません。スキップ。"); continue

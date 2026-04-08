@@ -500,6 +500,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         {/* 施設データ */}
         <SectionHeader chapter="CHAPTER 04" title="まちの機能" subtitle="生活インフラの充実度" />
         {hasFacilityData && (
+          <>
           {/* A. 安心の基盤 */}
           <Section title="🏥 安心の基盤">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
@@ -534,6 +535,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             </div>
           </Section>
           <SourceNote sourceKey="facilities" />
+          </>
         )}
 
         {/* CTA */}

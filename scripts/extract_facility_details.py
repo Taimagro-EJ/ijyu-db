@@ -121,13 +121,17 @@ def main():
     ]
     total = 0
     for filepath, category in FILES:
-        # 既存データを削除してから投入（重複防止）
-        supabase.table('facility_details').delete().eq('category', category).execute()
-        print(f'  🗑️ {category}の既存データを削除')
         full_path = os.path.expanduser(f'~/ijyu-db/{filepath}')
         if not os.path.exists(full_path):
             print(f"  ⚠️ {filepath} が見つかりません。スキップ。"); continue
         print(f"\n📂 {category}")
+        # 既存データを削除してから投入（重複防止）
+        requests.delete(
+            f"{SUPABASE_URL}/rest/v1/facility_details",
+            headers={**HEADERS, 'Prefer': 'return=minimal'},
+            params={'category': f'eq.{category}'}
+        )
+        print(f'  🗑️ {category}の既存データを削除')
         rows = process_geojson(full_path, category, municipalities)
         print(f"  → {len(rows)}件抽出")
         if rows: upsert_batch(rows); total += len(rows)

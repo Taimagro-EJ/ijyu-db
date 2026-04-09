@@ -68,3 +68,14 @@ osmium tags-filter data/japan-latest.osm.pbf \
   nwr/shop=convenience \
   -o data/convenience.osm.pbf
 osmium export data/convenience.osm.pbf -o data/convenience.geojson --geometry-types=point,polygon
+
+# ユニクロ・GU（アパレル）
+echo "👕 ユニクロ・GU抽出中..."
+osmium tags-filter "$PBF" \
+  nwr/brand=ユニクロ \
+  nwr/brand=UNIQLO \
+  nwr/brand=GU \
+  nwr/brand="ジーユー" \
+  -o "$DATA/clothes.osm.pbf" --overwrite
+osmium export "$DATA/clothes.osm.pbf" -o "$DATA/clothes.geojson" --overwrite
+echo "  → $(python3 -c "import json; d=json.load(open('$DATA/clothes.geojson')); print(len(d['features']))")件"

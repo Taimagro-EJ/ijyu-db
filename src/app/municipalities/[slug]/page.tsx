@@ -544,7 +544,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             </div>
           </Section>
           {/* E. おでかけと暮らし */}
-          {brands && (brands.aeon_mall_count > 0 || brands.lalaport_count > 0 || brands.nitori_count > 0 || brands.muji_count > 0 || brands.yamada_count > 0 || brands.ks_count > 0 || brands.costco_count > 0 || brands.donki_count > 0) && (
+          {brands && (brands.aeon_mall_count > 0 || brands.lalaport_count > 0 || brands.nitori_count > 0 || brands.muji_count > 0 || brands.yamada_count > 0 || brands.ks_count > 0 || brands.costco_count > 0 || brands.donki_count > 0 || brands.uniqlo_count > 0 || brands.gu_count > 0) && (
           <Section title="🛍 おでかけと暮らし">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
               {brands.aeon_mall_count > 0 && <StatCard label="イオンモール" value={`${brands.aeon_mall_count}軒`} />}
@@ -555,6 +555,8 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               {brands.yamada_count > 0 && <StatCard label="ヤマダ電機" value={`${brands.yamada_count}軒`} />}
               {brands.ks_count > 0 && <StatCard label="ケーズデンキ" value={`${brands.ks_count}軒`} />}
               {brands.costco_count > 0 && <StatCard label="コストコ" value={`${brands.costco_count}軒`} />}
+              {brands.uniqlo_count > 0 && <StatCard label="ユニクロ" value={`${brands.uniqlo_count}軒`} />}
+              {brands.gu_count > 0 && <StatCard label="GU" value={`${brands.gu_count}軒`} />}
             </div>
           </Section>
           )}

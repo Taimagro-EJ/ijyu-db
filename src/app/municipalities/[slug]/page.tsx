@@ -10,6 +10,7 @@ const ChapterSummary = dynamic(() => import('@/components/municipality/ChapterSu
 const InternetCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.InternetCTA })))
 const MovingCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.MovingCTA })))
 import SectionHeader from '@/components/municipality/SectionHeader'
+import BrandCard from '@/components/municipality/BrandCard'
 const FacilityCard = dynamic(() => import('@/components/municipality/FacilityCard'))
 
 export const revalidate = 60
@@ -561,16 +562,16 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
           {brands && (brands.aeon_mall_count > 0 || brands.lalaport_count > 0 || brands.nitori_count > 0 || brands.muji_count > 0 || brands.yamada_count > 0 || brands.ks_count > 0 || brands.costco_count > 0 || brands.donki_count > 0 || brands.uniqlo_count > 0 || brands.gu_count > 0) && (
           <Section title="🛍 おでかけと暮らし">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
-              {brands.aeon_mall_count > 0 && <StatCard label="イオンモール" value={`${brands.aeon_mall_count}軒`} />}
-              {brands.lalaport_count > 0 && <StatCard label="ららぽーと" value={`${brands.lalaport_count}軒`} />}
-              {brands.donki_count > 0 && <StatCard label="ドン・キホーテ" value={`${brands.donki_count}軒`} />}
-              {brands.nitori_count > 0 && <StatCard label="ニトリ" value={`${brands.nitori_count}軒`} />}
-              {brands.muji_count > 0 && <StatCard label="無印良品" value={`${brands.muji_count}軒`} />}
-              {brands.yamada_count > 0 && <StatCard label="ヤマダ電機" value={`${brands.yamada_count}軒`} />}
-              {brands.ks_count > 0 && <StatCard label="ケーズデンキ" value={`${brands.ks_count}軒`} />}
-              {brands.costco_count > 0 && <StatCard label="コストコ" value={`${brands.costco_count}軒`} />}
-              {brands.uniqlo_count > 0 && <StatCard label="ユニクロ" value={`${brands.uniqlo_count}軒`} />}
-              {brands.gu_count > 0 && <StatCard label="GU" value={`${brands.gu_count}軒`} />}
+              {brands.aeon_mall_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="イオンモール" count={brands.aeon_mall_count} brandPattern="イオンモール" />}
+              {brands.lalaport_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ららぽーと" count={brands.lalaport_count} brandPattern="ららぽーと" />}
+              {brands.donki_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ドン・キホーテ" count={brands.donki_count} brandPattern="ドン・キホーテ" />}
+              {brands.nitori_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ニトリ" count={brands.nitori_count} brandPattern="ニトリ" />}
+              {brands.muji_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="無印良品" count={brands.muji_count} brandPattern="無印良品" />}
+              {brands.yamada_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ヤマダ電機" count={brands.yamada_count} brandPattern="ヤマダ" />}
+              {brands.ks_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ケーズデンキ" count={brands.ks_count} brandPattern="ケーズ" />}
+              {brands.costco_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="コストコ" count={brands.costco_count} brandPattern="コストコ" />}
+              {brands.uniqlo_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ユニクロ" count={brands.uniqlo_count} brandPattern="ユニクロ" />}
+              {brands.gu_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="GU" count={brands.gu_count} brandPattern="GU" />}
             </div>
           </Section>
           )}

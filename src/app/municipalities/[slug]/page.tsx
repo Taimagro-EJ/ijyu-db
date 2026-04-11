@@ -5,6 +5,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 import RadarChart from '@/components/lifestyle/RadarChartWrapper'
 import SourceNote from '@/components/municipality/SourceNote'
+import ChapterSummary from '@/components/municipality/ChapterSummary'
 import { InternetCTA, MovingCTA } from '@/components/municipality/AffiliateCTA'
 import SectionHeader from '@/components/municipality/SectionHeader'
 import FacilityCard from '@/components/municipality/FacilityCard'
@@ -207,6 +208,14 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
     .eq('municipality_id', municipalityId)
     .single()
   const brands = brandsData as Record<string, number> | null
+  const { data: summariesData } = await supabase
+    .from('ai_chapter_summaries')
+    .select('chapter_key, summary_text')
+    .eq('municipality_code', municipalityId)
+  const summaries = (summariesData ?? []).reduce((acc: Record<string, string>, s: any) => {
+    acc[s.chapter_key] = s.summary_text
+    return acc
+  }, {})
 
   const carScore = m.car_necessity_score as number | null
   const carLabel = (['', '必須', '高い', '普通', '低い', '不要'] as const)[carScore ?? 0] ?? '-'
@@ -310,6 +319,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <StatCard label="年間日照時間" value={m.sunshine_hours_annual != null ? `${m.sunshine_hours_annual}h` : '-'} source={SOURCES.climate} />
             <StatCard label="年間降水量" value={m.precipitation_annual != null ? `${m.precipitation_annual}mm` : '-'} source={SOURCES.climate} />
           </div>
+          <ChapterSummary summary={summaries["climate"] ?? null} />
           <SourceNote sourceKey="climate" />
         </Section>
 
@@ -322,6 +332,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <StatCard label="車の必要度" value={carLabel} sub={`スコア ${carScore ?? '-'}/5`} />
           </div>
           <SourceNote sourceKey="rent" />
+          <ChapterSummary summary={summaries['cost'] ?? null} />
         </Section>
         <InternetCTA />
 
@@ -364,6 +375,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             </div>
           </div>
         </Section>
+        <ChapterSummary summary={summaries['access'] ?? null} />
         <MovingCTA municipalityName={m.name as string} />
 
         {/* 安全・治安 */}
@@ -560,6 +572,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             </div>
           </Section>
           )}
+          <ChapterSummary summary={summaries['facilities'] ?? null} />
           <SourceNote sourceKey="facilities" />
           </>
         )}

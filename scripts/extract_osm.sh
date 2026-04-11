@@ -78,3 +78,25 @@ osmium tags-filter "$PBF" \
   -o "$DATA/clothes.osm.pbf" --overwrite || true
 osmium export "$DATA/clothes.osm.pbf" -o "$DATA/clothes.geojson" --overwrite
 echo "  → $(python3 -c "import json; d=json.load(open('$DATA/clothes.geojson')); print(len(d['features']))")件"
+
+# 第2弾ブランド（専門店）
+echo "🏬 第2弾専門店抽出中..."
+osmium tags-filter "$PBF" \
+  nwr/brand=IKEA \
+  nwr/brand=イケア \
+  nwr/brand=カルディコーヒーファーム \
+  nwr/brand="KALDI COFFEE FARM" \
+  nwr/brand=ヨドバシカメラ \
+  nwr/brand=ビックカメラ \
+  nwr/brand=モンベル \
+  nwr/brand="mont-bell" \
+  nwr/brand=スノーピーク \
+  nwr/brand="Snow Peak" \
+  nwr/brand=ゼビオ \
+  nwr/brand=スポーツゼビオ \
+  nwr/brand=セリア \
+  nwr/brand="3COINS" \
+  nwr/brand=スリーコインズ \
+  -o "$DATA/specialty.osm.pbf" --overwrite || true
+osmium export "$DATA/specialty.osm.pbf" -o "$DATA/specialty.geojson" --overwrite || true
+echo "  → $(python3 -c "import json; d=json.load(open('$DATA/specialty.geojson')); print(len(d['features']))")件"

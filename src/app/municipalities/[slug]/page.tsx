@@ -4,13 +4,13 @@ import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-const RadarChart = dynamic(() => import('@/components/lifestyle/RadarChartWrapper'), { ssr: false })
+const RadarChart = dynamic(() => import('@/components/lifestyle/RadarChartWrapper'))
 import SourceNote from '@/components/municipality/SourceNote'
-const ChapterSummary = dynamic(() => import('@/components/municipality/ChapterSummary'), { ssr: false })
-const InternetCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.InternetCTA })), { ssr: false })
-const MovingCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.MovingCTA })), { ssr: false })
+const ChapterSummary = dynamic(() => import('@/components/municipality/ChapterSummary'))
+const InternetCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.InternetCTA })))
+const MovingCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.MovingCTA })))
 import SectionHeader from '@/components/municipality/SectionHeader'
-const FacilityCard = dynamic(() => import('@/components/municipality/FacilityCard'), { ssr: false })
+const FacilityCard = dynamic(() => import('@/components/municipality/FacilityCard'))
 
 export const revalidate = 60
 

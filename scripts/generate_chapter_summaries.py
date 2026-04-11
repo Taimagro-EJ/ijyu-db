@@ -105,7 +105,7 @@ def generate_summary(prompt: str) -> str:
     url = f"https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key={GEMINI_API_KEY}"
     payload = {
         "contents": [{"parts": [{"text": prompt}]}],
-        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 200}
+        "generationConfig": {"temperature": 0.3, "maxOutputTokens": 2048}
     }
     for attempt in range(3):
         response = requests.post(url, json=payload)

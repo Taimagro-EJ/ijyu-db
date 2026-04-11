@@ -1,14 +1,16 @@
 import { Metadata } from 'next'
+import dynamic from 'next/dynamic'
 import { supabase } from '@/lib/supabase'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
-import RadarChart from '@/components/lifestyle/RadarChartWrapper'
+const RadarChart = dynamic(() => import('@/components/lifestyle/RadarChartWrapper'), { ssr: false })
 import SourceNote from '@/components/municipality/SourceNote'
-import ChapterSummary from '@/components/municipality/ChapterSummary'
-import { InternetCTA, MovingCTA } from '@/components/municipality/AffiliateCTA'
+const ChapterSummary = dynamic(() => import('@/components/municipality/ChapterSummary'), { ssr: false })
+const InternetCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.InternetCTA })), { ssr: false })
+const MovingCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.MovingCTA })), { ssr: false })
 import SectionHeader from '@/components/municipality/SectionHeader'
-import FacilityCard from '@/components/municipality/FacilityCard'
+const FacilityCard = dynamic(() => import('@/components/municipality/FacilityCard'), { ssr: false })
 
 export const revalidate = 60
 

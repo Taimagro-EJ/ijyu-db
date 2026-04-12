@@ -127,11 +127,14 @@ def main():
             print(f"  ⚠️ {filepath} が見つかりません。スキップ。"); continue
         print(f"\n📂 {category}")
         # 既存データを削除してから投入（重複防止）
-        requests.delete(
+        del_res = requests.delete(
             f"{SUPABASE_URL}/rest/v1/facility_details",
             headers={**HEADERS, 'Prefer': 'return=minimal'},
             params={'category': f'eq.{category}'}
         )
+        if del_res.status_code not in (200, 204):
+            print(f'  ❌ {category}の削除失敗: {del_res.status_code} - スキップ')
+            continue
         print(f'  🗑️ {category}の既存データを削除')
         rows = process_geojson(full_path, category, municipalities)
         print(f"  → {len(rows)}件抽出")

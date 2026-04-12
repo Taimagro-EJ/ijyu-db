@@ -99,6 +99,16 @@ export default function RootLayout({
           crossOrigin="anonymous"
         />        
         {children}
+        <footer style={{ background: '#2C2A26', color: '#9E9488', padding: '24px 32px', marginTop: 'auto', fontSize: 12, textAlign: 'center' }}>
+          <div style={{ maxWidth: 800, margin: '0 auto' }}>
+            <p style={{ marginBottom: 8 }}>© 2026 移住DB | データで選ぶ、感情で決める移住先探し</p>
+            <div style={{ display: 'flex', gap: 24, justifyContent: 'center', flexWrap: 'wrap' }}>
+              <a href="/about" style={{ color: '#9E9488', textDecoration: 'none' }}>データについて</a>
+              <a href="/privacy" style={{ color: '#9E9488', textDecoration: 'none' }}>プライバシーポリシー</a>
+              <a href="/contact" style={{ color: '#9E9488', textDecoration: 'none' }}>お問い合わせ</a>
+            </div>
+          </div>
+        </footer>
       </body>
     </html>
   );

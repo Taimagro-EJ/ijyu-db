@@ -56,7 +56,12 @@ export default function PrivacyPage() {
           <p style={{ marginTop: 8 }}>パーソナライズ広告を無効にする場合は、<a href="https://adssettings.google.com/" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>Googleの広告設定</a>をご利用ください。また、<a href="https://www.aboutads.info/choices/" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>aboutads.info</a>にてサードパーティのCookieを無効にすることもできます。Google AdSenseに関する詳細は<a href="https://policies.google.com/technologies/ads" target="_blank" rel="noopener noreferrer" style={{ color: '#D46B3A' }}>Googleの広告ポリシー</a>をご覧ください。</p>
         </Section>
 
-        <Section title="7. 第三者への提供">
+        <Section title="7. アフィリエイトプログラムについて">
+          <p>当サイトでは、A8.netを通じたアフィリエイトプログラムに参加しています。記事内に含まれる一部のリンクは広告リンクであり、リンクを経由して商品・サービスをご購入いただいた場合、当サイトが報酬を受け取ることがあります。広告リンクには「※広告」と表示しています。</p>
+          <p style={{ marginTop: 8 }}>提携プログラム: ドコモ光（GMOとくとくBB）、引越し見積もりサービス等</p>
+        </Section>
+
+        <Section title="8. 第三者への提供">
           <p>当サイトは、以下の場合を除き、収集した情報を第三者に提供することはありません。</p>
           <ul>
             <li>ユーザーの同意がある場合</li>
@@ -65,19 +70,19 @@ export default function PrivacyPage() {
           </ul>
         </Section>
 
-        <Section title="8. データの安全管理">
+        <Section title="9. データの安全管理">
           <p>当サイトは、収集した情報の漏洩、滅失、毀損を防止するために適切なセキュリティ対策を講じます。</p>
         </Section>
 
-        <Section title="9. 免責事項">
+        <Section title="10. 免責事項">
           <p>当サイトに掲載されているデータは、e-Stat（政府統計の総合窓口）、気象庁、その他公的機関のデータをもとに作成した推計値を含みます。データの正確性には最善を尽くしていますが、その完全性・正確性を保証するものではありません。当サイトのデータを利用した結果生じた損害について、当サイトは責任を負いません。</p>
         </Section>
 
-        <Section title="10. プライバシーポリシーの変更">
+        <Section title="11. プライバシーポリシーの変更">
           <p>当サイトは、必要に応じてプライバシーポリシーを変更することがあります。変更後のポリシーは当ページに掲載した時点で効力を生じます。</p>
         </Section>
 
-        <Section title="11. お問い合わせ">
+        <Section title="12. お問い合わせ">
           <p>プライバシーポリシーに関するお問い合わせは、サイト内のお問い合わせフォームよりご連絡ください。</p>
         </Section>
       </main>

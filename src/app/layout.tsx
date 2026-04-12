@@ -14,6 +14,7 @@ const dmMono = DM_Mono({
   subsets: ["latin"],
   weight: ["400", "500"],
   display: "swap",
+  preload: false,
 });
 
 const shipporiMincho = Shippori_Mincho({
@@ -34,6 +35,7 @@ const zenMaruGothic = Zen_Maru_Gothic({
   subsets: ["latin"],
   weight: ["400", "500", "700"],
   display: "swap",
+  preload: false,
 });
 export const metadata: Metadata = {
   title: {
@@ -92,7 +94,7 @@ export default function RootLayout({
           </>
         )}
         <script
-          async
+          defer
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5777304596680169"
           crossOrigin="anonymous"
         />        

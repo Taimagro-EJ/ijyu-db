@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 const RadarChart = dynamic(() => import('@/components/lifestyle/RadarChartWrapper'))
 import SourceNote from '@/components/municipality/SourceNote'
-const ChapterSummary = dynamic(() => import('@/components/municipality/ChapterSummary'))
+const ChapterSummary = dynamic(() => import('@/components/municipality/ChapterSummary'), { ssr: false, loading: () => null })
 const InternetCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.InternetCTA })))
 const MovingCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.MovingCTA })))
 import SectionHeader from '@/components/municipality/SectionHeader'
@@ -284,7 +284,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
       {/* ヒーロー写真 */}
       <div style={{ position: 'relative', height: 320, overflow: 'hidden', background: '#454034' }}>
         {imageUrl ? (
-          <Image src={imageUrl} alt={`${m.name as string}の風景`} fill sizes="100vw" style={{ objectFit: 'cover', filter: 'brightness(1.03) saturate(0.88) contrast(1.05)' }} priority unoptimized />
+          <Image src={imageUrl} alt={`${m.name as string}の風景`} fill sizes="100vw" style={{ objectFit: 'cover', filter: 'brightness(1.03) saturate(0.88) contrast(1.05)' }} priority />
         ) : (
           <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, #454034 0%, #6B6457 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 64, opacity: 0.3 }}>🏘</div>
         )}

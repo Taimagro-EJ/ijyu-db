@@ -5,7 +5,7 @@ const CATEGORY_BRANDS: Record<string, { top3: string[]; trend: string | null }> 
   cafe: { top3: ['スターバックス', 'コメダ珈琲店', 'タリーズコーヒー'], trend: 'ブルーボトルコーヒー' },
   gym: { top3: ['エニタイムフィットネス', 'chocoZAP', 'ゴールドジム'], trend: 'FIT PLACE24' },
   mall: { top3: ['イオンモール', 'ららぽーと', 'アリオ'], trend: 'コストコ' },
-  supermarket: { top3: ['イオン', '西友', 'ライフ'], trend: 'ロピア' },
+  supermarket: { top3: ['イオン', '西友', 'ライフ'], trend: 'イオンタウン' },
   cinema: { top3: ['TOHOシネマズ', 'イオンシネマ', '109シネマズ'], trend: null },
   convenience: { top3: ['セブン-イレブン', 'ファミリーマート', 'ローソン'], trend: null },
 }

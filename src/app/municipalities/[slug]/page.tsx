@@ -6,7 +6,7 @@ import Link from 'next/link'
 import Image from 'next/image'
 const RadarChart = dynamic(() => import('@/components/lifestyle/RadarChartWrapper'))
 import SourceNote from '@/components/municipality/SourceNote'
-const ChapterSummary = dynamic(() => import('@/components/municipality/ChapterSummary'), { ssr: false, loading: () => null })
+const ChapterSummary = dynamic(() => import('@/components/municipality/ChapterSummary'), { loading: () => null })
 const InternetCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.InternetCTA })))
 const MovingCTA = dynamic(() => import('@/components/municipality/AffiliateCTA').then(mod => ({ default: mod.MovingCTA })))
 import SectionHeader from '@/components/municipality/SectionHeader'

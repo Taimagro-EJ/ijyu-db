@@ -20,7 +20,14 @@ export default function BrandCard({ municipalityId, municipalityName, label, cou
     const { createClient } = await import('@supabase/supabase-js')
     const sb = createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
     const { data } = await sb.from('facility_details').select('facility_name, lat, lng').eq('municipality_id', municipalityId).ilike('facility_name', `%${brandPattern}%`).limit(20)
-    setStores(data ?? [])
+    const seen = new Set<string>()
+    const deduped = (data ?? []).filter(s => {
+      const key = `${Math.round(s.lat * 1000)},${Math.round(s.lng * 1000)}`
+      if (seen.has(key)) return false
+      seen.add(key)
+      return true
+    })
+    setStores(deduped)
     setLoading(false)
     setExpanded(true)
   }
@@ -41,7 +48,7 @@ export default function BrandCard({ municipalityId, municipalityName, label, cou
           {stores.length === 0 ? <p style={{ fontSize: 11, color: '#9E9488', margin: 0 }}>店舗情報なし</p> : stores.map((s, i) => (
             <div key={i} style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', padding: '4px 0', borderBottom: i < stores.length - 1 ? '1px solid #F7F5F2' : 'none' }}>
               <p style={{ fontSize: 12, color: '#454034', margin: 0 }}>{s.facility_name}</p>
-              <a href={`https://www.google.com/maps?q=${s.lat},${s.lng}`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: '#3D5A80', textDecoration: 'none', whiteSpace: 'nowrap', marginLeft: 8 }}>地図</a>
+              <a href={`https://maps.google.com/maps?q=${encodeURIComponent(s.facility_name + ' ' + municipalityName)}&ll=${s.lat},${s.lng}&spn=0.005,0.005/@${s.lat},${s.lng},15z`} target="_blank" rel="noopener noreferrer" style={{ fontSize: 11, color: '#3D5A80', textDecoration: 'none', whiteSpace: 'nowrap', marginLeft: 8 }}>地図</a>
             </div>
           ))}
         </div>

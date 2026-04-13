@@ -100,3 +100,23 @@ osmium tags-filter "$PBF" \
   -o "$DATA/specialty.osm.pbf" --overwrite || true
 osmium export "$DATA/specialty.osm.pbf" -o "$DATA/specialty.geojson" --overwrite || true
 echo "  → $(python3 -c "import json; d=json.load(open('$DATA/specialty.geojson')); print(len(d['features']))")件"
+
+# ドラッグストア
+echo "💊 ドラッグストア抽出中..."
+osmium tags-filter "$PBF" \
+  nwr/shop=chemist \
+  nwr/shop=pharmacy \
+  nwr/amenity=pharmacy \
+  -o "$DATA/drugstores.osm.pbf" --overwrite || true
+osmium export "$DATA/drugstores.osm.pbf" -o "$DATA/drugstores.geojson" --overwrite
+echo "  → $(python3 -c "import json; d=json.load(open('$DATA/drugstores.geojson')); print(len(d['features']))")件"
+
+# ホームセンター
+echo "🔨 ホームセンター抽出中..."
+osmium tags-filter "$PBF" \
+  nwr/shop=doityourself \
+  nwr/shop=hardware \
+  nwr/shop=garden_centre \
+  -o "$DATA/homecenters.osm.pbf" --overwrite || true
+osmium export "$DATA/homecenters.osm.pbf" -o "$DATA/homecenters.geojson" --overwrite
+echo "  → $(python3 -c "import json; d=json.load(open('$DATA/homecenters.geojson')); print(len(d['features']))")件"

@@ -85,6 +85,7 @@ function DataBarWithSource({ label, value, max, unit, source, invert = false, co
       {context && <p style={{ fontSize: 11, color: '#A07855', margin: '2px 0 0', fontStyle: 'italic' }}>{context}</p>}
       {source && <p style={{ fontSize: 10, color: '#9E9488', margin: '2px 0 0' }}>出典: {source}</p>}
     </div>
+    </>
   )
 }
 
@@ -259,6 +260,8 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
     : null
 
   return (
+    <>
+    {imageUrl && <link rel="preload" as="image" href={imageUrl} fetchPriority="high" />}
     <div style={{ fontFamily: "'BIZ UDPGothic', 'Noto Sans JP', sans-serif", minHeight: '100vh', background: '#F7F5F2' }}>
 
       <script

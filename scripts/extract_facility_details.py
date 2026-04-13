@@ -119,6 +119,8 @@ def main():
         ('data/cinemas.geojson', 'cinema'),
         ('data/malls.geojson', 'mall'),
         ('data/clothes.geojson', 'clothes'),
+        ('data/drugstores.geojson', 'drugstore'),
+        ('data/homecenters.geojson', 'homecenter'),
     ]
     total = 0
     for filepath, category in FILES:

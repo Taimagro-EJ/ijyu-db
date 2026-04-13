@@ -120,3 +120,20 @@ osmium tags-filter "$PBF" \
   -o "$DATA/homecenters.osm.pbf" --overwrite || true
 osmium export "$DATA/homecenters.osm.pbf" -o "$DATA/homecenters.geojson" --overwrite
 echo "  → $(python3 -c "import json; d=json.load(open('$DATA/homecenters.geojson')); print(len(d['features']))")件"
+
+# ニトリ・無印良品・コストコ（ブランド名指定）
+echo "🏬 ニトリ・無印・コストコ抽出中..."
+osmium tags-filter "$PBF" \
+  nwr/brand=ニトリ \
+  nwr/brand=NITORI \
+  nwr/brand=無印良品 \
+  nwr/brand=MUJI \
+  nwr/brand=コストコ \
+  nwr/brand=Costco \
+  nwr/brand="Costco Wholesale" \
+  nwr/shop=furniture \
+  nwr/shop=variety_store \
+  nwr/shop=wholesale \
+  -o "$DATA/brands_section_e.osm.pbf" --overwrite || true
+osmium export "$DATA/brands_section_e.osm.pbf" -o "$DATA/brands_section_e.geojson" --overwrite
+echo "  → $(python3 -c "import json; d=json.load(open('$DATA/brands_section_e.geojson')); print(len(d['features']))")件"

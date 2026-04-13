@@ -617,5 +617,6 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         </div>
       </div>
     </div>
+  </>
   )
 }

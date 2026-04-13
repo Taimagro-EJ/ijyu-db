@@ -85,8 +85,6 @@ function DataBarWithSource({ label, value, max, unit, source, invert = false, co
       {context && <p style={{ fontSize: 11, color: '#A07855', margin: '2px 0 0', fontStyle: 'italic' }}>{context}</p>}
       {source && <p style={{ fontSize: 10, color: '#9E9488', margin: '2px 0 0' }}>出典: {source}</p>}
     </div>
-    </>
-  )
 }
 
 function StatCard({ label, value, sub, source }: { label: string; value: string; sub?: string; source?: string }) {

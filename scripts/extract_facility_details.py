@@ -121,6 +121,7 @@ def main():
         ('data/clothes.geojson', 'clothes'),
         ('data/drugstores.geojson', 'drugstore'),
         ('data/homecenters.geojson', 'homecenter'),
+        ('data/brands_section_e.geojson', 'mall'),  # ニトリ・無印・コストコ
     ]
     total = 0
     for filepath, category in FILES:

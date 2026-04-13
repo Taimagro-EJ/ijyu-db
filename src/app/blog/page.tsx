@@ -47,6 +47,12 @@ const CATEGORY_TEXT: Record<string, string> = {
 };
 
 const CATEGORY_LABELS: Record<string, string> = {
+  surprising_discovery: '意外な発見',
+  cross_ranking: 'クロスランキング',
+  correlation: '相関分析',
+  complex_ranking: '複合ランキング',
+  lifestyle: 'ライフスタイル',
+  data_analysis: 'データ分析',
   ranking: 'ランキング',
   comparison: '比較',
   deep_dive: '移住ガイド',

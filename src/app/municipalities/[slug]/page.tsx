@@ -286,7 +286,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
       {/* ヒーロー写真 */}
       <div style={{ position: 'relative', height: 320, overflow: 'hidden', background: '#454034' }}>
         {imageUrl ? (
-          <Image src={imageUrl} alt={`${m.name as string}の風景`} fill sizes="100vw" style={{ objectFit: 'cover', filter: 'brightness(1.03) saturate(0.88) contrast(1.05)' }} priority />
+          <img src={imageUrl} alt={`${m.name as string}の風景`} fetchPriority="high" decoding="async" loading="eager" style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'brightness(1.03) saturate(0.88) contrast(1.05)', position: 'absolute', inset: 0 }} />
         ) : (
           <div style={{ width: '100%', height: '100%', background: 'linear-gradient(135deg, #454034 0%, #6B6457 100%)', display: 'flex', alignItems: 'center', justifyContent: 'center', fontSize: 64, opacity: 0.3 }}>🏘</div>
         )}
@@ -561,7 +561,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             </div>
           </Section>
           {/* E. おでかけと暮らし */}
-          {brands && (brands.aeon_mall_count > 0 || brands.lalaport_count > 0 || brands.nitori_count > 0 || brands.muji_count > 0 || brands.yamada_count > 0 || brands.ks_count > 0 || brands.costco_count > 0 || brands.donki_count > 0 || brands.uniqlo_count > 0 || brands.gu_count > 0) && (
+          {brands && (brands.aeon_mall_count > 0 || brands.lalaport_count > 0 || brands.nitori_count > 0 || brands.muji_count > 0 || brands.yamada_count > 0 || brands.ks_count > 0 || brands.costco_count > 0 || brands.donki_count > 0 || brands.uniqlo_count > 0 || brands.gu_count > 0 || brands.ikea_count > 0 || brands.kaldi_count > 0 || brands.yodobashi_count > 0 || brands.bic_count > 0 || brands.montbell_count > 0 || brands.snowpeak_count > 0 || brands.xebio_count > 0 || brands.seria_count > 0 || brands.threecoins_count > 0 || brands.outlet_count > 0) && (
           <Section title="🛍 おでかけと暮らし">
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
               {brands.aeon_mall_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="イオンモール" count={brands.aeon_mall_count} brandPattern="イオンモール" />}
@@ -574,6 +574,16 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
               {brands.costco_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="コストコ" count={brands.costco_count} brandPattern="コストコ" />}
               {brands.uniqlo_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ユニクロ" count={brands.uniqlo_count} brandPattern="ユニクロ" />}
               {brands.gu_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="GU" count={brands.gu_count} brandPattern="GU" />}
+              {brands.ikea_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="IKEA" count={brands.ikea_count} brandPattern="IKEA" />}
+              {brands.kaldi_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="カルディ" count={brands.kaldi_count} brandPattern="カルディ" />}
+              {brands.yodobashi_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ヨドバシ" count={brands.yodobashi_count} brandPattern="ヨドバシ" />}
+              {brands.bic_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ビックカメラ" count={brands.bic_count} brandPattern="ビックカメラ" />}
+              {brands.montbell_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="モンベル" count={brands.montbell_count} brandPattern="モンベル" />}
+              {brands.snowpeak_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="スノーピーク" count={brands.snowpeak_count} brandPattern="スノーピーク" />}
+              {brands.xebio_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="ゼビオ" count={brands.xebio_count} brandPattern="ゼビオ" />}
+              {brands.seria_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="セリア" count={brands.seria_count} brandPattern="セリア" />}
+              {brands.threecoins_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="3COINS" count={brands.threecoins_count} brandPattern="3COINS" />}
+              {brands.outlet_count > 0 && <BrandCard municipalityId={municipalityId} municipalityName={m.name as string} label="アウトレット" count={brands.outlet_count} brandPattern="アウトレット" />}
             </div>
           </Section>
           )}

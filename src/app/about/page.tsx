@@ -105,10 +105,10 @@ export default function AboutPage() {
       {/* お問い合わせ */}
       <section className="mb-10">
         <h2 className="text-xl font-semibold mb-3 border-b pb-2">お問い合わせ</h2>
-        <p className="text-gray-700 text-sm">
-          データの誤りや改善提案は下記までご連絡ください。<br />
-          <span className="text-gray-400">（メールアドレスは後日追加予定）</span>
+        <p className="text-gray-700 text-sm mb-4">
+          データの誤りや改善提案は、下記のお問い合わせフォームよりご連絡ください。
         </p>
+        <a href="https://docs.google.com/forms/d/e/1FAIpQLSelnAEW61yiHcPrBg5OU3nM0Shx1_6tqfuBcN2FQar0ApJEmA/viewform" target="_blank" rel="noopener noreferrer" style={{ display: 'inline-block', padding: '10px 20px', background: '#D46B3A', color: '#fff', borderRadius: 8, fontSize: 13, fontWeight: 600, textDecoration: 'none' }}>お問い合わせフォームへ</a>
       </section>
 
       <div className="mt-8 pt-6 border-t">

@@ -1,5 +1,9 @@
 import type { NextConfig } from "next";
 const nextConfig: NextConfig = {
+  experimental: {
+    optimizeCss: true,
+    optimizePackageImports: ['recharts', 'react-markdown'],
+  },
   images: {
     minimumCacheTTL: 31536000,
     formats: ['image/webp'],

@@ -198,23 +198,15 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
   const m = data as Record<string, unknown>
   const municipalityId = m.id as string
 
-  const { data: sfData } = await supabase
-    .from('stats_family')
-    .select('*')
-    .eq('municipality_id', municipalityId)
-    .single()
+  const [sfResult, brandsResult, summariesResult] = await Promise.all([
+    supabase.from('stats_family').select('*').eq('municipality_id', municipalityId).single(),
+    supabase.from('municipality_lifestyle_brands').select('*').eq('municipality_id', municipalityId).single(),
+    supabase.from('ai_chapter_summaries').select('chapter_key, summary_text').eq('municipality_code', municipalityId),
+  ])
 
-  const sf = sfData as Record<string, unknown> | null
-  const { data: brandsData } = await supabase
-    .from('municipality_lifestyle_brands')
-    .select('*')
-    .eq('municipality_id', municipalityId)
-    .single()
-  const brands = brandsData as Record<string, number> | null
-  const { data: summariesData } = await supabase
-    .from('ai_chapter_summaries')
-    .select('chapter_key, summary_text')
-    .eq('municipality_code', municipalityId)
+  const sf = sfResult.data as Record<string, unknown> | null
+  const brands = brandsResult.data as Record<string, number> | null
+  const summariesData = summariesResult.data
   const summaries = (summariesData ?? []).reduce((acc: Record<string, string>, s: any) => {
     acc[s.chapter_key] = s.summary_text
     return acc

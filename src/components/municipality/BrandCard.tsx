@@ -37,7 +37,7 @@ export default function BrandCard({ municipalityId, municipalityName, label, cou
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'flex-start' }}>
         <div>
           <p style={{ fontSize: 11, color: '#9E9488', margin: '0 0 4px', fontWeight: 600 }}>{label}</p>
-          <p style={{ fontSize: 22, fontWeight: 700, color: '#2C2A26', margin: 0 }}>{count}軒</p>
+          <p style={{ fontSize: 22, fontWeight: 700, color: count === 0 ? '#C8C0B4' : '#2C2A26', margin: 0 }}>{count === 0 ? '—' : `${count}軒`}</p>
         </div>
         <button onClick={handleExpand} style={{ fontSize: 11, color: '#C4922A', background: 'none', border: '1px solid #C4922A', borderRadius: 6, padding: '3px 8px', cursor: 'pointer', whiteSpace: 'nowrap' }}>
           {loading ? '...' : expanded ? '▲ 閉じる' : '📍 一覧'}

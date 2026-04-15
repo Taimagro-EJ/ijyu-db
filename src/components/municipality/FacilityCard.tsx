@@ -6,6 +6,8 @@ const CATEGORY_BRANDS: Record<string, { top3: string[]; trend: string | null }> 
   gym: { top3: ['エニタイムフィットネス', 'chocoZAP', 'ゴールドジム'], trend: 'FIT PLACE24' },
   mall: { top3: ['イオンモール', 'ららぽーと', 'アリオ'], trend: 'コストコ' },
   supermarket: { top3: ['イオン', '西友', 'ライフ'], trend: 'イオンタウン' },
+  drugstore: { top3: ['マツモトキヨシ', 'ウエルシア', 'ツルハドラッグ'], trend: 'クスリのアオキ' },
+  homecenter: { top3: ['カインズ', 'コメリ', 'DCM'], trend: 'ナフコ' },
   cinema: { top3: ['TOHOシネマズ', 'イオンシネマ', '109シネマズ'], trend: null },
   convenience: { top3: ['セブン-イレブン', 'ファミリーマート', 'ローソン'], trend: null },
 }

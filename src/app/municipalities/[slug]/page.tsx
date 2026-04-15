@@ -204,7 +204,17 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
     .eq('municipality_id', municipalityId)
     .single()
 
+  const { data: accessMultiData } = await supabase
+    .from('stats_access_multi')
+    .select('destination,duration_minutes')
+    .eq('municipality_id', municipalityId)
+    .eq('transport_mode', 'driving')
+
   const sf = sfData as Record<string, unknown> | null
+  const accessMulti = (accessMultiData || []).reduce((acc: Record<string, number>, r: {destination: string, duration_minutes: number}) => {
+    acc[r.destination] = r.duration_minutes
+    return acc
+  }, {} as Record<string, number>)
   const { data: brandsData } = await supabase
     .from('municipality_lifestyle_brands')
     .select('*')
@@ -344,8 +354,10 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
         {/* アクセス */}
         <Section title="🚅 アクセス">
           <DataBarWithSource label="東京まで" value={timeTokyo} max={300} unit="分" context={tokyoContext(timeTokyo)} source={SOURCES.access} invert color="#3D5A80" />
-          {m.time_to_osaka != null && <DataBarWithSource label="大阪まで" value={m.time_to_osaka as number} max={300} unit="分" source={SOURCES.access} invert color="#3D5A80" />}
-          {m.time_to_nagoya != null && <DataBarWithSource label="名古屋まで" value={m.time_to_nagoya as number} max={300} unit="分" source={SOURCES.access} invert color="#3D5A80" />}
+          {accessMulti['osaka'] && <DataBarWithSource label="大阪まで" value={accessMulti['osaka']} max={600} unit="分" source={SOURCES.access} invert color="#3D5A80" />}
+          {accessMulti['nagoya'] && <DataBarWithSource label="名古屋まで" value={accessMulti['nagoya']} max={600} unit="分" source={SOURCES.access} invert color="#3D5A80" />}
+          {accessMulti['fukuoka'] && <DataBarWithSource label="福岡まで" value={accessMulti['fukuoka']} max={900} unit="分" source={SOURCES.access} invert color="#3D5A80" />}
+          {accessMulti['sapporo'] && <DataBarWithSource label="札幌まで" value={accessMulti['sapporo']} max={1200} unit="分" source={SOURCES.access} invert color="#3D5A80" />}
           <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12, marginTop: 16 }}>
             <StatCard label="最寄り新幹線駅" value={(m.nearest_shinkansen as string | null) ?? '-'} />
             <StatCard label="最寄り空港" value={(m.nearest_airport as string | null) ?? '-'} />

@@ -16,10 +16,58 @@ HEADERS = {
 }
 
 def load_municipalities():
-    resp = requests.get(f"{SUPABASE_URL}/rest/v1/municipality_overview",
-        headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"},
-        params={'select': 'id,name,latitude,longitude', 'limit': 600})
-    return [m for m in resp.json() if m.get('latitude') and m.get('longitude')]
+    """Load all municipalities with Geolonia CSV coordinates (595+ support)."""
+    import csv
+    from collections import defaultdict
+    geolonia_csv = os.path.expanduser(
+        "~/ijyu-db/scripts/municipalities_expansion/raw/latest.csv"
+    )
+    coord_map = defaultdict(lambda: {"lats": [], "lngs": []})
+    if os.path.exists(geolonia_csv):
+        with open(geolonia_csv, encoding="utf-8") as gf:
+            for row in csv.DictReader(gf):
+                code = row["市区町村コード"]
+                try:
+                    if row["緯度"]:
+                        coord_map[code]["lats"].append(float(row["緯度"]))
+                    if row["経度"]:
+                        coord_map[code]["lngs"].append(float(row["経度"]))
+                except Exception:
+                    pass
+    all_munis = []
+    offset = 0
+    while True:
+        resp = requests.get(
+            f"{SUPABASE_URL}/rest/v1/municipalities",
+            headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"},
+            params={"select": "id,name,prefecture_code", "limit": 1000, "offset": offset},
+        )
+        batch = resp.json()
+        all_munis.extend(batch)
+        if len(batch) < 1000:
+            break
+        offset += 1000
+    result = []
+    for m in all_munis:
+        d = coord_map.get(m["id"], {})
+        lats = d.get("lats", [])
+        lngs = d.get("lngs", [])
+        if lats and lngs:
+            result.append({
+                "id": m["id"],
+                "name": m["name"],
+                "prefecture_code": m.get("prefecture_code", ""),
+                "latitude": sum(lats) / len(lats),
+                "longitude": sum(lngs) / len(lngs),
+            })
+    if not result:
+        resp = requests.get(
+            f"{SUPABASE_URL}/rest/v1/municipality_overview",
+            headers={"apikey": SUPABASE_KEY, "Authorization": f"Bearer {SUPABASE_KEY}"},
+            params={"select": "id,name,latitude,longitude", "limit": 600},
+        )
+        result = [m for m in resp.json() if m.get("latitude") and m.get("longitude")]
+    return result
 
 def haversine(lat1, lon1, lat2, lon2):
     R = 6371

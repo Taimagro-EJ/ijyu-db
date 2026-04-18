@@ -1,7 +1,8 @@
 """
 Google Places API (New) でOSM不足ブランドの店舗データを補完
 """
-import os, time, math, requests
+import os, time, math, requests, sys
+sys.path.insert(0, os.path.dirname(__file__))
 from supabase import create_client
 
 GOOGLE_KEY = os.environ['GOOGLE_PLACES_API_KEY']
@@ -120,7 +121,10 @@ def main():
         brand_inserted = 0
         for pref in target_prefs:
             places = search_places(f"{brand['query']} {pref['name']}", pref['lat'], pref['lng'])
-            for place in places:
+            accepted, rejected = filter_places_response(places, brand['brand_name'])
+            if rejected:
+                print(f"  除外: {len(rejected)}件 ({[p.get('displayName',{}).get('text','') for p in rejected[:2]]})")
+            for place in accepted:
                 name = place.get('displayName', {}).get('text', '')
                 loc = place.get('location', {})
                 lat = loc.get('latitude')

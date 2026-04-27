@@ -235,7 +235,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
   const lifestyleScore = (m.lifestyle_score as number | null) ?? 0
   const scoreColor = lifestyleScore >= 70 ? '#4A7C59' : lifestyleScore >= 45 ? '#D46B3A' : '#B84C3A'
   const hasLifestyleData = m.lifestyle_score != null
-  const hasFacilityData = m.cafe_starbucks != null
+  const hasFacilityData = m.convenience_count != null || m.cafe_starbucks != null || (m as any).hospital_count != null
   const imageUrl = m.image_url as string | null
   const rent = m.rent_1ldk_estimate as number | null
   const timeTokyo = m.time_to_tokyo as number | null

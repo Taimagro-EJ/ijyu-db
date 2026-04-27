@@ -571,7 +571,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
               {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="gym" label="フィットネス" expectedCount={m.gym_24h_count as number} value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
               {(m as any).onsen_count != null && (m as any).onsen_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="onsen" label="温泉・銭湯" expectedCount={(m as any).onsen_count as number} value={`${(m as any).onsen_count}軒`} source={SOURCES.facility} />}
-              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={m.cafe_starbucks as number} value={`${m.cafe_starbucks}軒`} source={SOURCES.facility} />
+              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={(m.cafe_starbucks ?? (m as any).cafe_count_fallback ?? 0) as number} value={`${m.cafe_starbucks ?? (m as any).cafe_count_fallback ?? 0}軒`} source={SOURCES.facility} />
             </div>
           </Section>
           {/* E. おでかけと暮らし */}

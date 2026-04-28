@@ -87,7 +87,7 @@ export default function FacilityCard({ municipalityId, municipalityName, categor
                 <p style={{ fontSize: 10, color: '#9E9488', margin: '0 0 6px', fontWeight: 600, letterSpacing: '0.06em' }}>人気ブランド（この市町村）</p>
                 <div style={{ display: 'flex', gap: 6, flexWrap: 'wrap' }}>
                   {brands.top3.map((brand, i) => {
-                    const cnt = facilities.filter(f => f.facility_name && f.facility_name.includes(brand.split(/[・コーヒーフィットネス]/)[0].trim())).length
+                    const cnt = facilities.filter(f => f.facility_name && f.facility_name.includes(brand.replace('コーヒー','').replace('珈琲店','').replace('フィットネス','').trim())).length
                     return <span key={i} style={{ fontSize: 11, padding: '3px 8px', background: cnt > 0 ? '#E8F0E8' : '#F0EDE8', color: cnt > 0 ? '#4A7C59' : '#9E9488', borderRadius: 999 }}>{brand} {cnt > 0 ? `${cnt}軒` : 'なし'}</span>
                   })}
                   {brands.trend && <span style={{ fontSize: 11, padding: '3px 8px', background: '#FFF3E8', color: '#C4922A', borderRadius: 999 }}>🔥 {brands.trend}</span>}

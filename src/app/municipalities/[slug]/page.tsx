@@ -235,7 +235,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
   const lifestyleScore = (m.lifestyle_score as number | null) ?? 0
   const scoreColor = lifestyleScore >= 70 ? '#4A7C59' : lifestyleScore >= 45 ? '#D46B3A' : '#B84C3A'
   const hasLifestyleData = m.lifestyle_score != null
-  const hasFacilityData = m.convenience_count != null || m.cafe_starbucks != null || (m as any).hospital_count != null
+  const hasFacilityData = m.convenience_count != null || (m as any).cafe_total != null || (m as any).hospital_count != null
   const imageUrl = m.image_url as string | null
   const rent = m.rent_1ldk_estimate as number | null
   const timeTokyo = m.time_to_tokyo as number | null
@@ -571,7 +571,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
               {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="gym" label="フィットネス" expectedCount={m.gym_24h_count as number} value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
               {(m as any).onsen_count != null && (m as any).onsen_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="onsen" label="温泉・銭湯" expectedCount={(m as any).onsen_count as number} value={`${(m as any).onsen_count}軒`} source={SOURCES.facility} />}
-              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={(m.cafe_starbucks ?? 0) as number} value={m.cafe_starbucks != null ? `${m.cafe_starbucks}軒` : `-`} source={SOURCES.facility} />
+              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={((m as any).cafe_total ?? 0) as number} value={`${(m as any).cafe_total ?? 0}軒`} source={SOURCES.facility} />
             </div>
           </Section>
           {/* E. おでかけと暮らし */}

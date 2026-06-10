@@ -18,3 +18,7 @@ export function formatYenShort(value: number | null | undefined): string {
   }
   return `${value.toLocaleString()}円`;
 }
+
+export function formatFacilityCount(count: number | null | undefined): string {
+  return count != null ? `${count}軒` : '-'
+}

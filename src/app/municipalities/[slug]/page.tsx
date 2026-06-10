@@ -1,6 +1,7 @@
 import { Metadata } from 'next'
 import dynamic from 'next/dynamic'
 import { supabase } from '@/lib/supabase'
+import { formatFacilityCount } from '@/lib/format'
 import { notFound } from 'next/navigation'
 import Link from 'next/link'
 import Image from 'next/image'
@@ -571,7 +572,7 @@ export default async function MunicipalityPage({ params }: { params: Promise<{ s
             <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(160px, 1fr))', gap: 12 }}>
               {m.gym_24h_count != null && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="gym" label="フィットネス" expectedCount={m.gym_24h_count as number} value={`${m.gym_24h_count}軒`} source={SOURCES.facility} />}
               {(m as any).onsen_count != null && (m as any).onsen_count > 0 && <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="onsen" label="温泉・銭湯" expectedCount={(m as any).onsen_count as number} value={`${(m as any).onsen_count}軒`} source={SOURCES.facility} />}
-              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={(m as any).cafe_total ?? undefined} value={(m as any).cafe_total != null ? `${(m as any).cafe_total}軒` : '-'} source={SOURCES.facility} />
+              <FacilityCard municipalityId={municipalityId} municipalityName={m.name as string} category="cafe" label="カフェ" expectedCount={(m as any).cafe_total ?? undefined} value={formatFacilityCount((m as any).cafe_total as number | null)} source={SOURCES.facility} />
             </div>
           </Section>
           {/* E. おでかけと暮らし */}

@@ -4,7 +4,7 @@ import { useState } from 'react'
 import { Metadata } from 'next'
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', email: '', category: '', message: '' })
+  const [form, setForm] = useState({ name: '', email: '', category: '', message: '', website: '' })
   const [status, setStatus] = useState<'idle' | 'sending' | 'success' | 'error'>('idle')
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -18,7 +18,7 @@ export default function ContactPage() {
       })
       if (res.ok) {
         setStatus('success')
-        setForm({ name: '', email: '', category: '', message: '' })
+        setForm({ name: '', email: '', category: '', message: '', website: '' })
       } else {
         setStatus('error')
       }
@@ -67,6 +67,17 @@ export default function ContactPage() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: 20 }}>
+            {/* Bot対策ハニーポット: 人間には見えない。値が入っていたらサーバー側で破棄 */}
+            <input
+              type="text"
+              name="website"
+              value={form.website}
+              onChange={e => setForm({ ...form, website: e.target.value })}
+              autoComplete="off"
+              tabIndex={-1}
+              aria-hidden="true"
+              style={{ position: 'absolute', left: '-9999px', height: 0, width: 0, opacity: 0 }}
+            />
             <div>
               <label style={{ fontSize: 13, fontWeight: 600, color: '#454034', display: 'block', marginBottom: 6 }}>
                 お名前 <span style={{ color: '#B84C3A' }}>*</span>

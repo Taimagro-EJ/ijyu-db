@@ -1,14 +1,20 @@
 import { NextResponse } from 'next/server'
+import { safeEqual } from '@/lib/admin-auth'
 
 export async function POST(request: Request) {
-  const { password } = await request.json()
+  let body: { password?: unknown }
+  try {
+    body = await request.json()
+  } catch {
+    return NextResponse.json({ error: 'invalid json' }, { status: 400 })
+  }
   const adminPassword = process.env.ADMIN_PASSWORD
 
   if (!adminPassword) {
     return NextResponse.json({ error: 'ADMIN_PASSWORD not set' }, { status: 500 })
   }
 
-  if (password === adminPassword) {
+  if (typeof body.password === 'string' && safeEqual(body.password, adminPassword)) {
     return NextResponse.json({ ok: true })
   }
 

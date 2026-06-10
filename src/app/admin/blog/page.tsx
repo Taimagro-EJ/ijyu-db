@@ -52,7 +52,9 @@ export default function AdminBlogPage() {
 
   const loadPosts = async () => {
     setLoading(true)
-    const res = await fetch('/api/admin/posts')
+    const res = await fetch('/api/admin/posts', {
+      headers: { 'x-admin-password': password },
+    })
     if (res.ok) {
       const data = await res.json()
       setPosts(data)
@@ -64,7 +66,7 @@ export default function AdminBlogPage() {
     setPublishing(post.id)
     const res = await fetch('/api/admin/posts', {
       method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 'Content-Type': 'application/json', 'x-admin-password': password },
       body: JSON.stringify({ id: post.id, published: !post.published }),
     })
     if (res.ok) {

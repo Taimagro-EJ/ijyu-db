@@ -93,29 +93,44 @@ def get_next_outline(outlines_path='blog-outlines.json'):
     return None
 
 
+def _fetch_rows(params):
+    """municipality_overview を取得し、必ず行リストを返す。
+    PostgREST はエラー時に dict（{code,message,...}）を返すため、
+    list でない応答・非JSON応答・非200は明示的に例外にして
+    将来のスキーマ不整合やネットワーク異常を握り潰さない。"""
+    r = requests.get(f'{SUPABASE_URL}/rest/v1/municipality_overview', headers=SUPABASE_HEADERS, params=params)
+    if r.status_code != 200:
+        raise RuntimeError(f'Supabase取得失敗 (status={r.status_code}): {r.text[:300]}')
+    try:
+        body = r.json()
+    except ValueError:
+        raise RuntimeError(f'Supabase応答がJSONでない (status={r.status_code}): {r.text[:300]}')
+    if not isinstance(body, list):
+        raise RuntimeError(f'Supabase応答が想定外 (status={r.status_code}): {str(body)[:300]}')
+    return body
+
+
 def fetch_municipality_data(slug=None, slugs=None, condition=None, limit=10):
     """Supabaseから市町村データを取得"""
     params = {
-        'select': 'name,prefecture,region,avg_temp_annual,min_temp_winter,sunshine_hours_annual,precipitation_annual,rent_1ldk_estimate,total_monthly_cost_single,total_monthly_cost_family,time_to_tokyo,nearest_shinkansen,car_necessity_score,criminal_rate,slug'
+        'select': 'name,prefecture,region,avg_temp_annual,min_temp_winter,sunshine_hours_annual,precipitation_annual,rent_1ldk_estimate,total_monthly_cost_single,time_to_tokyo,nearest_shinkansen,car_necessity,criminal_rate,slug'
     }
 
     if slug:
         params['slug'] = f'eq.{slug}'
-        r = requests.get(f'{SUPABASE_URL}/rest/v1/municipality_overview', headers=SUPABASE_HEADERS, params=params)
-        data = r.json()
+        data = _fetch_rows(params)
         return data[0] if data else None
 
     if slugs:
         params['slug'] = f'in.({",".join(slugs)})'
-        r = requests.get(f'{SUPABASE_URL}/rest/v1/municipality_overview', headers=SUPABASE_HEADERS, params=params)
-        return r.json()
+        return _fetch_rows(params)
 
     # ランキング用：条件に応じてソート
     sort_map = {
         'cost_asc': 'total_monthly_cost_single.asc',
         'tokyo_access': 'time_to_tokyo.asc',
         'warm_no_snow': 'avg_temp_annual.desc',
-        'car_free': 'car_necessity_score.asc',
+        'car_free': 'car_necessity.asc',
         'childcare': 'total_monthly_cost_single.asc',
         'safe': 'criminal_rate.asc',
         'sunshine': 'sunshine_hours_annual.desc',
@@ -125,8 +140,7 @@ def fetch_municipality_data(slug=None, slugs=None, condition=None, limit=10):
     params['order'] = order
     params['limit'] = limit
 
-    r = requests.get(f'{SUPABASE_URL}/rest/v1/municipality_overview', headers=SUPABASE_HEADERS, params=params)
-    return r.json()
+    return _fetch_rows(params)
 
 
 def fetch_data_for_article(outline):

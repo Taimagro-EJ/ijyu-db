@@ -23,4 +23,6 @@ jobs:
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           SUPABASE_URL: ${{ secrets.SUPABASE_URL }}
-          SUPABASE_KEY: ${{ secrets.SUPABASE_KEY }}
+          # blog_posts は RLS 有効（anon は published=true の SELECT のみ）。
+          # draft INSERT には service_role が必要なため SERVICE_KEY を使う。
+          SUPABASE_KEY: ${{ secrets.SUPABASE_SERVICE_KEY }}

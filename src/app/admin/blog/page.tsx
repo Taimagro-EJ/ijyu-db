@@ -1,6 +1,9 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import ReactMarkdown from 'react-markdown'
+import remarkGfm from 'remark-gfm'
+import { markdownComponents } from '@/components/blog/markdownComponents'
 
 type BlogPost = {
   id: number
@@ -219,10 +222,11 @@ export default function AdminBlogPage() {
               {preview.title}
             </h2>
             {preview.content && (
-              <div
-                style={{ fontSize: 14, lineHeight: 1.9, color: '#1e293b' }}
-                dangerouslySetInnerHTML={{ __html: preview.content }}
-              />
+              <div style={{ fontSize: 14, lineHeight: 1.9, color: '#1e293b' }}>
+                <ReactMarkdown remarkPlugins={[remarkGfm]} components={markdownComponents}>
+                  {preview.content}
+                </ReactMarkdown>
+              </div>
             )}
             <div style={{ marginTop: 24, display: 'flex', justifyContent: 'flex-end', gap: 12 }}>
               <button onClick={() => setPreview(null)}
@@ -258,7 +262,7 @@ function PostCard({ post, onPreview, onPublish, publishing, isDraft }: {
       ? new Date(post.created_at).toLocaleDateString('ja-JP')
       : ''
 
-  const hasHumanInsert = post.content?.includes('[HUMAN_INSERT') ?? false
+  const hasHumanInsert = /\[\s*HUMAN_INS(IGHT|ERT)/.test(post.content ?? '')
 
   return (
     <div style={{
@@ -278,7 +282,7 @@ function PostCard({ post, onPreview, onPublish, publishing, isDraft }: {
             )}
             {hasHumanInsert && (
               <span style={{ fontSize: 11, color: '#C4922A', background: '#FDF3E3', padding: '2px 8px', borderRadius: 999 }}>
-                ⚠️ [HUMAN_INSERT]あり
+                ⚠️ 未処理マーカーあり
               </span>
             )}
           </div>

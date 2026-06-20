@@ -1,7 +1,14 @@
 import { NextResponse } from 'next/server'
 import { safeEqual } from '@/lib/admin-auth'
+import { getClientIp, hitRateLimit } from '@/lib/rate-limit'
 
 export async function POST(request: Request) {
+  const ip = getClientIp(request)
+  // ログイン試行をブルートフォースから保護（ログインは低頻度のため全試行を計数）
+  if (!(await hitRateLimit('admin_auth', ip, 10, 600))) {
+    return NextResponse.json({ error: '試行回数が多すぎます。しばらく待って再試行してください' }, { status: 429 })
+  }
+
   let body: { password?: unknown }
   try {
     body = await request.json()

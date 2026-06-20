@@ -1,11 +1,26 @@
 import { NextResponse } from 'next/server'
 import { supabaseAdmin } from '@/lib/supabase-admin'
 import { isAdminAuthorized } from '@/lib/admin-auth'
+import { getClientIp, hitRateLimit } from '@/lib/rate-limit'
+
+// レート制限 + 認証の共通ガード。失敗試行のみを原子的に計数（正規 admin は無制限）。
+// 認可済みなら null、未認可なら 401、失敗が窓内上限を超えたら 429 を返す。
+async function guard(request: Request): Promise<NextResponse | null> {
+  if (isAdminAuthorized(request)) {
+    return null
+  }
+  const ip = getClientIp(request)
+  // 認証失敗のみ計数・記録（hit_rate_limit は記録と判定を原子的に行う）
+  const allowed = await hitRateLimit('admin_posts', ip, 20, 600)
+  if (!allowed) {
+    return NextResponse.json({ error: 'Too Many Requests' }, { status: 429 })
+  }
+  return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+}
 
 export async function GET(request: Request) {
-  if (!isAdminAuthorized(request)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const blocked = await guard(request)
+  if (blocked) return blocked
 
   const { data, error } = await supabaseAdmin
     .from('blog_posts')
@@ -21,9 +36,8 @@ export async function GET(request: Request) {
 }
 
 export async function PATCH(request: Request) {
-  if (!isAdminAuthorized(request)) {
-    return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  }
+  const blocked = await guard(request)
+  if (blocked) return blocked
 
   let body: { id?: unknown; published?: unknown }
   try {
